@@ -1,0 +1,144 @@
+
+.msg_main_block {
+	padding-top: 12px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 0px;
+}
+
+.msg_titre{
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.tableau{
+	display: table;
+	margin-top:5px;
+	Border-top: 1pt Solid var(--bordure_row);
+	Border-left: 1pt Solid var(--bordure_row);
+	Border-right: 1pt Solid var(--bordure_row);
+	width: 100%;
+}
+
+.row_entete{
+	display: flex;
+	/*width:100%;*/
+	height:18px;
+	background-color: var(--fond_entete);
+	text-align: center;
+	Font-Size: 9pt;
+	color: var(--texte_rubrique);
+	/*display: flex;*/
+}
+
+.row1{
+	background-color: var(--fond_row1);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 2px;
+	display: flex;
+	Border-bottom: 1pt Solid var(--bordure_row);
+	/*Border-top: 1pt Solid var(--fond_row2);*/
+}
+.row2{
+	background-color: var(--fond_row2);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 2px;
+	display: flex;
+	Border-bottom: 1pt Solid var(--bordure_row);
+	/*Border-top: 1pt Solid var(--fond_row2);*/
+}
+.colonne{
+	/*display: inline-flex;*/
+	display: block;
+	min-width : 80px;
+	margin-right : 20px;
+	vertical-align : middle;
+	
+}
+
+
+.colonne_entete{
+	/*display: inline-flex;*/
+	display: block;
+	min-width : 80px;
+	margin-right : 20px;
+	vertical-align : middle;
+	padding-top:2px;
+	text-align:center;
+	Font-Size: 8pt;
+	color: var(--texte_bouton);
+	Opacity: 0.7;
+	
+}
+.colonne_puce{
+	/*display: inline-flex;*/
+	display: block;
+	min-width : 2px;
+	margin-right : 5px;
+	padding-top: 3px;
+	
+}
+
+.puce{
+	height:7px;
+	width:7px;
+}
+
+.colonne_entete_gauche{
+	width:100px;
+	padding : 2px;
+	float:left;
+	/*background-color: #603020;
+	Border-Right: 1pt Solid;*/
+}
+
+
+.colonne_entete_droite{
+	width:70px;
+	float:right;
+	padding : 2px;
+	background-color: var(--fond_rubrique);
+	Border-Left: 1pt Solid;
+}
+
+.colonne_ext{
+	display: block;
+	width : 10px;
+	margin-right : 20px;
+}
+
+.msg_base{
+	display:inline-flex;
+	width: 100%;
+	/*background-color: #beaf9e;*/
+	Border-bottom: var(--bordure_row) 1pt Solid;
+	/*min-height: 120px;*/
+}
+
+.msg_post{
+	padding-bottom: 25px;
+	display : none;
+}
+
+.msg_base {
+	display:inline-flex;
+	width: 100%;
+	/*background-color: #beaf9e;*/
+	Border-Bottom: 1pt Solid var(--bordure_post);
+	/*min-height: 120px;*/
+}
+
+.texte_entete{
+	/*padding-top : 10px;*/
+	text-align: left;
+	Font-Size: 9pt;
+	color: var(--texte_rubrique);
+	
+}
+.titre_tableau{
+	padding : 4px;
+}

@@ -1,0 +1,86 @@
+{% extends "forum\_base.html" %}
+{% block title %}LIEU : {{ lieu.nom }}{% endblock %}
+
+{% load static %}
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post_action.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\entete_lieu.css' %}">
+{% endblock %}
+
+{% block style %}
+#post_action {Background-image:url("{% static fond1 %}");}
+{% endblock %}
+
+
+{% block entete %}
+	
+	<div style="{% if programme %}opacity:0.5;{% endif %}">
+	{% include "forum\lieu_entete.html" %}
+	</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+	
+
+	{% if list_Loi_encours %}
+		{% include "forum\lieu_lois.html" %}
+	{% endif %}
+
+
+
+
+	{% if perso_joueur.id != 1 or joueur.statut == "MJ" %}
+		
+		<div id=post_action align="center"> 
+			
+			
+				{% include "forum\post_perso.html" with perso=perso_joueur extension="Y" %}
+				
+				{% include "forum\post_action.html" %}
+
+		</div>
+
+	{% endif %}
+
+	{% if list_posts and not programme %}{% include "forum\numero_page.html" with T_page=T_page num_page=num_page %}{% endif %}
+
+
+<div id=post_liste  style="{% if programme %}opacity:0.4;{% endif %}">
+
+	{% if not programme %}
+		<div class=texte_sstitre style="text-align: right;margin-right: 20px;">Filtre : 
+			<a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action.id}}/{{num_page}}#post_liste" {% if option == '' %}style="opacity:0.3;"{% endif %}>all</a> - 
+			<a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action.id}}:talk/{{num_page}}#post_liste" {% if option == 'talk' %}style="opacity:0.3;"{% endif %}>talk</a> - 
+			<a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action.id}}:msg/{{num_page}}#post_liste" {% if option == 'msg' %}style="opacity:0.3;"{% endif %}>msg</a>
+		</div>
+	{% endif %}
+
+
+
+	{% if list_posts %}
+	{% for post in list_posts %}
+		
+
+	
+		{% include "forum\post.html" with post=post %}
+		
+	
+	
+
+	{% endfor %}
+	{% else %}
+		<div class=texte_base style="margin-left: 20px;">Pas de post dans ce lieu</div>
+	{% endif %}
+	
+
+</div>
+{% if list_posts %}<div style="margin-top: 20px;">{% include "forum\numero_page.html" with T_page=T_page num_page=num_page %}</div>{% endif %}
+
+
+{% endblock %}

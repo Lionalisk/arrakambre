@@ -1,0 +1,102 @@
+{% extends "forum\_base.html" %}
+{% block title %}LISTE DES JOUEURS{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+{% endblock %}
+
+{% block style %}
+#total{min-width:850px;}
+
+{% endblock %}
+
+
+{% block entete %}
+
+<div class=entete>
+	<div class=texte_surtitre>JOUEURS</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+<div id=menu_haut>
+	
+	<div class=bouton_menu_droite><a class=texte_bouton_menu href="javascript:affiche_allID('masque')">Fold All</a></div>
+	<div class=bouton_menu_droite><a class=texte_bouton_menu href="javascript:affiche_allID('affiche')">UnFold All</a></div>
+				
+</div>
+
+
+<div class=msg_main_block align="left">
+	<!--<div class=msg_titre><div class=texte_titre>JOUEUR</div></div>-->
+	
+	{% if TT_joueur|length > 0 %}
+		<div class=tableau>
+				<div class=row_entete style="display: flex;">
+					<div class=colonne_puce></div>
+					<div class=colonne_entete>Nom</div>
+					<div class=colonne_entete>Alliés</div>
+					<div class=colonne_entete>Maison</div>
+					<div class=colonne_entete>nb Posts</div>
+					<div class=colonne_entete>nb Actions</div>
+					<div class=colonne_entete>Last Post</div>
+					<!--<div class=colonne_entete_gauche style="margin-left:30px;Font-Weight:Bold;"><div class=texte_entete>De :</div></div>
+					<div class=colonne_entete_gauche style="Font-Weight:Bold;"><div class=texte_entete>Titre</div></div>
+					<div class=colonne_entete_droite>Fold All</a>
+					<div class=colonne_entete_droite>Unfold All</a>-->
+				</div>
+		{% for T_joueur in TT_joueur %}
+			
+			<div class="{% cycle 'row1' 'row2' %}">
+				
+
+				<a href="javascript:afficheID('joueur_{{T_joueur.0.id}}','affiche')"><div id="affiche_joueur_{{T_joueur.0.id}}" class=colonne_ext><div class=texte_base>+</div></div></a>
+				<a href="javascript:afficheID('joueur_{{T_joueur.0.id}}','masque')"><div id="masque_joueur_{{T_joueur.0.id}}" class=colonne_ext style="display:none;"><div class=texte_base>-</div></div></a>
+
+				<div class=colonne><div class=texte_base><a href="/admin/forum/joueur/{{T_joueur.0.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a> {{T_joueur.0.nom}}</div></div> 
+
+				<div class=colonne><div class=texte_base>{{T_joueur.0.list_allies}}</div></div>
+				<div class=colonne><div class=texte_base>{{T_joueur.0.maison.nom}}</div></div>
+				<div class=colonne><div class=texte_base>{{T_joueur.2}} posts</div></div>
+				<div class=colonne><div class=texte_base>{{T_joueur.3}} actions</div></div>
+				<div class=colonne><div class=texte_small>{{T_joueur.4.created_date}} - {{T_joueur.4.perso.nom}}</div></div>
+
+				
+			</div>
+
+			<div id="joueur_{{T_joueur.0.id}}" class=msg_post>
+				<div class=msg_base align="left">
+					<div class=post_contenu style="padding:10px;vertical-align: top;">
+					
+					<div class=texte_base>Lieux <b>Inconnus</b> découverts : {{T_joueur.0.list_lieux_inconnus|safe|linebreaksbr}}</div>
+					<div class=texte_base>Lieux <b>Secrets</b> découverts : {{T_joueur.0.list_lieux_secrets|safe|linebreaksbr}}</div>
+					<br>
+					{% for perso in T_joueur.1 %}
+						<a href="/forum/perso/-{{joueur.id}}/{{perso.id}}/">
+							<div class=block_image style="padding:5px;vertical-align: top;">{% include "forum\post_perso.html" with perso=perso extension="Y" %}</div>
+						</a>
+					{% endfor %}
+					<!--<div class=texte_base>Lieux visible : {{T_joueur.0.list_lieux_visibles|safe|linebreaksbr}}</div>-->
+
+					</div>
+				</div>
+			</div>
+
+		{% endfor %}
+		</div>
+	{% else %}
+	<div class=texte_base>Pas de personnage</div>
+	{% endif %}
+</div>
+
+
+{% endblock %}

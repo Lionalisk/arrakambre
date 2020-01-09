@@ -1,0 +1,266 @@
+{% load static %}				
+
+
+	<div id=competences class=desc_perso_contenu style="width:100%;">
+		
+		<!--<div class=texte_titre>Compétences : </div><br>-->
+		
+		<div class=colonne_competence style="width:250px;padding-bottom: 20px;vertical-align: center;"><div class=texte_titre><a href='/forum/regles/1/#competences' target="_blank"><img src="{% static help %}" width="15" height="15"></a>Compétences :</div></div>
+		<div style="width:100%;">
+			<div class=colonne_competence style="width:250px;">
+				<div class=texte_sstitre>Classe principale : {{perso.get_classe_principale}}
+				{% if joueur.statut == "MJ" %} <a href="/forum/modifClass/{{perso.id}}/{{perso.get_classe_principale.id}}/2/">-</a> {% endif %}
+				</div>
+				<div class=texte_sstitre style="opacity: 0.5;">Classe secondaire : {{perso.get_classe_secondaire}}
+				{% if joueur.statut == "MJ" %} <a href="/forum/modifClass/{{perso.id}}/{{perso.get_classe_secondaire.id}}/1/">+</a> <a href="/forum/modifClass/{{perso.id}}/{{T_classe_perso.1.id}}/3/">-</a> {% endif %}
+				</div>
+
+				<div class=texte_sstitre style="opacity: 0.3;">Classe Tertiaire : {{perso.get_classe_tertiaire}}
+				{% if joueur.statut == "MJ" %} <a href="/forum/modifClass/{{perso.id}}/{{perso.get_classe_tertiaire.id}}/2/">+</a>{% endif %}
+				</div>
+			</div>
+			{% if joueur in perso.joueur.all or joueur.statut == "MJ" %}
+			<div class=colonne_competence>
+				{% for categorie_competence in TTT_competences %}
+					{% if categorie_competence.0 == "" %}
+					<div class=texte_sstitre style="padding-bottom:3px;">Divers : </div>
+						{% for competence in categorie_competence.1 %}
+							{% if competence.1 == 0 %} 
+								<div class=texte_base style="opacity:0.4;">{{competence.0.nom}} : {{competence.1}}
+							{% else %}
+								<div class=texte_base>{{competence.0.nom}} : <b>{{competence.1}}</b>{% if competence.2 > 0 %} + {{competence.2}}{% endif %}
+							{% endif %}
+
+							{% if joueur.statut == "MJ" %} 
+								<a id=affiche_{{competence.0.id}} href="javascript:afficheID2('{{competence.0.id}}','affiche')">+</a>
+								<a id=masque_{{competence.0.id}} style="display: none;" href="javascript:afficheID2('{{competence.0.id}}','masque')">-</a>
+							{% endif %}
+								</div>
+							{% if joueur.statut == "MJ" %}
+							<div id={{competence.0.id}} style="display: none;" class=texte_sstitre><a href="/forum/modifCompetence/{{perso.id}}/{{competence.0.id}}/{{competence.1|add:'-1'}}/">-</a> <a href="/forum/modifCompetence/{{perso.id}}/{{competence.0.id}}/{{competence.1|add:'1'}}/">+</a></div>
+							{% endif %}
+
+						{% endfor %}
+					{% endif %}
+				{% endfor %}
+			</div>
+
+		</div>
+		<br>
+		
+		{% for categorie_competence in TTT_competences %}
+			{% if categorie_competence.0 != "" %}
+			<div class=colonne_competence>
+				<div class=texte_sstitre style="padding-bottom:3px;">{{categorie_competence.0}}<br></div>
+				{% for competence in categorie_competence.1 %}
+					{% if competence.1 == 0 and competence.2 == 0 %} 
+						<div class=texte_base style="opacity:0.4;">
+							{{competence.1}} : {{competence.0.nom}}
+					{% else %}
+						<div class=texte_base><b>{{competence.1}}{% if competence.2 > 0 %} + {{competence.2}}{% endif %}</b> : {{competence.0.nom}}
+					{% endif %}
+					
+					{% if joueur.statut == "MJ" %} 
+						<a id=affiche_{{competence.0.id}} href="javascript:afficheID2('{{competence.0.id}}','affiche')">+</a>
+						<a id=masque_{{competence.0.id}} style="display: none;" href="javascript:afficheID2('{{competence.0.id}}','masque')">-</a>
+					{% endif %}
+
+						</div>
+					{% if joueur.statut == "MJ" %}
+					<div id={{competence.0.id}} style="display: none;" class=texte_sstitre>{% if competence.1 > 0 %}<a href="/forum/modifCompetence/{{perso.id}}/{{competence.0.id}}/{{competence.1|add:'-1'}}/">-</a> {% endif %}<a href="/forum/modifCompetence/{{perso.id}}/{{competence.0.id}}/{{competence.1|add:'1'}}/">+</a></div>
+					{% endif %}
+				{% endfor %}
+			</div>
+			{% endif %}
+		{% endfor %}
+
+		{% else %}
+		
+		<div class=colonne_competence>
+			<div class=texte_base>Aura : <b>{{perso.get_aura}}</b></div>
+		{% for comp in perso.get_liste_competence3 %}
+			<div class=texte_base>{{comp.nom}} : <b>3</b></div>
+		{% endfor %}
+		</div>
+
+		{% endif %}
+
+		<div class=colonne_competence style="display: block;margin-top:15px;">
+			<div class=texte_base><b>Dialecte(s) :</b> Commun{% for langage in perso.get_langage %}, {{langage.nom}}{% if not langage.est_parle %} (langue morte){% endif %}{% endfor %}</div>
+		</div>
+		
+	</div>
+
+	
+	{% if joueur.statut == "MJ" or joueur in perso.joueur.all %}
+	<div style="margin-bottom: 20px;margin-top:25px;">
+		<div>
+			<div class=colonne_competence style="width:170px;"><div class=texte_base><a href='/forum/regles/3/#valeur_combat_duel' target="_blank"><img src="{% static help %}" width="12" height="12"></a> Valeur de combat en Duel : </div></div>
+			<div class=colonne_competence style="min-width:30px;padding-left: 0px;">
+				<div class=texte_sstitre>{{perso.VALEUR_FRAPPE_DUEL}}</div>
+			</div>
+			<div class=colonne_competence style="padding-left: 0px;">
+				<div class=texte_sstitre>= {{perso.VALEUR_DUEL_brut}} (Compétence*2){% if perso.arme %} + {{perso.VALEUR_ARME_DUEL}} (arme){% endif %}{% if perso.PV == 1 %} - 2 ({{perso.etat_sante.nom}}){% endif %}{% if perso.valeur_combat_bonus %}<br> + {{perso.valeur_combat_bonus}} (bonus){% endif %}</div>
+			</div>
+
+		</div>
+		<div>
+			<div class=colonne_competence style="width:170px;"><div class=texte_base><a href='/forum/regles/3/#valeur_combat' target="_blank"><img src="{% static help %}" width="12" height="12"></a> Valeur de combat en mélée : </div></div>
+			<div class=colonne_competence style="min-width:30px;padding-left: 0px;"><div class=texte_sstitre>{{perso.VALEUR_FRAPPE_MELEE}}</div></div>
+			<div class=colonne_competence style="padding-left: 0px;"><div class=texte_sstitre>= {{perso.VALEUR_MELEE_brut}} (Compétence*2){% if perso.arme %} + {{perso.VALEUR_ARME_MELEE}} (arme){% endif %}{% if perso.nbGardes > 0 %} + {{perso.nbGardes}} (gardes){% endif %}{% if perso.valeur_combat_bonus %}<br> + {{perso.valeur_combat_bonus}} (bonus){% endif %}</div></div>
+		</div>
+
+		{% if qst_perso_accompagnant %}
+		<div>
+		<div class=colonne_competence style="width:170px;"><div class=texte_base>Valeur de combat du groupe : </div></div>
+		<div class=colonne_competence style="width:30px;padding-left: 0px;"><div class=texte_sstitre>{{perso.VALEUR_FRAPPE_MELEE_GROUPE}}</div></div>
+		</div>
+		{% endif %}
+		<br>
+		<div>
+			<div class=colonne_competence style="width:170px;"><div class=texte_base><a href='/forum/regles/3/#valeur_combat' target="_blank"><img src="{% static help %}" width="12" height="12"></a> Niveau de Dommage : </div></div>
+			<div class=colonne_competence style="min-width:30px;padding-left: 0px;"><div class=texte_sstitre>{{perso.MALUS_DENOMINATEUR_DOMMAGE}}</div></div>
+		</div>
+		<div>
+			<div class=colonne_competence style="width:170px;"><div class=texte_base><a href='/forum/regles/3/#valeur_combat' target="_blank"><img src="{% static help %}" width="12" height="12"></a> Niveau de Défense : </div></div>
+			<div class=colonne_competence style="min-width:30px;padding-left: 0px;"><div class=texte_sstitre>{{perso.BONUS_DENOMINATEUR_DOMMAGE}}</div></div>
+		</div>
+
+		<div>
+			<div class=colonne_competence style="width:170px;"><div class=texte_base><a href='/forum/regles/3/#valeur_combat' target="_blank"><img src="{% static help %}" width="12" height="12"></a> Valeur d'Endurance : </div></div>
+			<div class=colonne_competence style="min-width:30px;padding-left: 0px;"><div class=texte_sstitre>{{perso.NIV_PROTECTION}}</div></div>
+		</div>
+
+		
+		
+	</div>
+	<div style="margin-left: 15px;"><img src="{% static separateur_h %}"></div>
+	{% endif %}
+
+
+	
+	{% if joueur in perso.joueur.all or joueur.statut == "MJ" %}
+		<div id=comportements class=colonne_competence style="width:250px;padding-bottom: 20px;margin-top:10px;"><div class=texte_titre><a href='/forum/regles/1/#comportement' target="_blank"><img src="{% static help %}" width="15" height="15"></a> Comportements :</div></div>
+
+		<div>
+			
+			{% if perso.posture %}
+			<div class=colonne_competence style="width:180px;"><div class=texte_base><b>Posture de Combat en cours : </b></div></div>
+			<div class=colonne_competence style="width:200px;padding-left: 0px;"><div class=texte_sstitre>
+				{% if joueur.statut == "MJ" %}<a href="/forum/modifPosture/{{perso.id}}/{{perso.posture.id}}/a/1"><< </a>{% endif %}
+				{{perso.posture.nom}
+				{% if joueur.statut == "MJ" %}<a href="/forum/modifPosture/{{perso.id}}/{{perso.posture.id}}/a/0"> >></a>{% endif %}
+			</div></div>
+			</div>
+			{% endif %}
+			
+			<div>
+			<div class=colonne_competence style="width:180px;"><div class=texte_base>Posture par défaut en <b>Mélée</b> : </div></div>
+			<div class=colonne_competence style="width:200px;padding-left: 0px;"><div class=texte_sstitre>
+				<a href="/forum/modifPosture/{{perso.id}}/{{perso.posture_defaut_melee.id}}/melee/1"><< </a>
+				{{perso.posture_defaut_melee.nom}}
+				<a href="/forum/modifPosture/{{perso.id}}/{{perso.posture_defaut_melee.id}}/melee/0"> >></a>
+			</div></div>
+			</div>
+
+			<div>
+			<div class=colonne_competence style="width:180px;"><div class=texte_base>Posture par défaut en <b>Duel</b> : </div></div>
+			<div class=colonne_competence style="width:200px;padding-left: 0px;"><div class=texte_sstitre>
+				<a href="/forum/modifPosture/{{perso.id}}/{{perso.posture_defaut_duel.id}}/duel/1"><< </a>
+				{{perso.posture_defaut_duel.nom}}
+				<a href="/forum/modifPosture/{{perso.id}}/{{perso.posture_defaut_duel.id}}/duel/0"> >></a>
+			</div></div>
+			</div>
+			<div>
+			<div class=colonne_competence style="width:180px;"><div class=texte_base>Stratégie par défaut en <b>Bataille</b> : </div></div>
+			<div class=colonne_competence style="width:100px;padding-left: 0px;"><div class=texte_sstitre></div></div>
+			</div>
+
+			<div style="margin-top:10px;">
+			<div class=colonne_competence style="width:180px;"><div class=texte_base>Accepte les Duels ? : </div></div>
+			<div class=colonne_competence style="width:200px;padding-left: 0px;"><div class=texte_sstitre>
+				{% if perso.accepte_duel %}<a href="/forum/modifPosture/{{perso.id}}/0/provocation_duel/0"><< </a>Répond aux provocations
+				{% else %}<a href="/forum/modifPosture/{{perso.id}}/1/provocation_duel/0"><< </a>Evite les provocations
+				{% endif %}
+			</div></div>
+			</div>
+
+			<div>
+			<div class=colonne_competence style="width:180px;"><div class=texte_base>Intervient dans les combats ? : </div></div>
+			<div class=colonne_competence style="width:260px;padding-left: 0px;">
+				<div class=texte_sstitre>
+				<a href="/forum/modifComportementIntervention/{{perso.id}}/{{perso.comportement_intervention.id}}/"><< </a> {{perso.comportement_intervention.nom}}
+				</div>
+			</div>
+			<div class=texte_base><div class=colonne_competence style="width:400px;margin-bottom:12px;margin-top:2px;">{{perso.comportement_intervention.description}}</div></div>
+			</div>
+
+
+
+
+		</div>
+
+		
+
+
+		<div style="margin-left: 15px;"><img src="{% static separateur_h %}"></div>
+	{% endif %}
+
+	{% if qst_perso_accompagnant %}
+	<div class=desc_perso_contenu style="margin-top:5px;margin-bottom:18px;margin-left: 15px;">
+		<div class=texte_sstitre style="margin-bottom: 10px;">Accompagnant(s) : </div>
+		{% for perso_accompagnant in qst_perso_accompagnant %}
+		<div style="display:inline-block;margin-right: 10px;">
+			<a href="/forum/perso/-{{joueur.id}}/{{perso_accompagnant.id}}/"><div class=block_image>{% include "forum\img_perso.html" with perso=perso_accompagnant size="XS" %}</div></a>
+			<div style="display:inline-block; margin-left: 5px;vertical-align: top;">
+				<div class=texte_sstitre>{{perso_accompagnant.get_nom}}</div>
+				<div class=texte_base>{{perso_accompagnant.etat_sante.nom}}</div>
+				<div class=texte_base>Gardes : {{perso_accompagnant.nbGardes}}</div>
+				<div class=texte_base>Troupes : {{perso_accompagnant.nbTroupes}}</div>
+			</div>
+		</div>
+		{% endfor %}
+
+	</div>
+	{% endif %}
+
+	{% if joueur in perso.joueur.all or joueur.statut == "MJ" %}
+	{% if qst_perso_prisonnier %}
+	<div class=desc_perso_contenu style="margin-top:5px;margin-bottom:18px;margin-left: 15px;">
+		<div class=texte_sstitre style="margin-bottom: 10px;">Prisonniers : </div>
+		{% for perso_prisonnier in qst_perso_prisonnier %}
+			<a href="/forum/perso/-{{joueur.id}}/{{perso_prisonnier.id}}/"><div class=block_image>{% include "forum\img_perso.html" with perso=perso_prisonnier size="XS" %}</div></a>
+			<div style="display:inline-block; margin-left: 5px;vertical-align: top;">
+				<div class=texte_sstitre>{{perso_prisonnier.get_nom}}</div>
+				<div class=texte_base>{{perso_prisonnier.etat_sante.nom}}</div>
+			</div>
+		{% endfor %}
+
+	</div>
+	<div style="margin-left: 15px;"><img src="{% static separateur_h %}"></div>
+	{% endif %}
+	
+
+	{% endif %}
+
+
+	{% if joueur.statut == "MJ" %}
+
+	<div class=desc_perso_contenu align="left">
+	<div class=texte_titre>MJ : Ajouter un effet au personnage : </div>
+	<br>
+	<div class=post_formulaire>
+		<form method="POST" class="post-form">{% csrf_token %}
+			
+			<div class=texte_base >{{form.effet_maladie_cible.label}} : {{ form.effet_maladie_cible }}</div>
+			<div class=texte_base >{{form.effet_potion_cible.label}} : {{ form.effet_potion_cible }}</div>
+			<div class=texte_base >{{form.effet_poison_cible.label}} : {{ form.effet_poison_cible }}</div>
+			<div class=texte_base >{{form.effet_divers_cible.label}} : {{ form.effet_divers_cible }}</div>
+
+			<div><input type="submit" class="save_btn" value="Envoyer"></div>
+		
+		</form>
+			
+	</div>
+	</div>
+	{% endif %}

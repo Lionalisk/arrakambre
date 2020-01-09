@@ -1,0 +1,162 @@
+{% extends "forum\_base.html" %}
+{% block title %}BACKGROUND{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+
+{% block entete %}
+
+
+<div class=entete>
+	<div class=texte_surtitre>BACKGROUND - {{rubrique.nom}}</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+<div id=menu_haut>
+	{% if joueur %}	
+		{% for rub in qst_titre_background %}
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/background/-{{joueur.id}}/{{rub.id}}/">{{rub.nom}}</a></div>
+		{% endfor %}
+	
+	{% else %}
+		{% for rub in qst_titre_background %}
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/background/-0/{{rub.id}}/">{{rub.nom}}</a></div>
+		{% endfor %}
+	{% endif %}
+	
+		
+</div>
+{% for p in joueur.joueur.all %}
+{{p.nom}}
+{% endfor %}
+
+<div class=msg_main_block align="left">
+	<!--<div class=msg_titre><div class=texte_titre>JOUEUR</div></div>-->
+		{% if joueur.statut == "MJ" %}
+		<a href="/forum/createbackg/{{rubrique.id}}/" target="_blank"><img src="{% static add %}" width="10px" height="10px"></a>
+		{% endif %}
+
+
+		<div class=texte_base style="margin-top: 10pt;margin-bottom: 20pt;">
+
+			{{rubrique.desc|safe|linebreaksbr}}
+
+		</div>
+
+		<div class=tableau>
+			
+		
+
+		{% for background in qst_sstitre_backg %}
+			
+			<div class="{% cycle 'row1' 'row2' %}" style="padding:10pt;">
+				<div style="margin-right: 30px;text-align: center;">
+					<div id={{background.nom_info}} class=texte_surtitre>
+						{% if joueur.statut == "MJ" %}
+						<a href="/forum/createbackg/{{background.id}}/" target="_blank"><img src="{% static add %}" width="10px" height="10px"></a>
+						<a href="/admin/forum/background/{{background.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a>
+						{% endif %}
+						{{background.nom}}
+					</div><br>
+					<div class=texte_base style="margin-top: 10pt;margin-bottom: 20pt;">
+
+						
+						{{background.desc|safe|linebreaksbr}}
+						
+
+						{% for ssbackground in background.enfants %}
+							
+								
+								<div id={{ssbackground.nom_info}} class=texte_titre style="margin-top: 30pt;margin-bottom: 20pt;margin-left:20pt;">
+									{% if joueur.statut == "MJ" %}
+									
+									<a href="/admin/forum/background/{{ssbackground.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a>
+
+									{% endif %}
+									
+									{{ssbackground.nom}}
+								</div>
+
+								<div style="margin-top: 10pt;margin-bottom: 10pt;margin-left:40pt;">
+									
+									{{ssbackground.desc|safe|linebreaksbr}}
+
+								</div>
+
+						{% endfor %}
+
+					</div>
+
+					<div><img src="{% static separateur_h %}"></div>
+				</div>
+
+			</div>
+			
+			
+		{% endfor %}
+		{% if qst_maisons %}
+			{% for maison in qst_maisons %}
+			<div class="{% cycle 'row1' 'row2' %}" style="padding:10pt">
+				<div>
+					<div id=maison_{{maison.nom_info}} class=texte_surtitre>
+						{% if joueur.statut == "MJ" %}
+						<a href="/admin/forum/maison/{{maison.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a>
+						{% endif %}
+						La Maison {{maison.nom}}
+					</div>
+					<div style="margin-top: 20pt;margin-left:20pt;"">
+						<div class=texte_base style=""><b>Dieu/Déesse :</b> {{maison.dieu}}</div>
+						<div class=texte_base style=""><b>Emblème :</b> {{maison.embleme}}</div>
+
+						<div class=texte_base style="margin-top: 10pt;margin-bottom: 20pt;">
+							{{maison.description|safe|linebreaksbr}}
+						</div>
+
+						<div class=texte_titre style="">Institutions :</div>
+						<div class=texte_base style="margin-top: 10pt;margin-bottom: 20pt;">
+							{{maison.institutions|safe|linebreaksbr}}
+						</div>
+
+						
+						{% if maison.suzerain %}<div class=texte_base style=""><b>Suzerain :</b> {{maison.suzerain}}</div>{% endif %}
+						{% if maison.senateur %}<div class=texte_base style=""><b>Sénateur sur Arrakambre :</b> {{maison.senateur.nom}}</div>{% endif %}
+						<div class=texte_base style="margin-top: 10pt;margin-left: 10pt; "><img src="/static/forum/{{nom_jeu}}/img/illustration/{{maison.nom_info}}.jpg" style="border: Solid 1pt var(--fond_bouton);"></div>
+				</div>
+			</div>
+				
+			</div>
+			
+			{% endfor %}
+		{% endif %}
+
+		{% if qst_persos %}
+			{% for peros in qst_persos %}
+			<div class="{% cycle 'row1' 'row2' %}" style="padding:10pt">
+
+			</div>
+			{% endfor %}
+		{% endif %}
+
+		</div>
+
+</div>
+
+
+{% endblock %}

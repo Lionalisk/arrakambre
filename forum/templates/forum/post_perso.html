@@ -1,0 +1,73 @@
+{% load static %}
+
+	<div class=post_perso align="left">
+		
+	{% if perso.id != 1 %}
+		
+			{% if extension == "POST" %}
+				{% include "forum\img_perso.html" with perso=perso post=post size="POST" %}
+			{% else %}
+				{% include "forum\img_perso.html" with perso=perso size="L" %}
+			{% endif %}
+		
+		<div class=post_perso_info>
+			
+			{% if extension == "POST" %}
+				<div class=texte_titre style="display:table;">{{post.perso_nom}}</div>
+				<div class=texte_sstitre>{{post.perso_titre}}</div>
+			{% else %}
+				<div class=texte_titre style="display:table;"><a href="/forum/perso/-{{joueur.id}}/{{perso.id}}/">{{perso.get_nom}}</a></div>
+				<div class=texte_sstitre>{{perso.get_titre}}</div>
+			{% endif%}
+
+			
+
+
+			{% if extension == "Y" %}
+			<div class=post_perso_blocktexte>
+				<div class=texte_base>
+				<div>{{perso.etat_sante.nom}}</div>
+				{%if perso.PC > 0 %}<div>Concentration : {{perso.PC}} pt{%if perso.PC > 1 %}s{%endif%}</div>{%endif%}
+				{%if perso.dissimulation > 0 %}<div>Dissimulation : {{perso.dissimulation}}</div>{%endif%}
+				<div>{{perso.nbGardes}} garde{%if perso.nbGardes > 1 %}s{%endif%}<br>{{perso.nbTroupes}} troupe{%if perso.nbTroupes > 1 %}s{%endif%}</div>
+				</div>
+			</div>
+
+
+			{% elif extension == "INDEX" %}
+			
+			{% endif %}
+
+		</div>
+
+	{% else %}
+	<div class=post_perso_info style="margin-left: 10px;">
+		
+		<div class=texte_titre style="display:table;">{{perso.get_nom}}</div>
+
+		
+		<br>
+		<div class=post_action_liste>
+		{% if extension != "POST" %}
+		{% regroup list_action by categorie as T_categories %}
+		{% for catego in T_categories %}
+			<!--{% if T_categories|length > 1 and catego.grouper.priorite > 1 %}<div class=post_action_item><br></div>{% endif %}-->
+			<div class=post_action_categorie>
+				{% for action_item in catego.list %}
+					{% if action_item == action %}
+					<div class=post_action_item style="opacity:0.2;">{{ action_item.nom }}</div>
+					{% else %}
+					<div class=post_action_item><a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action_item.id}}/1#perso_present">{{ action_item.nom }}</a></div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		{% endfor %}
+		{% endif %}
+
+		
+		</div>
+	</div>
+	{% endif %}
+
+
+	</div>

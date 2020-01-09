@@ -1,0 +1,81 @@
+{% extends "forum\_base.html" %}
+{% block title %}LISTE DES PERSOS{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+
+{% block entete %}
+
+
+<div class=entete>
+	<div class=texte_surtitre>PERSONNAGES</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+<div id=menu_haut>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/personnagesMJ/maison/">Par Maison</a></div>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/personnagesMJ/joueur/">Par Joueur</a></div>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/personnagesMJ/lieu/">Par Lieu</a></div>
+	
+	<div class=bouton_menu_droite><a class=texte_bouton_menu href="/forum/personnagesMJ/inactive/">Inactifs</a></div>
+				
+</div>
+
+
+<div class=msg_main_block align="left">
+	<!--<div class=msg_titre><div class=texte_titre>JOUEUR</div></div>-->
+	
+	{% if qst_perso.count %}
+		<div class=tableau>
+				<div class=row_entete>
+					<!--<div class=colonne_entete_gauche style="margin-left:30px;Font-Weight:Bold;"><div class=texte_entete>De :</div></div>
+					<div class=colonne_entete_gauche style="Font-Weight:Bold;"><div class=texte_entete>Titre</div></div>
+					<div class=colonne_entete_droite>Fold All</a>
+					<div class=colonne_entete_droite>Unfold All</a>-->
+				</div>
+		{% for perso in qst_perso %}
+			
+			<div class="{% cycle 'row1' 'row2' %}">
+				
+				<div class=colonne><div class=texte_base>
+				{{perso.listejoueur}}
+				</div></div> 
+				<div class=colonne><div class=texte_base>{{perso.nom}}</div></div>
+				<div class=colonne><div class=texte_base>{{perso.maison.nom}}</div></div>
+				<div class=colonne><div class=texte_base>{{perso.lieu.nom}}</div></div> 
+
+				
+			</div>
+
+			<!--<div id="msg_joueur_{{msg_joueur.id}}" class=msg_post>
+				<div class=post_base align="left">
+					<div class=post_contenu align="right">
+					<div class=post_contenu_texte>{{msg_joueur.texte|safe|linebreaksbr}}</div>
+				</div>
+				</div>
+			</div>-->
+
+		{% endfor %}
+		</div>
+	{% else %}
+	<div class=texte_base>Pas de personnage</div>
+	{% endif %}
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,100 @@
+
+
+
+
+:root {
+	
+	--fonce1 : #403030;
+	--fonce2 : #511;
+	--fonce3 : #552725;
+	--fonce4 : #704843;
+	--fonce5 : #977; /*bordure discrete*/
+	--clair1 : #fed;
+	--clair2 : #cab8a7;
+	--noir : #221;
+	
+	
+	--fond_enteteMJ : #492518;
+	--fond_rubriqueMJ : #381712;
+	
+	--fond_entete : var(--fonce4);
+	--fond_rubrique : var(--fonce3);
+	--texte_rubrique : var(--clair2);
+
+	--fond_bouton : var(--fonce1);
+	--texte_bouton : var(--clair1);
+
+	--texte_surtitre : var(--fonce1);
+	--texte_titre : var(--fonce2);
+	--texte_base : var(--noir);
+	--texte_small : var(--fonce1);
+	--texte_a : var(--fonce1);
+
+	--bordure_main : var(--fonce4);
+	--bordure_post : var(--fonce5);
+	--bordure_row : var(--fonce5);
+	
+	--fond_quote : var(--clair2);
+	--fond_row1 : #f7ede0;
+	--fond_row2 : #efdbcf;
+
+	--fond_body : #000;
+	--fond_total : #b8a186;
+	--fond_textarea : #fff5ee;
+
+	--fond_sys : #dab094;
+	--texte_sys : #610;
+	--bordure_sys : #754;
+
+	--fond_barreprogress_encours : #c82;
+	--fond_barreprogressOK :#080;
+ 
+  
+}
+/*
+:root {
+	
+	--fonce1 : #422;
+	--fonce2
+	--fonce3 : #603020;
+	--fonce4 : #7a4a3a;
+	
+	--fond_enteteMJ : #4a2a1a;
+	--fond_entete : #7a4a3a;
+	--fond_rubrique : #603020;
+	--fond_rubriqueMJ : #302010;
+	--texte_rubrique : #cab3a1;
+
+	--fond_bouton : #422;
+	--texte_bouton : #fed;
+
+	--texte_surtitre : #410;
+	--texte_titre : #521;
+	--texte_base : #221;
+	--texte_small : #443;
+	--texte_a : #422;
+
+
+	--bordure_main : #753;
+	--bordure_post : #665;
+	--bordure_row : #987;
+
+
+	--fond_row1 : #f7eddc;
+	--fond_row2 : #efdbc3;
+
+	--fond_body : #000;
+	--fond_total : #b8a186;
+	--fond_textarea : #fff5e9;
+
+	--fond_quote : #cab8a0;
+	--fond_sys : #dab094;
+	--texte_sys : #610;
+	--bordure_sys : #754;
+
+
+	--fond_barreprogress_encours : #c82;
+	--fond_barreprogressOK :#080;
+ 
+  
+}*/

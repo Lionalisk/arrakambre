@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+
+{% with 'forum/'|add:nom_jeu|add:'/img/separateur_h.png' as separateur_h %}
+{% with 'forum/'|add:nom_jeu|add:'/img/separateur_v.png' as separateur_v %}
+{% with 'forum/'|add:nom_jeu|add:'/img/separateur_v_2.png' as separateur_v2 %}
+{% with 'forum/'|add:nom_jeu|add:'/img/separateur_parent.png' as separateur_parent %}
+{% with 'forum/'|add:nom_jeu|add:'/img/edit.png' as edit %}
+{% with 'forum/'|add:nom_jeu|add:'/img/add.png' as add %}
+{% with 'forum/'|add:nom_jeu|add:'/img/help.png' as help %}
+{% with 'forum/'|add:nom_jeu|add:'/img/valid.png' as validation %}
+{% with 'forum/'|add:nom_jeu|add:'/img/gardes.png' as imgGardes %}
+{% with 'forum/'|add:nom_jeu|add:'/img/troupes.png' as imgTroupes %}
+{% with "forum/img/delete.png" as delete %}
+{% with 'forum/'|add:nom_jeu|add:'/img/talk.png' as talk %}
+{% with 'forum/'|add:nom_jeu|add:'/img/fond1.png' as fond1 %}
+{% with 'forum/'|add:nom_jeu|add:'/img/fond_hide.png' as fond_hide %}
+
+<head>
+<title>ARRAKAMBRE - {% block title %}{% endblock %}</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+
+
+
+<script type="text/javascript" src="{% static 'forum\jvscript\fonctions.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'forum/'|add:nom_jeu|add:'/root.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum/css/header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum/css/main.css' %}">
+{% block linkcss %}{% endblock %}
+
+<style>
+
+#total {Background-image:url("{% static 'forum/'|add:nom_jeu|add:'/img/parchemin.jpg' %}");}
+#main {Background-image:url("{% static 'forum/'|add:nom_jeu|add:'/img/fond2.png' %}");}
+.msg_base {Background-image:url("{% static fond1 %}");}
+.post_base {Background-image:url("{% static fond1 %}");}
+.post_hide {Background-image:url("{% static fond_hide %}");}
+{% block style %}{% endblock %}
+
+</style>
+
+
+</head>
+	
+
+
+    <body background="{% static 'forum/'|add:nom_jeu|add:'/img/background_page.jpg' %}">
+	
+{{joueur.test}}
+	<div id=total align="left">
+		<div id=header>
+
+			<div id=menu_haut>
+				{% if joueur %}
+					<div class=bouton_menu_gauche_icone><a href="/forum/-{{joueur.id}}"><img src="{% static 'forum\\'|add:nom_jeu|add:'\img\index.png' %}"></a></div>
+					
+					{% if joueur.nb_msg_nonlu > 0 %}
+					<div class=bouton_menu_gauche_icone style="background-color:#dab094;"><a href="/forum/messagerie/-{{joueur.id}}/0/all/">
+						<div id=num_msg>{{joueur.nb_msg_nonlu}}</div>
+						<img src="{% static 'forum\\'|add:nom_jeu|add:'\img\msg2.png' %}" style="margin-left:12px"></a>
+					</div>
+					{% else %}
+						<div class=bouton_menu_gauche_icone><a href="/forum/messagerie/-{{joueur.id}}/0/all/"><img src="{% static 'forum\\'|add:nom_jeu|add:'\img\msg.png' %}"></a></div>
+					{% endif %}
+
+					<!--<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/actualite/-{{ joueur.id }}">Actualités</a></div>-->
+					<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/lieu/-{{ joueur.id }}">Les Lieux</a></div>
+					<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/perso/-{{ joueur.id }}/0/">FichesPerso</a></div>
+					<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/background/-{{joueur.id}}/1/">Background</a></div>
+					<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/regles/-{{joueur.id}}/0/">Règles</a></div>
+				{% else %}
+					<div class=bouton_menu_gauche_icone><a href="/forum/accounts/login"><img src="{% static 'forum\\'|add:nom_jeu|add:'\img\index.png' %}"></a></div>
+					<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/background/-0/1/">Background</a></div>
+					<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/regles/-0/0/">Règles</a></div>
+				{% endif %}
+
+				
+				
+
+				{% if joueur_reel %}
+					<div class=bouton_menu_droite_icone><a href="/forum/accounts/logout"><img src="{% static 'forum\\'|add:nom_jeu|add:'\img\deconnexion.png' %}"></a></div>
+				
+				
+					{% if joueur_reel.statut != "MJ" %}
+					<div class=bouton_menu_droite style="Border-Right: 0pt;"><a class=texte_bouton_menu href="/forum/profil/">{{joueur.nom}}</a></div>
+					{% else %}
+					<div class=bouton_menu_droiteMJ style="Border-Right: 0pt;">
+						<div id="menu_deroulant">
+						     <label for="toggle-block">{{joueur.nom}}</label>
+						     <input id="toggle-block" name="toggle-block" style="display:none;" type="checkbox" nochecked />
+						     <div id="my-block">
+						     	{%for j in qst_joueur %}
+						     		<a class=texte_bouton_menu href="#" onclick="changeJoueur('{{j.id}}')"><div class="ligne_menu_deroulant">{{j.nom}}</div></a>
+						     	{% endfor %}
+						     </div>
+						</div>
+					</div>
+					{% endif %}
+				{% else %}
+					
+				{% endif %}
+
+
+			</div>
+
+			{% if joueur and joueur.statut == "MJ" %}
+			<div id=menu_MJ>
+				<div class=bouton_menu_gaucheMJ><a class=texte_bouton_menu href="/admin/" target="_blank">Admin</a></div>
+				<div class=bouton_menu_gaucheMJ><a class=texte_bouton_menu href="/forum/personnagesMJ/all">Parametres</a></div>
+				<div class=bouton_menu_gaucheMJ>
+					<div id="menu_deroulant2">
+					     <label for="toggle-block2">Bases</label>
+					     <input id="toggle-block2" name="toggle-block2" style="display:none;" type="checkbox" nochecked />
+					     <div id="my-block2">
+					     		<div class="ligne_menu_deroulant"><a class=texte_bouton_menu href="/forum/joueursMJ/all/">Joueurs</a></div>
+					     		<div class="ligne_menu_deroulant"><a class=texte_bouton_menu href="/forum/maisonsMJ/all/">Maisons</a></div>
+					     		<div class="ligne_menu_deroulant"><a class=texte_bouton_menu href="/forum/personnagesMJ/maison/">Persos</a></div>
+					     		<div class="ligne_menu_deroulant"><a class=texte_bouton_menu href="/forum/lieuxMJ/all/">Lieux</a></div>
+					     		<div class="ligne_menu_deroulant"><a class=texte_bouton_menu href="/forum/resultatsMJ/0/0/all/">Resultats</a></div>
+					     		<div class="ligne_menu_deroulant"><a class=texte_bouton_menu href="/forum/evenementsMJ/all/">Evénements</a></div>
+					     		
+					     </div>
+					</div>
+				</div>
+				<!--<div class=bouton_menu_gaucheMJ><a class=texte_bouton_menu href="/forum/personnagesMJ/all/">Persos</a></div>
+				<div class=bouton_menu_gaucheMJ><a class=texte_bouton_menu href="/forum/lieuxMJ/all/">Lieux</a></div>-->
+				<div class=bouton_menu_gaucheMJ><a class=texte_bouton_menu href="/forum/commmandesMJ/encours/0/0/">Commandes</a></div>
+
+				
+			</div>
+			{% endif %}
+				
+				
+
+			<div id=titre><img src="{% static 'forum/'|add:nom_jeu|add:'/img/titre.png' %}"></div>
+
+			{% if joueur %}
+			<div id=persos_du_joueur align="right">
+				{% for p in joueur.list_persos %}
+				<a href="/forum/lieu/-{{joueur.id}}/{{p.lieu.id}}/{{p.id}}/1/1">
+					<div class=block_image>{% include "forum\img_perso.html" with perso=p size="XS" %}</div>
+				</a>
+				{% endfor %}
+			</div>
+
+			<div id=persos_du_joueur align="right">
+				{% for p in joueur.list_hotes %}
+				<a href="/forum/lieu/-{{joueur.id}}/{{p.lieu.id}}/{{p.id}}/1/1">
+					<div class=block_image>{% include "forum\img_perso.html" with perso=p size="XS" %}</div>
+				</a>
+				{% endfor %}
+			</div>
+			{% endif %}
+
+		</div>
+		
+		
+		<div id=entete align="left">
+			{% block entete %}{% endblock %}
+		</div>
+
+
+
+		<div id=main align="center">
+			{% block main %}{% endblock %}
+		</div>
+	
+
+
+		<div id=footer>
+		</div>
+
+	</div>
+	{{joueur.test}}
+	
+    </body>
+    {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
+</html>

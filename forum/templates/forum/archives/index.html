@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>INDEX</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+<SCRIPT LANGUAGE="Javascript" SRC="{% static "forum\jvscript\fonctions.js" %}"> </SCRIPT>
+<SCRIPT LANGUAGE="Javascript" SRC="{% static "forum\jvscript\fonctions_auto.js" %}"> </SCRIPT>
+
+<link rel="stylesheet" type="text/css" href="{% static "forum\css\cssfile.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "forum\css\cssfile_index.css" %}">
+
+<style>
+#total {
+	Background-image:url("../../static/forum/img/parchemin.jpg");
+}
+
+#index_personnage {
+	Background-image :url("{% static "forum\img\fond1.png" %}");
+}
+#index_lieu {
+	Background-image :url("{% static "forum\img\fond1.png" %}");
+}
+#index_actu {
+	Background-image :url("{% static "forum\img\fond1.png" %}");
+}
+
+</style>
+</head>
+
+
+
+<body background="{% static "forum\img\marbre.jpg" %}">
+{% with 'forum/img/bouton.png' as imgPathBouton %}
+{% with 'forum/img/separateur_h.png' as imgPathSeparateur_h %}
+{% with 'forum/img/separateur_v.png' as imgPathSeparateur_v %}
+
+
+<div id=total align="center">
+	
+	
+	<div id=header>
+		<div id=menu_haut>
+				<div id=bouton_menu_gauche style="width: 30px;padding:2px;"><a href="/forum/"><img src="{% static "forum\img\index.png" %}"></a></div>
+				<div id=bouton_menu_gauche style="width: 30px;padding:2px;"><a href="/forum/messagerie/"><img src="{% static "forum\img\msg.png" %}"></a></div>
+				<div id=bouton_menu_gauche><a id=bouton_menu href="/forum/lieu/">Forum</a></div>
+				<div id=bouton_menu_gauche><a id=bouton_menu href="/forum/background/">Background</a></div>
+				<div id=bouton_menu_gauche><a id=bouton_menu href="/forum/regles/">Règles</a></div>
+				
+				<div id=bouton_menu_droite style="width: 30px;padding:1px;"><a href="/forum/accounts/logout"><img src="{% static "forum\img\deconnexion.png" %}"></a></div>
+				<div id=bouton_menu_droite style="Border-Right: 0pt;"><a id=bouton_menu href="/forum/regles/">{{joueur.nom}}</a></div>
+		</div>
+		
+		<div align="center"><img src="..\..\static\forum\img\titre.png"></div>
+	</div>	
+	
+	
+	<!-- partie personnage-->
+	<div id=index_personnage align="center">
+		
+		<div id=index_titre>
+		PERSONNAGES
+		</div>
+		
+		<div id=index_base_perso align="left">
+			{% if list_perso %}
+			{% for personnage in list_perso %}
+			{% with 'forum/img/persos/'|add:personnage.image as imgPath %}
+			{% with 'forum/img/'|add:personnage.etat_sante.image as imgPathSante %}
+
+			
+			<div id=index_elt>
+				
+				
+
+				<div id=index_elt_img align="center">
+					<div id=img_perso style="background:url({% static imgPath %});">
+						<a href="lieu/{{personnage.lieu.id}}/{{personnage.id}}/1"><img src="{% static imgPathSante %}" width="81" height="88" border="1"></a>
+					</div>
+				</div>
+				
+
+				
+				<div id=index_elt_info>
+					<div id=texte_titre><a href="#">{{personnage.nom}}</a></div>
+					<div id=texte_sstitre>{{personnage.titre}}</div>
+					<div id=texte_base>{{personnage.etat_sante.nom}}<br>{{personnage.Situation}}<br></div>
+					<div id=texte_base>{{personnage.nbGardes}} garde{%if personnage.nbGardes > 1 %}s{%endif%} - {{personnage.nbTroupes}} troupe{%if personnage.nbTroupes > 1 %}s{%endif%}</div>
+				</div>
+				
+				
+				<img src="{% static "forum/img/separateur_v.png"%}" style="display:inline-table;">
+				
+
+				
+				<div id=index_elt_info_lieu>
+					<div id=texte_titre><a href="lieu/{{personnage.lieu.id}}/1/1">{{personnage.lieu.nom}}</a></div>
+					<div id=texte_sstitre>Dernière action :</div>
+					<div id=texte_base>
+						{% for post in list_derniers_posts %}
+							{% if post.lieu.nom == personnage.lieu.nom %}
+								{{post.date_jeu}} : {{post.perso.nom}}
+								<!--{{post.created_date|date:"G:i-j/m"}} : {{post.perso.nom}}-->
+							{% endif %}
+						{% endfor %}
+						
+					</div>	
+				</div>
+				
+				<div id=index_elt_action align="left">
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+				</div>
+				
+				<div align=center><img src="{% static imgPathSeparateur_h %}"></div>
+			
+			</div>
+			
+			{% endwith %}{% endwith %}
+			{% endfor %}
+			{% endif %}
+				
+		</div>
+
+	</div>
+	
+	
+	
+	<div id=index_actu align="center">
+		<div id=index_titre>ACTUALITES</div>
+		<div id=index_actu_all>
+			<div id=texte_sstitre>{{date}}</div>
+		</div>
+	</div>
+	
+	
+	<!-- partie territoire-->
+	
+	
+	
+	<div id=index_lieu align="left">
+		
+		<div id=index_titre>
+		TERRITOIRES
+		</div>
+		
+		<div id=index_base_perso align="left">
+			
+			{% if list_territoire %}
+			{% for territoire in list_territoire %}
+			{% with 'forum/img/lieu/'|add:territoire.image as imgPath %}
+			
+			
+			<div id=index_elt>
+				
+	
+				<div id=index_elt_img align="center">
+					<div id=img_perso>
+						<img src="{% static imgPath %}" width="88" height="88" border="1">
+					</div>
+				</div>
+				
+				
+
+				
+				<div id=index_elt_info>
+					<div id=texte_titre><a href="#">{{territoire.nom}}</a></div>
+					<div id=texte_sstitre>{{territoire.maison.nom}}</div>
+					<br>
+					{% if territoire.proprietaire %}
+					<div id=texte_sstitre>{{territoire.proprietaire.nom}}<br>{{territoire.proprietaire.titre}}</div>
+					{% endif %}
+					<div id=texte_base>
+					</div>
+				</div>
+				
+				
+				<img src="{% static imgPathSeparateur_v %}" style="display:inline-table;">
+				
+
+				
+				<div id=index_elt_info_lieu>
+					<div id=texte_titre>Caracteristiques</div>
+					<div id=texte_base>
+						Défense : {{territoire.defense_assault}}<br>
+						Gardes : {{territoire.nbgarde}}<br>
+						Troupe : {{territoire.nbtroupe}}<br>
+						Piège : {{territoire.piege}}
+						
+					</div>	
+				</div>
+				
+				<div id=index_elt_info_lieu>
+					
+					<div id=texte_titre>Activités</div>
+					<div id=texte_sstitre>Dernières actions :</div>
+					<div id=texte_base>
+						{% for post in list_derniers_posts %}
+							{% if post.lieu.id == territoire.id %}
+								{{post.created_date|date:"G:i-j/m"}} : {{post.perso.nom}}
+							{% endif %}
+						{% endfor %}
+						
+					</div>	
+				</div>
+				
+				
+				<div id=index_elt_action align="left">
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+					<div id=img_bouton><img src="{% static imgPathBouton %}"></div>
+				</div>
+				
+			</div>
+
+			
+			
+			<div  align=center><img src="{% static imgPathSeparateur_h %}"></div>
+			
+			{% endwith %}
+			{% endfor %}
+			{% endif %}
+			
+		
+		</div>
+		
+		
+	</div>
+	
+	
+	
+	<div id=footer>
+	</div>
+	
+</div>
+
+{% endwith %}{% endwith %}{% endwith %}
+
+</body>
+</html>

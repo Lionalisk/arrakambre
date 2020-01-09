@@ -1,0 +1,206 @@
+{% extends "forum\_base.html" %}
+{% block title %}LISTE DES COMMANDES{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\menu_deroulant.css' %}">
+{% endblock %}
+
+{% block style %}
+#total{min-width:1000px;}
+{% endblock %}
+
+
+{% block entete %}
+
+<div class=entete>
+	<div class=texte_surtitre>COMMANDES - {{filtre}}{% if IDjoueur != 0 %} - {{joueur_commande.nom}}{% endif %}
+													{% if perso_commande.id != 1 %} - {{perso_commande.nom}}{% endif %}</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+<div id=menu_haut>
+	{% if filtre == "all" %}<div style="opacity:0.6;">{% else %}<div>{% endif %}
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/commmandesMJ/all/{{tri}}/{{IDjoueur}}/">Tous</a></div>
+	</div>
+	{% if filtre == "encours" %}<div style="opacity:0.6;">{% else %}<div>{% endif %}
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/commmandesMJ/encours/{{tri}}/{{IDjoueur}}/">En cours</a></div>
+	</div>
+	{% if filtre == "erreur" %}<div style="opacity:0.6;">{% else %}<div>{% endif %}
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/commmandesMJ/erreur/{{tri}}/{{IDjoueur}}/">Erreurs</a></div>
+	</div>
+	{% if filtre == "fini" %}<div style="opacity:0.6;">{% else %}<div>{% endif %}
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/commmandesMJ/fini/{{tri}}/{{IDjoueur}}/">Finis</a></div>
+	</div>
+	{% if filtre == "programme" %}<div style="opacity:0.6;">{% else %}<div>{% endif %}
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/commmandesMJ/programme/{{tri}}/{{IDjoueur}}/">Programme</a></div>
+	</div>
+
+	<!--
+	<div class=bouton_menu_droite><a class=texte_bouton_menu href="#" onclick="affiche_allID('masque')">Fold All</a></div>
+-->
+	<div class=bouton_menu_droite>
+
+		<div id="menu_deroulant_spe_1">
+		     <label for="toggle-block_spe_1">Joueurs</label>
+		     <input id="toggle-block_spe_1" name="toggle-block_spe_1" style="display:none;" type="checkbox" nochecked />
+		     <div id="my-block_spe_1">
+		     		<div class="ligne_menu_deroulant"><a class=texte_bouton_menu href="/forum/commmandesMJ/{{filtre}}/{{tri}}/0/">All</a></div>
+		     		{% for j in qst_joueur %}
+		     		<div class="ligne_menu_deroulant"><a class=texte_bouton_menu href="/forum/commmandesMJ/{{filtre}}/{{tri}}/{{j.id}}/">{{j.nom}}</a></div>
+		     		{% endfor %}
+		     		
+		     </div>
+		</div>
+	</div>
+
+	<div class=bouton_menu_droite>
+
+		<div id="menu_deroulant_spe_2">
+		     <label for="toggle-block_spe_2">Persos</label>
+		     <input id="toggle-block_spe_2" name="toggle-block_spe_2" style="display:none;" type="checkbox" nochecked />
+		     <div id="my-block_spe_2">
+		     		<div class="ligne_menu_deroulant"><a class=texte_bouton_menu href="/forum/commmandesMJ/{{filtre}}/{{tri}}/0/">All</a></div>
+		     		{% for p in qst_perso %}
+
+		     		<div class="ligne_menu_deroulant"><a class=texte_bouton_menu href="/forum/commmandesMJ/{{filtre}}/{{tri}}/p{{p.id}}/">{{p.nom}}</a></div>
+		     		{% endfor %}
+		     		
+		     </div>
+		</div>
+	</div>
+	
+				
+</div>
+
+
+<div class=msg_main_block align="left" style="min-width:620px;">
+	<!--<div class=msg_titre><div class=texte_titre>JOUEUR</div></div>-->
+	
+	{% if qst_commande %}
+		<div class=tableau>
+				<div class=row_entete style="border-bottom: 1pt #dcb solid;">
+					<!--<div class=colonne_entete_gauche style="width:60px;">Unfold All</div>
+					<div class=colonne_entete_gauche style="width:60px;">Fold All</div>-->
+					
+					<div class=colonne_entete_droite><a class=texte_bouton_menu href="/forum/commmandesMJ/{{filtre}}/0/{{IDjoueur}}/">Tri Création</a></div>
+					<div class=colonne_entete_droite><a class=texte_bouton_menu href="/forum/commmandesMJ/{{filtre}}/2/{{IDjoueur}}/">Tri Fin</a></div>
+					<div class=colonne_entete_droite><a class=texte_bouton_menu href="/forum/commmandesMJ/{{filtre}}/1/{{IDjoueur}}/">Tri Début</a></div>
+					
+					
+				</div>
+
+				<div class=row_entete style="display: flex;">
+					<div class=colonne_puce></div>
+					<div class=colonne_entete style="min-width:40px;text-align: left;"></div>
+					<div class=colonne_entete style="min-width:70px;text-align: left;">Perso</div>
+					<div class=colonne_entete style="min-width:100px;text-align: left;">Action</div>
+					<div class=colonne_entete style="min-width:130px;text-align: left;">Lieu</div>
+					<div class=colonne_entete style="min-width:200px;text-align: left;">Cible</div>
+					<div class=colonne_entete style="text-align: left;">Début</div>
+					<div class=colonne_entete style="text-align: left;">Fin</div>
+					<div class=colonne_entete style="min-width:50px;text-align: left;">Jet</div>
+				</div>
+
+		{% for commande in qst_commande %}
+			
+			
+			<div class="{% cycle 'row1' 'row2' %}" >
+			
+			
+
+				<a href="javascript:afficheID('commande_{{commande.id}}','affiche')"><div id="affiche_commande_{{commande.id}}" class=colonne_ext><div class=texte_base>+</div></div></a>
+				<a href="javascript:afficheID('commande_{{commande.id}}','masque')"><div id="masque_commande_{{commande.id}}" class=colonne_ext style="display:none;"><div class=texte_base>-</div></div></a>
+
+				<div class=colonne style="min-width:8px;"><a href="/admin/forum/commande/{{commande.id}}/change/"nom_jeu><img src="{% static edit %}" width="10px" height="10px"></a></div>
+
+				<div class=colonne style="min-width:70px;"><div class=texte_base>{% if commande.dissimulation > 0 %}<div style="opacity:0.5;">{% else %}<div>{% endif %}<a href="/forum/perso/-{{joueur.id}}/{{commande.perso.id}}/">{{commande.perso.nom}}</a></div></div></div> 
+
+				<div class=colonne style="width:100px;"><div class=texte_base>
+					{% if commande.erreur %}<div style="color:#800;">{% elif not commande.commence %}<div style="color:#008;">{% elif not commande.fini %}<div style="color:#080;">{% else %}<div>{% endif %}{{commande.action.nom}}</div>
+				</div></div>
+
+				<div class=colonne style="width:130px;"><div class=texte_base><a href="/forum/lieu/-{{joueur.id}}/{{commande.lieu.id}}/1/1/1">{{commande.lieu.nom}}</a></div></div>
+				<div class=colonne style="width:200px;">
+				{% if commande.return_persos_cible != "" %}<div class=texte_base>{{commande.return_persos_cible}}</div>{% endif %}
+						{% if commande.return_lieux_cible != "" %}<div class=texte_base>{{commande.return_lieux_cible}}</div>{% endif %}
+						
+						{% if commande.champ_recherche1 or commande.champ_recherche2 %}
+							<div class=texte_base>
+							{% if commande.champ_recherche1 %}Champ1 : {{commande.champ_recherche1}}{% endif %}
+							{% if commande.champ_recherche2 %} - Champ2 : {{commande.champ_recherche2}}{% endif %}
+							</div>
+						{% endif %}
+
+						{% if commande.instant_heure or commande.instant_jour or commande.instant_mois %}
+							<div class=texte_base>
+							{% if commande.instant_heure %}{{commande.instant_heure}}h - {% endif %}
+							{% if commande.instant_jour %}{{commande.instant_jour}}/{% endif %}
+							{% if commande.instant_mois %}/{{commande.instant_mois}}{% endif %}
+							</div>
+						{% endif %}
+				</div>
+
+			{% if commande.commande_precede %}
+				<div class=colonne><div class=texte_base>{{commande.commande_precede.action.nom}}</div></div>
+			{% else %}
+				<div class=colonne><div class=texte_small>{{commande.return_date_debut}}</div></div>
+				<div class=colonne><div class=texte_small>{{commande.return_date_fin}}</div></div>
+				<div class=colonne style="min-width: 50px;">
+				{% if commande.jet > 0 %}
+				{% if commande.return_succes %}
+					<div class=texte_base style="color:#080;">{{commande.return_proba_succes}} <a href="/forum/modifJet/{{commande.id}}/fail/">-</a></div>
+				{% else %}
+					<div class=texte_base style="color:#800;">{{commande.return_proba_succes}} <a href="/forum/modifJet/{{commande.id}}/success/">+</a></div>
+				
+				{% endif %}
+				{% endif %}
+				</div>
+
+			{% endif %}
+
+				
+			</div>
+
+			<div id="commande_{{commande.id}}" class=msg_post>
+				<div class=msg_base align="left">
+					<div class=post_contenu style="padding:10px;">
+
+						<div class=texte_sstitre style="padding-bottom:5px;">Création : {{commande.return_date_created}} par {{commande.joueur.nom}}</div>
+
+						{% if commande.desc != "" %}
+							<div class=texte_sstitre>{{commande.desc}}</div>
+						{% endif %}
+
+						{% if commande.texte_post != "" %}
+							<div class=texte_base>{{commande.texte_post}}</div>
+						{% endif %}
+						{% if commande.champ_texte != "" %}
+							<br>
+							<div class=texte_base>{{commande.champ_texte}}</div>
+						{% endif %}
+
+
+					</div>
+				</div>
+			</div>
+
+		{% endfor %}
+		</div>
+	{% else %}
+	<div class=texte_base>Pas de commandes</div>
+	{% endif %}
+</div>
+
+
+{% endblock %}

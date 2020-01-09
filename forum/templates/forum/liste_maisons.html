@@ -1,0 +1,91 @@
+{% extends "forum\_base.html" %}
+{% block title %}LISTE DES MAISONS{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+
+{% block entete %}
+
+
+<div class=entete>
+	<div class=texte_surtitre>MAISONS</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+<div id=menu_haut>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/maisonsMJ/all/">/ Defaut</a></div>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/maisonsMJ/influence/">/ Influence</a></div>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/maisonsMJ/senateurs/">/ Sénateurs</a></div>
+	
+	<div class=bouton_menu_droite><a class=texte_bouton_menu href="#">Fold All</a></div>
+	<div class=bouton_menu_droite><a class=texte_bouton_menu href="#">UnFold All</a></div>
+				
+</div>
+
+
+<div class=msg_main_block align="left">
+	<!--<div class=msg_titre><div class=texte_titre>JOUEUR</div></div>-->
+	
+	{% if qst_maison %}
+		<div class=tableau>
+				<div class=row_entete style="display: flex;">
+					<div class=colonne_puce></div>
+					<div class=colonne_entete style="text-align: left;">Maison</div>
+					<div class=colonne_entete style="text-align: left;">Sénateur</div>
+					<div class=colonne_entete style="text-align: left;">Prestige</div>
+					<div class=colonne_entete style="text-align: left;">% Prestige</div>
+					<div class=colonne_entete style="text-align: left;">Influence</div>
+					<div class=colonne_entete style="text-align: left;">Nb sénateurs</div>
+				</div>
+		{% for maison in qst_maison %}
+			
+			<div class="{% cycle 'row1' 'row2' %}">
+				
+				<div class=colonne>
+					<div class=texte_base>
+						<a href="/admin/forum/maison/{{maison.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a> 
+						{{maison.nom}}
+					</div>
+				</div> 
+				<div class=colonne><div class=texte_base>{{maison.senateur.nom}}</div></div>
+				<div class=colonne><div class=texte_base>{{maison.prestige}}</div></div>
+				<div class=colonne><div class=texte_base>{{maison.pct_prestige}}</div></div>
+				<div class=colonne><div class=texte_base>{{maison.influence}}</div></div>
+				<div class=colonne><div class=texte_base>{{maison.nb_voix_senat}}</div></div>
+
+				
+			</div>
+
+			<!--<div id="msg_joueur_{{msg_joueur.id}}" class=msg_post>
+				<div class=msg_base align="left">
+					<div class=post_contenu align="right">
+					<div class=post_contenu_texte>{{msg_joueur.texte|safe|linebreaksbr}}</div>
+				</div>
+				</div>
+			</div>-->
+
+		{% endfor %}
+		</div>
+	{% else %}
+	<div class=texte_base>Pas de maisons</div>
+	{% endif %}
+</div>
+
+
+{% endblock %}

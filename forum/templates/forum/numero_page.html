@@ -1,0 +1,13 @@
+<div id=num_page class=liste_num_page align=right>
+	{% for num in T_page %}
+		{% if num == '...' %}
+		<div class=texte_base style="display:inline-flex;">...</div>
+		{% else %}
+			{% if num == num_page %}
+				<div class=num_page style="opacity: 0.5;">{{num}}</div>
+			{% else %}
+				<a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action.id}}{% if option != ''%}:{{option}}{% endif %}/{{num}}#post_action"><div class=num_page>{{num}}</div></a>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+</div>

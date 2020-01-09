@@ -1,0 +1,159 @@
+{% extends "forum\_base.html" %}
+{% block title %}LISTE DES LIEUX{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+{% endblock %}
+
+{% block style %}
+#total{min-width:1000px;}
+{% endblock %}
+
+
+{% block entete %}
+
+
+
+<div class=entete>
+	<div class=texte_surtitre>LIEUX</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+<div id=menu_haut>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/lieuxMJ/all/">Par Quartier</a></div>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/lieuxMJ/maison/">Par Maison</a></div>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/lieuxMJ/nbperso/">Par nbPerso</a></div>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/lieuxMJ/nbpost/">Par nbPost</a></div>
+	
+	<div class=bouton_menu_droite><a class=texte_bouton_menu href="/forum/lieuxMJ/inactive/">Inactifs</a></div>
+				
+</div>
+
+
+<div class=msg_main_block align="left">
+	<!--<div class=msg_titre><div class=texte_titre>JOUEUR</div></div>-->
+	
+	{% if qst_lieu %}
+		<div class=tableau>
+				<div class=row_entete style="display: flex;">
+					<div class=colonne_puce></div>
+					<div class=colonne_entete style="width:200px;">Lieu</div>
+					<div class=colonne_entete style="width:100px;">Maison</div>
+					<div class=colonne_entete style="min-width:40px;">Defense</div>
+					<div class=colonne_entete>Gardes/Troupes</div>
+					<div class=colonne_entete></div>
+					<div class=colonne_entete style="min-width:20px;">persos</div>
+					<div class=colonne_entete style="min-width:20px;">posts</div>
+					<div class=colonne_entete>Dernier Post</div>
+				</div>
+
+
+		{% if filtre == "maison" %}{% regroup qst_lieu by maison.nom as T_categories %}
+		{% elif filtre == "nbperso" %}{% regroup qst_lieu by return_nb_perso_present as T_categories %}
+		{% elif filtre == "all" %}{% regroup qst_lieu by return_lieu_parent as T_categories %}
+		{% else %}{% regroup qst_lieu by active as T_categories %}
+		{% endif %}
+
+
+		{% for categorie in T_categories %}
+			<div>
+				{% if T_categories|length > 1 %}<div class=titre_tableau><div class=texte_titre>{{ categorie.grouper }}</div></div>{% endif %}
+
+				{% for lieu in categorie.list %}
+
+					<div class="{% cycle 'row1' 'row2' %}">
+						
+						<!--<div class=colonne><div class=texte_base>{{lieu.listejoueur}}</div></div>-->
+						<div class=colonne_puce>
+							
+						
+
+						<a href="javascript:afficheID('lieu_{{lieu.id}}','affiche')"><div id="affiche_lieu_{{lieu.id}}" class=colonne_ext><div class=texte_base>
+							{% if lieu.ferme %}<div class=puce style="background-color: #800;"></div>
+							{% else %}<div class=puce style="background-color: #080;"></div>
+							{% endif %}
+						
+
+						</div></div></a>
+						<a href="javascript:afficheID('lieu_{{lieu.id}}','masque')"><div id="masque_lieu_{{lieu.id}}" class=colonne_ext style="display:none;"><div class=texte_base>
+							{% if lieu.ferme %}<div class=puce style="background-color: #800;"></div>
+							{% else %}<div class=puce style="background-color: #080;"></div>
+							{% endif %}
+						
+
+						</div></div></a>
+
+						</div>
+
+						<div class=colonne style="width:190px;"><div class=texte_base><a href="/admin/forum/lieu/{{lieu.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a> <a href="/forum/lieu/{{lieu.id}}/">{{lieu.nom}}</a></div></div>
+						<div class=colonne><div class=texte_base>{{lieu.maison.nom}}</div></div>
+						<div class=colonne style="min-width:40px;"><div class=texte_small>{{lieu.piege}}-{{lieu.defense_intrusion}}-{{lieu.defense_assault}}</div></div>
+						<div class=colonne><div class=texte_small>G:{{lieu.nbgarde}}/{{lieu.nbgarde_max}} - T:{{lieu.nbtroupe}}/{{lieu.nbtroupe_max}}</div></div>
+						<div class=colonne><div class=texte_small>{% if lieu.secret %}Secret{% elif lieu.inconnu %}Inconnu{% endif %}</div></div>
+						<div class=colonne style="min-width:20px;"><div class=texte_base align=center>{{lieu.return_nb_perso_present}}</div></div>
+						<div class=colonne style="min-width:20px;"><div class=texte_base align=center>{{lieu.return_nb_post}}</div></div>
+						<div class=colonne><div class=texte_small>{{lieu.return_last_post.created_date}} - {{lieu.return_last_post.perso.nom}}</div></div>
+						
+						
+					</div>
+
+					<div id="lieu_{{lieu.id}}" class=msg_post>
+						<div class=msg_base align="left">
+							<div class=post_contenu>
+								<div class=texte_base>Hôte : <b>{{lieu.get_hote.nom}}</b></div>
+								<div class=texte_base>Le lieu est un espace <b>{% if lieu.espace %}ouvert{% else %}clos{% endif %}</b></div>
+								<div class=texte_base>Le lieu est <b>{% if lieu.ferme %}fermé{% else %}ouvert{% endif %}</b>{% if lieu.ferme %} - Invités : <b>{{lieu.return_invites}}</b>{% endif %}</div>
+
+								{% if lieu.inconnu %}<div class=texte_base>Le lieu est <b>Inconnu</b>. Il a été découvert par <b>{{lieu.return_user_connaissants_inconnu}}</b></div>{% endif %}
+								{% if lieu.secret %}<div class=texte_base>Le lieu est <b>Secret</b>. Il a été découvert par <b>{{lieu.return_user_connaissants_secret}}</b></div>{% endif %}
+
+								<br>
+								{% if lieu.return_ateliers != "" %}
+								<div class=texte_base>Atelier : <b>{{lieu.return_ateliers}}</b></div>
+								{% endif %}
+								<div class=texte_base>Passages : </div>
+								<div class=texte_small>{% for passage in lieu.get_passages %}{{passage.nom}}<br>{% endfor %}</div><br>
+								
+								<div class=texte_small>Piège : {{lieu.piege}}</div>
+								<div class=texte_small>Défense Intrusion : {{lieu.defense_intrusion}}</div>
+								<div class=texte_small>Défense Assaut : {{lieu.defense_assault}}</div>
+								<div class=texte_small>Gardes : {{lieu.nbgarde}}/{{lieu.nbgarde_max}}</div>
+								<div class=texte_small>Troupes : {{lieu.nbtroupe}}/{{lieu.nbtroupe_max}}</div>
+								{% if lieu.lieu_recherche.all %}<br><div class=texte_base>Resultats : </div>
+								{% endif %}
+								{% for r in lieu.lieu_recherche.all %}
+									{% if r.active and not r.fini %}<div class=texte_small><a href="/admin/forum/resultat/{{r.id}}/change/" target="_blank">{{r}}</a></div>{% endif %}
+								{% endfor %}
+								<br>
+								<div class=texte_small>{{lieu.description}}</div>
+								<br>
+								
+							</div>
+						</div>
+					</div>
+
+				{% endfor %}
+			</div>
+		
+		{% endfor %}
+		</div>
+	{% else %}
+	<div class=texte_base>Pas de lieux</div>
+	{% endif %}
+</div>
+
+
+{% endblock %}

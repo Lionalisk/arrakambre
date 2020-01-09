@@ -1,0 +1,207 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+	background-color: #000;
+}
+a {
+	text-decoration: none;
+	color: #422;
+}
+td {
+	Vertical-Align: Top;
+}
+
+textarea{
+	background-color: #fff5e9;
+	border: 1px Solid #422;
+	padding-left : 3px;
+	color : #422;
+	width:90%;
+}
+
+input[type=text]{
+	background-color: #fff5e9;
+	padding-left : 3px;
+	border: 1px Solid #422;
+	color : #422;
+	width : 90%;
+	margin-bottom : 5px;
+}
+
+input[type=password]{
+	background-color: #fff5e9;
+	padding-left : 3px;
+	border: 1px Solid #422;
+	color : #422;
+	width : 90%;
+	margin-bottom : 5px;
+}
+
+input[type=submit] {
+	background-color: #422;
+	border: 3px Solid #422;
+	color: #fec;
+}
+select{
+	background-color: #fff5e9;
+	padding-left : 3px;
+	border: 1px Solid #422;
+	color : #422;
+	width : 91%;
+	margin-bottom : 5px;
+}
+
+
+#total{
+	
+	/*Background-image:url("../../../static/forum/img/parchemin.jpg");*/
+	background-repeat:repeat;
+	background-color: #b8a186;
+	width: 85%;/*80*/
+	min-width: 550px;
+	max-width : 1000px;
+	margin: auto;
+	
+	Margin-Top: 25px;
+	
+}
+
+#entete{
+	
+}
+.entete{
+	display: table;
+	margin-left: 5%;
+	margin-right: 5%;
+	width : 90%;
+}
+
+#main{
+	/*background-color: #cfc6b5;*/
+	display:table;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top:20px;
+	width : 90%;
+	
+	Border-Style: Solid;
+	Border-Width: 1pt;
+	Border-Color: #753;
+	padding-bottom: 15px;
+	/*min-height: 600px;*/
+}
+
+
+#footer {
+	margin-left: 10%;
+	margin-right: 10%;
+	height: 30px;
+}
+
+
+.block_image {
+	display:inline-block;
+}
+
+.img_perso {
+	width: 82px;
+	height: 90px;
+	/*background-image: url("../img/persos/tir_arkhos.jpg");*/
+}
+
+.img_perso_small {
+	width: 61px;
+	height: 69px;
+	background-size: 105%;
+}
+.img_perso_Xsmall {
+	width: 41px;
+	height: 45px;
+	background-size: 105%;
+}
+
+.colonne_competence {
+	display:inline-block;
+	padding-left:20px;
+	vertical-align:top;
+	min-width:100px;
+}
+
+
+.liste_num_page {
+	padding : 3px;
+}
+
+.num_page {
+	display : inline-flex;
+	margin : 0px;
+	padding-top : 1px;
+	padding-bottom : 1px;
+	padding-left : 2px;
+	padding-right : 2px;
+	background-color : #410;
+	color : #987;
+	height : 14px;
+	/*min-width : 9px;*/
+	vertical-align : middle;
+	Font-Size: 9pt;
+	Font-Weight: Bold;
+	Border: Solid 1pt #410;
+}
+
+.texte_surtitre{
+	display : block;
+	text-align: left;
+	Font-family: Fantasy;
+	/*Font-Weight: Bold;*/
+	Font-Size: 14pt;
+	color: #410;
+	
+}
+
+.texte_titre {
+	Font-Weight: Bold;
+	text-align: left;
+	Font-Size: 12pt;
+	color: #521;
+	Opacity: 0.9;
+	text-decoration: none;
+}
+
+.texte_sstitre {
+	/*padding-top:2px;*/
+	text-align: left;
+	Font-Weight: Bold;
+	Font-Size: 9pt;
+	color: #521;
+	Opacity: 0.8;
+}
+
+.texte_base{
+	/*padding-top : 10px;*/
+	text-align: left;
+	Font-Size: 9pt;
+	color: #332;
+	Opacity: 0.8;
+}
+.texte_small{
+	/*padding-top : 10px;*/
+	text-align: left;
+	Font-Size: 8pt;
+	color: #443;
+	Opacity: 0.7;
+}
+
+
+.barre_progress{
+	Border : Solid 1pt #410;
+	display : table;
+	
+}
+.barre_progress_encours{
+	background-color: #c82;
+	height:10px;
+}
+.barre_progress_OK{
+	background-color: #080;
+	height:10px;
+}

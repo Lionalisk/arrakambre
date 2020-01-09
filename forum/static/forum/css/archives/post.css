@@ -1,0 +1,157 @@
+
+
+
+#post_liste{
+	display: table;
+	margin-top:15px;
+	width : 100%;
+}
+
+
+/* INFOS du PERSO qui post*/
+
+
+.post_perso {
+	min-width : 120px;
+	padding: 6px;
+}
+
+
+.post_perso_info{
+	padding-top:1px;
+	padding-right:5px;
+	padding-bottom:5px;
+	padding-left:2px;
+}
+
+.post_perso_blocktexte{
+	padding-top:3px;
+	padding-bottom:1px;
+}
+
+
+
+
+/* POSTS */
+
+
+
+.post {
+	display:table;
+	padding-top: 12px;
+	padding-left: 12px;
+	padding-right: 12px;
+	padding-bottom: 0px;
+	width : 95%;
+}
+
+.post_base {
+	display:inline-flex;
+	width: 100%;
+	/*background-color: #beaf9e;*/
+	Border: 1pt Solid #665;
+	
+	/*min-height: 120px;*/
+}
+
+.texte_typeinfo{
+	padding-top:2px;
+	text-align: left;
+	Font-Size: 10pt;
+	color: #521;
+	Opacity: 0.8;
+	padding : 10px;
+}
+
+
+.post_base_typesys {
+	display:inline-flex;
+	width: 100%;
+	background-color: #dab094;
+	Border-Width: 1pt;
+	Border-Style: Solid;
+	Border-Color: #754;
+	
+	/*min-height: 120px;*/
+}
+.texte_typesys{
+	padding-top:2px;
+	text-align: left;
+	Font-Size: 9pt;
+	color: #610;
+	Opacity: 0.8;
+	padding : 10px;
+}
+
+
+.post_contenu {
+	display : inline-table;
+	Border-left: 0pt Solid #665;
+	/*background-color: #aaf;*/
+	padding:5px;
+	min-height: 130px;
+	width:100%;
+	position:relative;
+	/*margin-right:10%;*/
+}
+
+.post_contenu_texte{
+	display : table;
+	padding: 5px;
+	text-align: left;
+	Font-Size: 10pt;
+	color: #221;
+	width:100%;
+	/*min-height: 90px;*/
+	
+}
+
+.post_signature{
+	text-align: right;
+	Font-Size: 8pt;
+	color: #864;
+	margin-top: 20px;
+	vertical-align:bottom;
+	
+}
+
+.post_footer {
+	
+	text-align: right;
+	height: 8px;
+	Font-Size: 9pt;
+	color: #221;
+	padding: 2px;
+	opacity:0.6;
+	
+}
+
+.quote{
+	display: block;
+	padding:10px;
+	margin-bottom:10px;
+	margin-right : 10px;
+	Border: 1pt Solid #987;
+	background-color: #CAB8A0;
+	color: #422;
+}
+
+/* INDICATION POUR MJ EN FOOTER */
+
+.post_indicMJ{
+	display : inline-flex;
+	text-align: right;
+	
+	vertical-align:top;
+}
+
+.post_indicMJ_texte{
+	Font-Size: 8pt;
+	color: #642;
+	margin-top: 2px;
+	margin-right: 10px;
+}
+
+
+
+

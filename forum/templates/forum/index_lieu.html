@@ -1,0 +1,96 @@
+{% extends "forum\_base.html" %}
+{% block title %}LIEUX{{ lieu.nom }}{% endblock %}
+
+{% load static %}
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\index.css' %}">
+{% endblock %}
+
+{% block style %}
+.index_lieu_elt_encart {Background-image:url("{% static "forum\\"|add:nom_jeu|add:"\img\fond1.png" %}");}
+{% endblock %}
+
+
+{% block entete %}
+
+
+<div class=entete>
+	<div class=texte_surtitre>CARTE D'ARRAKAMBRE</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+{% endblock %}
+
+
+
+
+{% block main %}
+
+<div id=index_lieux align="left">
+			
+			{% for lieu in list_lieux %}
+			{% with 'forum/'|add:nom_jeu|add:'/img/lieu/'|add:lieu.image|add:'.jpg' as imgPath %}
+			{% if not lieu.lieu_parent %}<div  align=center><img src="{% static separateur_h %}"></div>{% endif %}
+			<div class=index_lieu_elt>
+				
+				<div class=index_lieu_elt_separateur>
+				{% if lieu.lieu_parent %}
+					<img src="{% static separateur_parent %}">
+					{% if lieu.lieu_parent.lieu_parent %}
+						<img src="{% static separateur_parent %}">
+						{% if lieu.lieu_parent.lieu_parent.lieu_parent %}
+							<img src="{% static separateur_parent %}">
+							{% if lieu.lieu_parent.lieu_parent.lieu_parent.lieu_parent %}
+								<img src="{% static separateur_parent %}">
+								{% if lieu.lieu_parent.lieu_parent.lieu_parent.lieu_parent %}
+									<img src="{% static separateur_parent %}">
+								{% endif %}
+							{% endif %}
+						{% endif %}
+					{% endif %}
+				{% endif %}
+				
+				</div>
+				<div class=index_lieu_elt_encart>
+					<div class=index_lieu_elt_img align="left"><a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/1/1/1"><img src="{% static imgPath %}" width="82px" height="90px" border="1px"></a></div>
+					
+					<div class=index_elt_info>
+						<div class=texte_titre>
+							<a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/1/1/1">{{lieu.nom}}</a>
+							{% if joueur.statut == "MJ" %}
+								<a href='/admin/forum/lieu/{{lieu.id}}/change/' target="_blank"><img src="{% static edit %}" width="15" height="15"></a>
+							{% endif %}
+						</div>
+						<div class=texte_sstitre>{{lieu.maison.nom}}</div>
+						
+						<div class=texte_base>
+						Lieu public<br>
+						Gardes : {{lieu.nbgarde}}<br>
+						</div>
+					</div>
+					
+					
+					<!--<img src="..\..\static\forum\\"|add:nom_jeu|add:"\img\separateur_v.png" style="display:inline-table;">-->
+
+					<div class=index_elt_info_lieu>
+						
+						<div class=texte_titre>Activités</div>
+						<div class=texte_sstitre>Dernières actions :</div>
+						<div class=texte_base>
+							{% for post in list_derniers_posts %}
+								{% if post.lieu.id == lieu.id %}
+									{{post.date_jeu}} : {{post.perso.nom}}
+									<!--{{post.created_date|date:"G:i-j/m"}} : {{post.perso.nom}}-->
+								{% endif %}
+							{% endfor %}
+							
+						</div>	
+					</div>
+				</div>
+			</div>
+
+			
+			{% endwith %}
+			{% endfor %}
+		</div>
+
+{% endblock %}

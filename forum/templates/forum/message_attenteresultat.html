@@ -1,0 +1,73 @@
+{% load static %}
+	{% if TT_resultat_attente|length > 0 %}
+	<div class=msg_main_block align="left">
+		<div class=msg_titre><div class=texte_titre>NEED RESULTAT</div></div>
+
+		
+			<div id="message" class=tableau>
+					<div class=row_entete>
+						<!--
+						<div class=colonne_entete_gauche style="margin-left:30px;Font-Weight:Bold;"><div class=texte_entete>De :</div></div>
+						<div class=colonne_entete_gauche style="Font-Weight:Bold;"><div class=texte_entete>Titre</div></div>
+						<div class=colonne_entete_droite><a class=texte_bouton_menu align=center href="#message" onclick="affiche_allID('masque')">Fold All</a></div>
+						<div class=colonne_entete_droite><a class=texte_bouton_menu align=center href="#message" onclick="affiche_allID('affiche')">Unfold All</a></div>
+						-->
+					</div>
+			{% for T_resultat_attente in TT_resultat_attente %}
+				
+				<div class="{% cycle 'row1' 'row2' %}" {% if resultat_attente in T_msg_nonlu %}style="Font-Weight: Bold;"{% endif %}>
+					
+					<a href="#affiche_resultat_attente_{{T_resultat_attente.0.id}}" onclick="afficheID('resultat_attente_{{T_resultat_attente.0.id}}','affiche')"><div id="affiche_resultat_attente_{{T_resultat_attente.0.id}}" class=colonne_ext><div class=texte_base>+</div></div></a>
+					
+					<a href="#affiche_resultat_attente_{{T_resultat_attente.0.id}}" onclick="afficheID('resultat_attente_{{T_resultat_attente.0.id}}','masque')"><div id="masque_resultat_attente_{{T_resultat_attente.0.id}}" class=colonne_ext style="display:none;"><div class=texte_base>-</div></div></a>
+					
+					<div class=colonne><div class=texte_base>{{T_resultat_attente.0.perso.nom}}</div></div>
+					<div class=colonne><div class=texte_base>{{T_resultat_attente.0.action.nom}}</div></div> 
+					<div class=colonne><div class=texte_base>{{T_resultat_attente.0.lieu.nom}}</div></div>
+					<div class=colonne style="min-width:30px;"><div class=texte_base>{{T_resultat_attente.0.bonus_reussite}}</div></div>
+					<div class=colonne style="min-width:150px;"><div class=texte_base>{{T_resultat_attente.0.date_fin}}</div></div>
+
+					<div class=colonne id="affiche_choix_resultat_{{T_resultat_attente.0.id}}"><div class=texte_base><a href="#affiche_choix_resultat_{{T_resultat_attente.0.id}}" onclick="afficheID('choix_resultat_{{T_resultat_attente.0.id}}','affiche')">Choix Resultat</a></div></div>
+					<div class=colonne id="masque_choix_resultat_{{T_resultat_attente.0.id}}" style="display:none;"><div class=texte_base><a href="#masque_choix_resultat_{{T_resultat_attente.0.id}}" onclick="afficheID('choix_resultat_{{T_resultat_attente.0.id}}','masque')">Choix Resultat</a></div></div>
+					
+
+					<div style="width:100%;" align="right"><a href="/forum/lierResultat/new/{{T_resultat_attente.0.id}}/"><img title="Créer un nouveau résultat" alt="Créer un nouveau résultat" src="{% static edit %}" width="15" height="15"></a></div>
+					<div style="width:100%;" align="right"><a href="/forum/lierResultat/0/{{T_resultat_attente.0.id}}/"><img src="{% static delete %}" width="15" height="15"></a></div>
+
+				</div>
+
+				<div id="choix_resultat_{{T_resultat_attente.0.id}}" class=msg_post>
+					<div class=msg_base align="left">
+						<div class=post_contenu align="left">
+							{% for choix_resultat in T_resultat_attente.1 %}
+							<div class=post_contenu_texte>
+								<a href="/forum/lierResultat/{{choix_resultat.id}}/{{T_resultat_attente.0.id}}/">
+								{{choix_resultat}}
+								</a>
+							</div>
+							{% endfor %}
+							
+						</div>
+					</div>
+				</div>
+
+				<div id="resultat_attente_{{T_resultat_attente.0.id}}" class=msg_post>
+					<div class=msg_base align="left">
+						<div class=post_contenu align="left">
+							<div class=post_contenu_texte>{{T_resultat_attente.0.texte_post|safe|linebreaksbr}}</div>
+							<div class=post_contenu_texte>####</div>
+							<div class=post_contenu_texte>{{T_resultat_attente.0.champ_texte|safe|linebreaksbr}}</div>
+						</div>
+					</div>
+				</div>
+
+			{% endfor %}
+			</div>
+		
+		
+</div>
+<div><img src="{% static separateur_h %}"></div>
+
+{% else %}
+		<!--<div class=texte_base>Pas de message</div>-->
+{% endif %}

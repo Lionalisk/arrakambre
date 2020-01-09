@@ -1,0 +1,101 @@
+{% load static %}
+	{% if not perso_joueur.commande_attente %}
+		{% if perso_joueur.id != 1 %}
+		<div class=post_action_liste>
+
+			{% regroup list_action by categorie as T_categories %}
+			{% for catego in T_categories %}
+				<!--{% if T_categories|length > 1 and catego.grouper.priorite > 1 %}<div class=post_action_item><br></div>{% endif %}-->
+				<div class=post_action_categorie>
+					{% for action_item in catego.list %}
+						{% if action_item == action %}
+						<div class=post_action_item style="opacity:0.2;">{{ action_item.nom }}</div>
+						{% else %}
+							{% if programme %}
+							<div class=post_action_item><a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action_item.id}}:prog/1#perso_present">{{ action_item.nom }}</a></div>
+							{% else %}
+							<div class=post_action_item><a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action_item.id}}/1#perso_present">{{ action_item.nom }}</a></div>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				</div>
+			{% endfor %}
+			{% if perso_joueur.occupe and perso_joueur.lieu_cible_connu %}
+				<br>
+				<img src="{% static separateur_h %}" width="100" height="20">
+				<div class=post_action_categorie>
+					<div class=post_action_item><a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/1:prog/1#perso_present">ACTION SUIVANTE</a></div>
+				</div>
+				
+			{% endif %}
+			</div>
+
+		{% endif %}
+		
+		<div class=post_formulaire>
+			<a href="#action"><div id=affiche_help class=texte_titre style="margin-top:3px;margin-bottom:8px;margin-left:5px;" onclick="afficheID('help','affiche')"><img src="{% static help %}" width="15" height="15">{{action.nom}}</div></a>
+			<a href="#action"><div id=masque_help class=texte_titre style="margin-top:3px;margin-bottom:8px;margin-left:5px;display:none;" onclick="afficheID('help','masque')"><img src="{% static help %}" width="15" height="15">{{action.nom}}</div></a>
+			<div id=help style="display:none;">
+				{{action.return_html_desc|safe|linebreaksbr}}
+			</div>
+			{% if perso_joueur.occupe %}
+				{% for c in perso_joueur.liste_commandes_programmes %}
+				<div class=texte_sstitre style="margin-left:5px;">{{ c.return_recap|safe|linebreaksbr }}</div><br>
+				{% endfor %}
+			{% endif %}
+			{% if perso_joueur.occupe %}<div class=texte_sstitre>{{ perso_joueur.desc_occupe|safe|linebreaksbr }}<br><br></div>{% endif %}
+			<form method="POST" class="post-form" name="form_action">{% csrf_token %}
+				
+						
+				{% if action.options %}<div class=post_verbose_form >Options :<br>{{ form.option_action }}</div>{% endif %}
+				
+				{% if action.cible_perso %}<div class=post_verbose_form >{{ action.cible_perso_verbose }}<br>{{ form.perso_cible }}</div>{% endif %}
+				{% if action.cible_persos %}<div class=post_verbose_form >{{ action.cible_persos_verbose }}<br>{{ form.persos_cible }}</div>{% endif %}
+				{% if action.cible_lieu %}<div class=post_verbose_form >{{ action.cible_lieu_verbose }}<br>{{ form.lieu_cible }}</div>{% endif %}
+				{% if action.cible_lieux %}<div class=post_verbose_form >{{ action.cible_lieux_verbose }}<br>{{ form.lieux_cible }}</div>{% endif %}
+				
+				{% if action.cible_resultat %}<div class=post_verbose_form >{{ action.cible_resultat_verbose }}<br>{{ form.resultat_cible }}</div>{% endif %}
+				{% if action.cible_posture %}<div class=post_verbose_form >{{ action.cible_posture_verbose }}<br>{{ form.posture_cible }}</div>{% endif %}
+
+				{% if action.champ_recherche1 %}<div class=post_verbose_form>{{ action.champ_recherche1_verbose }}<br>{{ form.champ_recherche1 }}</div>{% endif %}
+				{% if action.champ_recherche2 %}<div class=post_verbose_form>{{ action.champ_recherche2_verbose }}<br>{{ form.champ_recherche2 }}</div>{% endif %}
+				{% if action.champ_texte %}<div class=post_verbose_form>{{ action.champ_texte_verbose }}<br>{{ form.champ_texte }}</div>{% endif %}
+				
+				{% if action.cible_instant %}<div class=post_verbose_form>{{ action.cible_instant_verbose }}<br><div class=post_form_integer>heure : {{ form.heure_cible }}</div><div class=post_form_integer>jour : {{ form.jour_cible }}</div> <div class=post_form_mois>Mois : {{ form.mois_cible }}</div></div>{% endif %}
+				
+				{% if action.post_OK %}<div class=post_form_champTexte>{{ form.texte }}</div>{% endif %}
+				
+				<div class=boutons_balise>
+					<div class=bouton_balise2><a href="javascript:insertAtCursor('b')"><div class=bouton_balise><b>B</b></div></a></div>
+					<div class=bouton_balise2><a href="javascript:insertAtCursor('i')"><div class=bouton_balise><i>I</i></div></a></div>
+					<div class=bouton_balise2><a href="javascript:insertAtCursor('u')"><div class=bouton_balise><u>U</u></div></a></div>
+					<div class=bouton_balise2><a href="javascript:insertAtCursor('span class=red')"><div class=bouton_balise><span class=red>red</span></div></a></div>
+					{% for langage in perso_joueur.get_langage_parle %}
+						<div class=bouton_balise2><a href="javascript:insertAtCursor('{{langage.nom_info}}')"><div class=bouton_balise>{{langage.nom_info}}</div></a></div>
+					{% endfor %} 
+				</div>
+
+				<div>
+					{% if action.implique_objet %}
+					<input type="submit" class="save_btn" value="{{ action.nom }} {{ objet.obj.nom }}">
+					{% else %}
+					<input type="submit" class="save_btn" value="{{ action.nom }}">
+					{% endif %}
+					
+				</div>
+
+			
+			</form>
+		
+		</div>
+
+	{% else %}
+			{% if perso_joueur.commande_attente.post %}
+			{% include "forum\post.html" with post=perso_joueur.commande_attente.post %}
+			{% endif %}
+			<div style="position: block; margin-right:5px;margin-top:15px;height:100%;">
+			<div><a href="/forum/modifCommande/-{{joueur.id}}/{{perso_joueur.commande_attente.id}}/validation/"><img src="{% static validation %}" width="30" height="30"></a></div>
+			<div><a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{perso_joueur.commande_attente.action.id}}:editable/1#perso_present"><img src="{% static edit %}" width="30" height="30"></a></div>
+			<div><a href="/forum/modifCommande/-{{joueur.id}}/{{perso_joueur.commande_attente.id}}/annulation/"><img src="{% static delete %}" width="30" height="30"></a></div>
+			</div>
+	{% endif %}

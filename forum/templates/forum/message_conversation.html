@@ -1,0 +1,54 @@
+{% load static %}
+	
+	<div id=menu_haut style="margin-top:1px;opacity: 0.85;">
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/messagerie/-{{joueur.id}}/{{perso_id}}/reception/">Reception</a></div>
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/messagerie/-{{joueur.id}}/{{perso_id}}/envoi/">Envoi</a></div>
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/messagerie/-{{joueur.id}}/{{perso_id}}/all/">All</a></div>
+	</div>
+
+
+	<div class=msg_main_block align="left">
+		<div class=msg_titre>
+			<div class=texte_titre>CONVERSATIONS - {{filtre|upper}}</div>
+			<div class=texte_titre>{% if perso_id == 1 %}Tous Personnages{% else %}{{perso.nom}}{% endif %}</div>
+		</div>
+		{% for p in qst_persos_du_joueur %}
+			<a href="/forum/messagerie/-{{joueur.id}}/{{p.id}}/{{filtre}}/">
+				<div class=block_image>{% include "forum\img_perso.html" with perso=p size="XS" %}</div>
+			</a>
+		{% endfor %}
+
+		{% if qst_msg_perso %}
+			<div id="msg_personnage" class=tableau>
+					<div class=row_entete>
+						<div class=colonne_entete_gauche style="margin-left:30px;Font-Weight:Bold;"><div class=texte_entete>De :</div></div>
+						<div class=colonne_entete_gauche style="Font-Weight:Bold;"><div class=texte_entete>A :</div></div>
+						<div class=colonne_entete_droite><a class=texte_bouton_menu align=center href="#msg_personnage" onclick="affiche_allID('masque')">Fold All</a></div>
+						<div class=colonne_entete_droite><a class=texte_bouton_menu align=center href="#msg_personnage" onclick="affiche_allID('affiche')">Unfold All</a></div>
+					</div>
+			{% for msg_perso in qst_msg_perso %}
+				<div class="{% cycle 'row1' 'row2' %}">
+					<div id="affiche_msg_post_{{msg_perso.id}}" class=colonne_ext><div class=texte_base><a href="#affiche_msg_post_{{msg_perso.id}}" onclick="afficheID('msg_post_{{msg_perso.id}}','affiche')">+</a></div></div>
+					<div id="masque_msg_post_{{msg_perso.id}}" class=colonne_ext style="display:none;"><div class=texte_base><a href="#affiche_msg_post_{{msg_perso.id}}" onclick="afficheID('msg_post_{{msg_perso.id}}','masque')">-</a></div></div>
+					<div class=colonne><div class=texte_base>{{msg_perso.perso.nom}}</div></div> 
+					<div class=colonne>
+						{% for perso_cible in msg_perso.persos_cible.all %}
+							<div class=texte_base> {{perso_cible.nom}}</div>
+						{% endfor %}
+					</div>
+					<div class=colonne><div class=texte_base>{{msg_perso.date_jeu}}</div></div>
+					<div class=colonne><div class=texte_base>{{msg_perso.lieu.nom}}</div></div> 
+					<!--<div class=colonne><a href="#" onclick="deletePost('/forum/MaskPost/{{lieu.id}}/{{post.id}}')"><img src="{% static delete %}" width="15" height="15"></a></div> -->
+
+				</div>
+
+				<div id="msg_post_{{msg_perso.id}}" class=msg_post>
+					{% include "forum\post.html" with post=msg_perso %}
+				</div>
+
+			{% endfor %}
+			</div>
+		{% else %}
+		<div class=texte_base>Pas de message</div>
+		{% endif %}
+	</div>

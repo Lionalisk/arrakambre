@@ -1,0 +1,81 @@
+
+/* MENU DEROULANT 1 */
+
+#menu_deroulant_spe_1{
+}
+#menu_deroulant_spe_1 label{
+    cursor:pointer;
+}
+/* le bloc n'est pas visible lorsque la checkbox n'est pas cochée */
+#my-block_spe_1{
+    display: none;
+	position : absolute;
+	background-color: #302010;
+    margin-top:4px;
+	padding-top:10px;
+	padding-bottom:4px;
+	width:68px;
+	opacity:0.8;
+}
+/* le bloc est visible lorsque la checkbox est cochée */
+#toggle-block_spe_1:checked + #my-block_spe_1{
+   display: block;
+}
+
+#toggle-block_spe_1 input{
+   display: none;
+}
+
+/* MENU DEROULANT 2 */
+
+#menu_deroulant_spe_2{
+}
+#menu_deroulant_spe_2 label{
+    cursor:pointer;
+}
+/* le bloc n'est pas visible lorsque la checkbox n'est pas cochée */
+#my-block_spe_2{
+    display: none;
+	position : absolute;
+	background-color: #302010;
+    margin-top:4px;
+	padding-top:10px;
+	padding-bottom:4px;
+	width:68px;
+	opacity:0.8;
+}
+/* le bloc est visible lorsque la checkbox est cochée */
+#toggle-block_spe_2:checked + #my-block_spe_2{
+   display: block;
+}
+
+#toggle-block_spe_2 input{
+   display: none;
+}
+
+/* MENU DEROULANT 3 */
+
+#menu_deroulant_spe_3{
+}
+#menu_deroulant_spe_3 label{
+    cursor:pointer;
+}
+/* le bloc n'est pas visible lorsque la checkbox n'est pas cochée */
+#my-block_spe_3{
+    display: none;
+	position : absolute;
+	background-color: #302010;
+    margin-top:4px;
+	padding-top:10px;
+	padding-bottom:4px;
+	width:68px;
+	opacity:0.8;
+}
+/* le bloc est visible lorsque la checkbox est cochée */
+#toggle-block_spe_3:checked + #my-block_spe_3{
+   display: block;
+}
+
+#toggle-block_spe_3 input{
+   display: none;
+}

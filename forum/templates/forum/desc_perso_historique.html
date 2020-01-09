@@ -1,0 +1,23 @@
+{% load static %}
+						
+						
+
+
+	
+{% if qst_action_perso %}
+	{% for post in qst_action_perso %}
+		
+		<br>
+		<div class=texte_sstitre style="padding-left: 12px;">{{post.lieu.nom}}</div>
+		{% include "forum\post.html" with post=post %}
+		
+	
+	
+
+	{% endfor %}
+	<br><br>
+{% else %}
+	<div class=texte_base style="padding: 12px;">{{post.lieu.nom}}</div>Pas d'historique pour ce perso</div>
+{% endif %}
+	
+

@@ -1,0 +1,177 @@
+{% extends "forum\_base.html" %}
+{% block title %}LISTE DES RESULTATS{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\menu_deroulant.css' %}">
+{% endblock %}
+
+{% block style %}
+#total{min-width:1000px;}
+{% endblock %}
+
+
+{% block entete %}
+
+
+
+<div class=entete>
+	<div class=texte_surtitre>RESULTATS</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+
+<div id=menu_haut>
+	
+
+	{% if filtre == "all" %}<div class=bouton_menu_gauche style="opacity:0.6;">{% else %}<div class=bouton_menu_gauche>{% endif %}
+		<a class=texte_bouton_menu href="/forum/resultatsMJ/{{lieu_select_id}}/{{action_id}}/all/">All</a></div>
+
+	{% if filtre == "nonfini" %}<div class=bouton_menu_gauche style="opacity:0.6;">{% else %}<div class=bouton_menu_gauche>{% endif %}
+		<a class=texte_bouton_menu href="/forum/resultatsMJ/{{lieu_select_id}}/{{action_id}}/nonfini/">Non Fini</a></div>
+
+	{% if filtre == "fini" %}<div class=bouton_menu_gauche style="opacity:0.6;">{% else %}<div class=bouton_menu_gauche>{% endif %}
+		<a class=texte_bouton_menu href="/forum/resultatsMJ/{{lieu_select_id}}/{{action_id}}/fini/">Fini</a></div>
+	
+	<div class=bouton_menu_droite style="width:100px;">
+
+		<div id="menu_deroulant_spe_1">
+		     <label for="toggle-block_spe_1">{{action_nom}}</label>
+		     <input id="toggle-block_spe_1" name="toggle-block_spe_1" style="display:none;" type="checkbox" nochecked />
+		     <div id="my-block_spe_1" style="width:100px;">
+		     	{% if action_id != 0 %}<a class=texte_bouton_menu href="/forum/resultatsMJ/0/0/all/">All</a>{% endif %}
+		     	{% for action in qst_action %}
+		     		{% if action_id != action.id %}
+		     		<a class=texte_bouton_menu href="/forum/resultatsMJ/{{lieu_select_id}}/{{action.id}}/{{filtre}}/">{{action.nom}}</a>
+		     		{% endif %}
+		     	{% endfor %}
+		     </div>
+		</div>
+
+	</div>
+	
+				
+</div>
+
+
+<div class=msg_main_block align="left">
+	<!--<div class=msg_titre><div class=texte_titre>JOUEUR</div></div>-->
+	
+	{% if qst_resultat %}
+		<div class=tableau>
+				<div class=row_entete style="display: flex;">
+					<div class=colonne_puce style="width:40px;"></div>
+					<div class=colonne_entete style="min-width:5px;text-align: left;"></div>
+					<div class=colonne_entete style="width:190px;text-align: left;">Nom</div>
+					<div class=colonne_entete style="width:120px;text-align: left;">Lieu</div>
+					<div class=colonne_entete style="width:100px;text-align: left;">Action</div>
+					<div class=colonne_entete style="text-align: left;">Autre</div>
+					<div class=colonne_entete style="text-align: left;">Spécial</div>
+					
+				</div>
+
+
+		
+
+		{% if tri_lieu %}{% regroup qst_resultat by lieu as T_categories %}
+		{% else %}{% regroup qst_resultat by action as T_categories %}
+			<div class=titre_tableau><div class=texte_titre>
+				<a href="/forum/resultatsMJ/0/{{action_id}}/{{filtre}}/">+</a> {{lieu_select.nom}}
+			</div></div>
+		{% endif %}
+
+
+		{% for categorie in T_categories %}
+			<div>
+
+				{% if T_categories|length > 1 %}
+					<div class=titre_tableau><div class=texte_titre>
+						<a href="/forum/resultatsMJ/{{categorie.grouper.id}}/{{action_id}}/{{filtre}}/">{{ categorie.grouper.nom }}</a>
+					</div></div>
+				{% endif %}
+
+				{% for resultat in categorie.list %}
+
+					<div class="{% cycle 'row1' 'row2' %}">
+						
+						<!--<div class=colonne><div class=texte_base>{{lieu.listejoueur}}</div></div>-->
+						<div class=colonne_puce>
+							
+						
+
+						<a href="javascript:afficheID('resultat_{{resultat.id}}','affiche')"><div id="affiche_resultat_{{resultat.id}}" class=colonne_ext><div class=texte_base>
+							{% if resultat.fini %}<div class=puce style="background-color: #800;"></div>
+							{% else %}<div class=puce style="background-color: #080;"></div>
+							{% endif %}
+						
+
+						</div></div></a>
+						<a href="javascript:afficheID('resultat_{{resultat.id}}','masque')"><div id="masque_resultat_{{resultat.id}}" class=colonne_ext style="display:none;"><div class=texte_base>
+							{% if resultat.fini %}<div class=puce style="background-color: #800;"></div>
+							{% else %}<div class=puce style="background-color: #080;"></div>
+							{% endif %}
+						
+
+						</div></div></a>
+
+						</div>
+
+						<div class=colonne style="min-width:5px;"><div class=texte_base>{{resultat.priorite}}</div></div>
+						<div class=colonne style="width:190px;"><div class=texte_base><a href="/admin/forum/resultat/{{resultat.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a> {{resultat.nom}}</div></div>
+						<div class=colonne style="width:120px;"><div class=texte_base><a href="/forum/lieu/{{resultat.lieu.id}}/">{{resultat.lieu.nom}}</a></div></div>
+						<div class=colonne style="width:100px;"><div class=texte_base><a href="/forum/resultatsMJ/{{lieu_select_id}}/{{resultat.action.id}}/{{filtre}}/">{{resultat.action.nom}}</a></div></div>
+						<div class=colonne><div class=texte_small>{% if resultat.unique %}/Unique {% endif %}{% if resultat.public %}/Public{% endif %}</div></div>
+						{% if resultat.passage_trouve or resultat.objet_trouve.all or resultat.perso_trouve or resultat.attaquer_par or resultat.modif_PV != 0 %}
+						<div class=colonne><div class=texte_small>{{resultat.return_decouverte}}</div></div>
+						{% endif %}
+						
+						
+					</div>
+
+					<div id="resultat_{{resultat.id}}" class=msg_post>
+						<div class=msg_base align="left">
+							<div class=post_contenu>
+								{% if resultat.passage_trouve %}<div class=texte_base><b>Passage secret</b> : {{resultat.passage_trouve.nom}}</div>{% endif %}
+								{% if resultat.objet_trouve.all %}<div class=texte_base><b>Objet(s)</b> : {{resultat.return_objet_trouve_liste}}</div>{% endif %}
+								{% if resultat.perso_trouve %}<div class=texte_base><b>Personnage trouvé</b> : {{resultat.perso_trouve.nom}}</div>{% endif %}
+								{% if resultat.attaquer_par %}<div class=texte_base><b>Attaquer par</b> : {{resultat.attaquer_par.nom}}</div>{% endif %}
+								{% if resultat.modif_PV != 0 %}<div class=texte_base><b>Modif PV</b> : {{resultat.modif_PV}}</div>{% endif %}
+								{% if resultat.return_decouverte != "" %}<br>{% endif %}
+								{% if resultat.cle1 and resultat.cle1 != "" %}<div class=texte_small><b>Clé 1</b> : {{resultat.cle1}}</div>{% endif %}
+								{% if resultat.cle2 and resultat.cle2 != "" %}<div class=texte_small><b>Clé 2</b> : {{resultat.cle2}}</div>{% endif %}
+								{% if resultat.cle_date and resultat.cle_date != "" %}<div class=texte_small><b>Clé Date</b> : {{resultat.cle_date}}</div>{% endif %}
+								{% if resultat.return_have_key %}<br>{% endif %}
+								
+								<div class=texte_small>{{resultat.texte}}</div>
+								<br>
+								<div class=texte_small>{{resultat.description}}</div>
+								
+							</div>
+						</div>
+					</div>
+
+				{% endfor %}
+			</div>
+		
+		{% endfor %}
+		</div>
+	{% else %}
+	<div class=texte_base>Pas de Résultats</div>
+	{% endif %}
+</div>
+
+
+{% endblock %}

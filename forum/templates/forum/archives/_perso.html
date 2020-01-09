@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>INDEX LIEU : {{ lieu.nom }}</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="..\..\static\forum\css\cssfile.css">
+<link rel="stylesheet" type="text/css" href="..\..\static\forum\css\cssfile_post.css">
+<style>
+#total {
+	Background-image:url("../../static/forum/img/parchemin.jpg");
+}
+#post_base {
+	Background-image:url("../../static/forum/img/fond1.png");
+}
+
+#base {
+	Background-image:url("../../static/forum/img/fond2.png");
+}
+
+#post_action_base {
+	Background-image:url("../../static/forum/img/fond1.png");
+}
+
+</style>
+</head>
+
+    <body background="..\..\static\forum\img\marbre.jpg">
+
+
+
+	<div id=total align="left">
+	
+		<div id=header>
+			<div id=menu_haut>
+					<div id=bouton_menu_gauche style="width: 30px;padding:2px;"><img src="..\..\static\forum\img\index.png"></div>
+					<div id=bouton_menu_gauche style="width: 30px;padding:2px;"><img src="..\..\static\forum\img\msg.png"></div>
+					<div id=bouton_menu_gauche><a id=bouton_menu href="../forum/lieu/">Forum</a></div>
+					<div id=bouton_menu_gauche><a id=bouton_menu href="background/">Background</a></div>
+					<div id=bouton_menu_gauche><a id=bouton_menu href="regles/">Règles</a></div>
+					
+					<div id=bouton_menu_droite style="width: 30px;padding:1px;"><a href="accounts/logout"><img src="..\..\static\forum\img\deconnexion.png"></a></div>
+					<div id=bouton_menu_droite style="Border-Right: 0pt;"><a id=bouton_menu href="regles/">{{joueur.nom}}</a></div>
+			</div>
+			
+			<div align="center"><img src="..\..\static\forum\img\titre.png"></div>	
+			
+		</div>
+		
+		
+		<div id=perso_entete align="left">
+			
+		</div>
+		
+		
+		
+		<div id=perso_competences>
+			<div id=perso_competences_titre>Combat</div>
+			<div id=perso_competences_competence>
+				<div id=perso_competences_nom>Attaque</div><div id=perso_competences_valeur></div>
+				<div id=perso_competences_desc></div>
+			</div>
+			<div id=perso_competences_competence>
+				<div id=perso_competences_nom>Esquive</div><div id=perso_competences_valeur></div>
+				<div id=perso_competences_desc></div>
+			</div>
+			<div id=perso_competences_competence>
+				<div id=perso_competences_nom>Mélée</div><div id=perso_competences_valeur></div>
+				<div id=perso_competences_desc></div>
+			</div>
+			<div id=perso_competences_competence>
+				<div id=perso_competences_nom>Officier</div><div id=perso_competences_valeur></div>
+				<div id=perso_competences_desc></div>
+			</div>
+			<div id=perso_competences_competence>
+				<div id=perso_competences_nom>Armurier</div><div id=perso_competences_valeur></div>
+				<div id=perso_competences_desc></div>
+			</div>
+		</div>
+		
+		
+		<div id=perso_competences>
+			
+		</div>
+		
+		
+		<div id=perso_competences>
+			
+		</div>
+		
+		
+		
+		
+		<div id=perso_attributs>
+			
+		</div>
+		
+		
+		
+		
+		<div id=base align="center" style="margin-top:10px;">
+			
+			<div id=post_action>
+				<div id=post_action_liste>
+					<div id=img_bouton><img src="..\..\static\forum\img\bouton.png"></div>
+					<div id=img_bouton><img src="..\..\static\forum\img\bouton.png"></div>
+					<div id=img_bouton><img src="..\..\static\forum\img\bouton.png"></div>
+					<div id=img_bouton><img src="..\..\static\forum\img\bouton.png"></div>
+					<div id=img_bouton><img src="..\..\static\forum\img\bouton.png"></div>
+					<div id=img_bouton><img src="..\..\static\forum\img\bouton.png"></div>
+					<div id=img_bouton><img src="..\..\static\forum\img\bouton.png"></div>
+					<div id=img_bouton><img src="..\..\static\forum\img\bouton.png"></div>
+					<div id=img_bouton><img src="..\..\static\forum\img\bouton.png"></div>
+				</div>
+				
+				<div id=post_action_base align="center">
+				
+					<div id=post_perso align="left">
+						<div id=img_perso style="background:url(../../static/forum/img/persos/tir_arkhos.jpg);">
+							<img src="..\..\static\forum\img\sante_blesse2.png" width="81" height="88" border="1">
+						</div>
+						<div id=post_perso_info>
+							<div id=texte_titre style="display:table;"><a href="#">Tir-Arkhos</a></div>
+							<div id=texte_sstitre>Exarque Urbi</div>
+							<div id=texte_base>En bonne santé</div>
+							<div id=texte_base>7 gardes<br>0 troupe</div>
+						</div>
+					</div>
+					
+					
+					
+					<div id=post_formulaire>
+					<form method="POST" class="post-form">
+					
+						<div id=post_action_perso>
+							
+						</div>
+						
+						
+						<div id=post_action_option>
+						</div>
+						
+						<div id=post_action_champ>
+						</div>
+						
+						<div id=post_action_valider>
+							<button type="submit" class="save btn btn-default">Save</button>
+						</div>
+					
+					</form>
+					</div>
+				
+			</div>
+			
+			<div id=post_liste>
+				<div id=post>
+					<div id=post_base align="left">
+					
+						<div id=post_perso align="left">
+							<div id=img_perso style="background:url(../../static/forum/img/persos/tir_arkhos.jpg);">
+								<img src="..\..\static\forum\img\sante_blesse2.png" width="81" height="88" border="1">
+							</div>
+							<div id=post_perso_info>
+								<div id=texte_titre style="display:table;"><a href="#">Tir-Arkhos</a></div>
+								<div id=texte_sstitre>Exarque Urbi</div>
+								<div id=texte_base>En bonne santé</div>
+								<div id=texte_base>7 gardes<br>0 troupe</div>
+							</div>
+						</div>
+						
+						<div id=post_contenu align="center">
+							<div id=post_contenu_titre>aaaaaaaaaa</div>
+							<div id=texte_base>
+							Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy<br>eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+<br><br>
+autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+<br><br>
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+							</div>
+						</div>
+						
+					</div>
+					
+					<div id=post_footer>
+						
+						
+						14 - 09 - 2018 
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	
+	</div>
+	
+	
+	
+	
+	
+	
+	<!--
+	
+	<div id=base style="min-height: 600px;">
+		
+		<div>
+		{% block content %}
+		<h1>New post</h1>
+		<form method="POST" class="post-form">{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit" class="save btn btn-default">Save</button>
+		</form>
+		{% endblock %}
+		</div>
+		
+		{% if list_posts %}
+			{% for post in list_posts %}
+				{% with 'forum/img/persos/'|add:post.perso.image as imgPath %}
+			<div id=post>
+				<div id=post_base>
+					<div id=img_perso align="center">
+						<div><img src="{% static imgPath %}"></div>
+						<div><b>{{ post.perso.nom }}</b></div>
+						<div id=post_nbgardes>0 Gardes <br> 0 Troupes</div>
+					</div>
+					<div id=post_contenu>
+						<div id=post_titre>{{ lieu.nom }} - 8h, 7e jour du mois Ulfis</div>
+						<div id=post_texte>{{ post.texte }}</div>
+						<div id=post_action></div>
+					</div>
+				</div>
+				<div id=post_footer> 14 - 09 - 2018 </div>
+			</div>
+				{% endwith %}
+			{% endfor %}
+		{% else %}
+			<p>No Post are here.</p>
+		{% endif %}
+	</div>
+	<div id=footer>
+	</div>
+	
+</div>-->
+
+	<div id=footer>
+	</div>
+
+		
+    </body>
+</html>

@@ -1,0 +1,159 @@
+
+
+
+
+
+
+#header {
+    height: 120px;
+	Z-Index: 6;
+}
+
+#menu_MJ{
+	width:100%;
+	height:25px;
+	background-color: var(--fond_enteteMJ);
+	text-align: center;
+	Font-Size: 9pt;
+	color: var(--texte_rubrique);
+	Border-Top: 1pt Solid;
+}
+
+#menu_haut{
+	width:100%;
+	height:25px;
+	background-color: var(--fond_entete);
+	text-align: center;
+	Font-Size: 9pt;
+	color: var(--texte_rubrique);
+}
+
+#titre{
+	float:left;
+	margin-left: 35%;
+    
+	display: block;
+}
+
+#persos_du_joueur{
+	margin-right: 0%;
+	padding: 3px;
+}
+
+.bouton_menu_gauche{
+	min-width:70px;
+	padding : 5px;
+	float:left;
+	background-color: var(--fond_rubrique);
+	Border-Right: 1pt Solid;
+}
+
+.bouton_menu_gauche_icone{
+	width:30px;
+	height:20px;
+	padding : 2px;
+	float:left;
+	background-color: var(--fond_rubrique);
+	Border-Right: 1pt Solid;
+}
+
+.bouton_menu_droite{
+	min-width:70px;
+	float:right;
+	padding : 5px;
+	background-color: var(--fond_rubrique);
+	Border-Left: 1pt Solid;
+}
+
+.bouton_menu_droite_icone{
+	width:30px;
+	float:right;
+	padding : 1px;
+	background-color: var(--fond_rubrique);
+	Border-Left: 1pt Solid;
+}
+
+.texte_bouton_menu{
+	/*color: #422;*/
+	display: block;
+	color: var(--texte_rubrique);
+}
+
+
+
+.bouton_menu_gaucheMJ{
+	min-width:70px;
+	padding : 5px;
+	float:left;
+	background-color: var(--fond_rubriqueMJ);;
+	Border-Right: 1pt Solid;
+}
+
+.bouton_menu_droiteMJ{
+	min-width:70px;
+	float:right;
+	padding : 5px;
+	background-color: var(--fond_rubriqueMJ);
+	Border-Left: 1pt Solid;
+}
+
+
+/* MENU DEROULANT 1 */
+
+.ligne_menu_deroulant{
+	padding:2px;
+}
+
+#menu_deroulant{
+}
+#menu_deroulant label{
+    cursor:pointer;
+}
+/* le bloc n'est pas visible lorsque la checkbox n'est pas cochée */
+#my-block{
+    display: none;
+	position : absolute;
+	background-color: var(--fond_rubriqueMJ);
+    margin-top:4px;
+	padding-top:10px;
+	padding-bottom:4px;
+	width:68px;
+	opacity:0.8;
+}
+/* le bloc est visible lorsque la checkbox est cochée */
+#toggle-block:checked + #my-block{
+   display: block;
+}
+
+#toggle-block input{
+   display: none;
+}
+
+/* MENU DEROULANT 2 */
+
+#menu_deroulant2{
+}
+#menu_deroulant2 label{
+    cursor:pointer;
+}
+/* le bloc n'est pas visible lorsque la checkbox n'est pas cochée */
+#my-block2{
+    display: none;
+	position : absolute;
+	background-color: var(--fond_rubriqueMJ);
+    margin-top:4px;
+	padding-top:10px;
+	padding-bottom:4px;
+	width:68px;
+	opacity:0.8;
+}
+/* le bloc est visible lorsque la checkbox est cochée */
+#toggle-block2:checked + #my-block2{
+   display: block;
+}
+
+#toggle-block2 input{
+   display: none;
+}
+
+

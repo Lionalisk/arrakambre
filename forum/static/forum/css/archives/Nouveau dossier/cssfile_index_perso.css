@@ -1,0 +1,157 @@
+#index_actu{
+	/*float:right;*/
+	display:inline-table;
+	background-color: #beaf9e;
+	/*margin-right: 50px;*/
+	/*margin-left: 50px;*/
+	width: 300px;
+	height:300px;
+}
+
+
+#index_titre {
+	padding-top: 8px;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-bottom: 0px;
+	
+	text-align: left;
+	Font-family: Fantasy;
+	/*Font-Weight: Bold;*/
+	Font-Size: 14pt;
+	color: #221;
+	
+}
+
+
+#index_base {
+	/*background-color: #cfc6b5;*/
+	display:inline-table;
+	margin-left: 30px;
+	margin-right: 30px;
+	/*padding-right: 100px;
+	padding-left: 10px;*/
+	min-width:470px;
+	width:50%;
+	Border-Style: Solid;
+	Border-Width: 1pt;
+	Border-Color: #753;
+	padding-bottom: 15px;
+	/*min-height: 600px;*/
+	
+}
+
+#index_base_perso {
+	padding-top: 12px;
+	padding-left: 20px;
+	padding-right: 5px;
+	padding-bottom: 0px;
+}
+
+
+#index_perso {
+	/*background-color: #beaf9e;
+	Border-Width: 1pt;
+	Border-Style: Solid;
+	Border-Color: #665;*/
+	/*min-height: 120px;*/
+	min-width: 450px;
+	/*float:left;*/
+}
+
+#index_perso_info {
+	/*Border-Right: 1pt Solid;*/
+	Z-Index: 2;
+	/*float: left;*/
+	min-width: 120px;
+	padding-top: 6px;
+	/*Vertical-Align: Middle;*/
+	
+}
+
+#index_perso_titre {
+	padding-top : 1px;
+	Font-Weight: Bold;
+	text-align: left;
+	Font-Size: 11pt;
+	color: #221;
+	Opacity: 0.9;
+	text-decoration: none;
+}
+
+#index_perso_sstitre {
+	padding-top : 2px;
+	text-align: left;
+	Font-Weight: Bold;
+	Font-Size: 9pt;
+	color: #332;
+	Opacity: 0.8;
+}
+
+#index_perso_text{
+	padding-top : 5px;
+	text-align: left;
+	Font-Size: 9pt;
+	color: #332;
+	Opacity: 0.8;
+}
+
+#index_info_lieu{
+	Z-Index: 1;
+	/*float: left;*/
+	/*min-height: 100px;*/
+	padding: 6px;
+	min-width: 150px;
+	
+	Font-Weight: Bold;
+	Font-Size: 9pt;
+}
+
+
+#index_perso_action{
+	/*padding: 2px;*/
+	width: 100%;
+	padding-left:10px;
+}
+
+#index_perso_present{
+	min-height: 16px;
+	padding: 2px;
+	text-align: left;
+	Font-Weight: Bold;
+	Font-Size: 9pt;
+	color: #221;
+}
+
+
+
+}
+#post_action{
+	padding : 8px;
+	text-align: left;
+	Font-Size: 10pt;
+	color: black;
+	margin-left: 100px;
+	background-color: #fff;
+	min-height: 20px;
+}
+
+#post_nbgardes{
+	padding : 4px;
+	text-align: left;
+	Font-Size: 8pt;
+
+}
+
+
+#post_footer {
+	
+	text-align: right;
+	height: 8px;
+	Font-Size: 9pt;
+	color: #221;
+	padding: 2px;
+	
+}
+
+

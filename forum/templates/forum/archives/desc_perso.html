@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static "forum\css\cssfile.css" %}">
+<style>
+#total {
+	Background-image :url("{% static "forum\img\parchemin.jpg" %}");
+}
+</style>
+</head>
+<body>
+
+
+
+<div id=total align="center">
+	<div id=header>
+	<a href="accounts/logout/">{{user.username}}</a>
+	</div>
+	
+	<div id=base>
+		<div id=post>
+			<div id=post_base>
+				<div id=post_perso align="center">
+					<div><img src="{% static "forum\img\Tir_Arkhos.jpg" %}"></div>
+					<div><b>Tir-Arkhos</b></div>
+					<div id=post_nbgardes>0 Garde<br>0 Troupe</div>
+				</div>
+				<div id=post_contenu>
+					<div id=post_titre>TAVERNE - 8h, 7e jour du mois Ulfis</div>
+					<div id=post_texte></div>
+					<div id=post_action></div>
+				</div>
+			</div>
+			<div id=post_footer> 14 - 09 - 2018 </div>
+		</div>
+		<!--<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>
+		<p>aaaaaaaaaaaaa</p>!-->
+		
+	</div>
+	<div id=footer>
+	</div>
+	
+</div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+{% extends "forum\_base.html" %}
+{% block title %}POST Resultat{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post_action.css' %}">
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block entete %}
+
+
+<div class=entete>
+	<div class=texte_surtitre>CREATION RESULTAT</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+<div id=menu_haut>
+	
+	<div class=bouton_menu_gauche style="width:100px;">
+		<a class=texte_bouton_menu href="/forum/messagerie/-{{joueur.id}}/0/reception/">Messages</a>
+	</div>
+
+	
+	<div class=bouton_menu_gauche style="width:170px;">
+		<a class=texte_bouton_menu href="/forum/messagerie/-{{joueur.id}}/1/reception/">Discussions Personnages</a>
+	</div>
+		
+</div>
+
+
+<div class=post_formulaire>
+	<form method="POST" class="post-form">{% csrf_token %}
+		
+
+		<div class=post_verbose_form >Titre </div><div class=post_verbose_form >{{ form.nom }}</div>
+
+		<div class=post_form_champTexte>{{ form.texte }}</div>
+
+		<div class=post_verbose_form >Le Résultat est Public ? </div><div class=post_verbose_form >{{ form.public }}</div>
+		
+		<div class=post_verbose_form >Le Résultat est Unique ? </div><div class=post_verbose_form>{{ form.unique }}</div>
+		
+		<div class=post_verbose_form >Passage Secret Trouvé : </div><div class=post_verbose_form>{{ form.passage_trouve }}</div>
+		<div class=post_verbose_form >Objets Trouvés : </div><div class=post_verbose_form>{{ form.objet_trouve }}</div>
+		<div class=post_verbose_form >Personnage Trouvé : </div><div class=post_verbose_form>{{ form.perso_trouve }}</div>
+
+		<div class=post_verbose_form >Modif Pt de Vie : </div><div class=post_verbose_form>{{ form.modif_PV }}</div>
+		
+		<div>
+			<input type="submit" class="save_btn" value="Envoyer">
+		</div>
+	
+	</form>
+		
+</div>
+
+
+{% endblock %}

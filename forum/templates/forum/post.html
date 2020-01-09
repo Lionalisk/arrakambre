@@ -1,0 +1,160 @@
+{% load static %}
+
+	<div id=post_{{post.id}} class=post>
+			
+			
+
+		{% if post.style == "info" %}
+			
+			{% if post.dissimulation > 0 %}<div class=post_hide align="left">
+			{% else %}<div class=post_base align="left">
+			{% endif %}
+				<div class=texte_typeinfo>
+				
+				{% if post.langage.id == 1 %}
+					{{post.get_texte_traduit|safe|linebreaksbr}}
+				{% else %}
+					{% if joueur in post.joueur_traduit.all %}
+						{{post.get_texte_traduit|safe|linebreaksbr}}
+
+						{% if joueur.statut == 'MJ' %}
+							<br>
+							<a href='/forum/removetraduction/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action.id}}:{{option}}/{{post.id}}/{{num_page}}/'>No Traduction</a>
+						{% endif %}
+
+					{% else %}
+						{{post.texteVO|safe|linebreaksbr}}
+						
+						{% if post.langage in perso_joueur.langage.all or joueur.statut == 'MJ' %}
+							<br>
+							<a href='/forum/traduire/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action.id}}:{{option}}/{{post.langage.id}}/{{post.id}}/{{num_page}}/'>Traduire</a>
+						{% endif %}
+					{% endif %}
+				{% endif %}
+				</div>
+			</div>
+
+
+
+
+		
+		{% elif post.style == "sys" %}
+			<div class=post_base_typesys align="left">
+			
+				<div class=texte_typesys>{{post.texte|safe|linebreaksbr}}</div>
+			</div>
+		
+
+
+
+		{% else %}
+
+			{% if post.dissimulation > 0 %}<div class=post_hide align="left">
+			{% else %}<div class=post_base align="left">
+			{% endif %}
+			
+				{% include "forum\post_perso.html" with perso=post.perso extension="POST" post=post %}
+
+				<div style="margin-top:5px;display:block;">
+					
+
+					{% for T_perso_cible in post.T_persos_cible %}
+						<div class=img_perso_cible>
+							<img src="{% static 'forum/'|add:nom_jeu|add:'/img/'|add:T_perso_cible.0 %}" width="40" height="44" border="1" title="{{T_perso_cible.1}}" alt="{{T_perso_cible.1}}">
+						</div>
+					{% endfor %}
+				</div>
+				
+				
+				<div class=post_contenu align="right">
+					
+					<div class=post_contenu_texte>
+						<span>
+						{% if post.langage.id == 1 %}
+							{{post.get_texte_traduit|safe|linebreaksbr}}
+						{% else %}
+							{% if joueur in post.joueur_traduit.all %}
+								{{post.get_texte_traduit|safe|linebreaksbr}}
+
+								{% if joueur.statut == 'MJ' %}
+									<br>
+									<a href='/forum/removetraduction/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action.id}}:{{option}}/{{post.id}}/{{num_page}}/'>No Traduction</a>
+								{% endif %}
+
+							{% else %}
+								{{post.texteVO|safe|linebreaksbr}}
+								
+								{% if post.langage in perso_joueur.langage.all or joueur.statut == 'MJ' %}
+									<br>
+									<a href='/forum/traduire/-{{joueur.id}}/{{lieu.id}}/{{perso_joueur.id}}/{{action.id}}:{{option}}/{{post.langage.id}}/{{post.id}}/{{num_page}}/'>Traduire</a>
+								{% endif %}
+							{% endif %}
+						{% endif %}
+						</span>
+					</div>
+					
+					{% if post.nom_info != ""  %}
+					<div align=center><img src="{% static separateur_h %}"></div>
+					<div align=center><img src="{% static 'forum/img/illustration/'|add:post.nom_info|add:'.jpg' %}"></div>
+					{% endif %}
+
+					<div class=post_signature>
+						<div>{{ post.signature|safe|linebreaksbr }}</div>
+					</div>
+				</div>
+			
+			</div>
+			
+
+		{% endif %}	
+			
+
+
+
+
+		
+
+		{%if joueur.statut == "MJ" %}
+		
+		<div class=post_footer style="height:12px;">
+			
+				{{post.date_jeu}}
+			<div class=post_indicMJ>
+				<div class=post_indicMJ_texte>{{ post.info_MJ|safe }}</div>
+				<a href='/admin/forum/post/{{post.id}}/change/' target="_blank"><img src="{% static edit %}" width="15" height="15"></a>
+				<a href="javascript:deletePost('/forum/deletePost/{{post.lieu.id}}/{{post.id}}')"><img src="{% static delete %}" width="15" height="15"></a>
+			
+			{% if post.dissimulation >= 200 %}
+				<img src="{% static 'forum/'|add:nom_jeu|add:'/img/hrp.png' %}" title="Post HRP" alt="Post HRP">
+				{% elif post.dissimulation >= 100 %}
+				<img src="{% static 'forum/'|add:nom_jeu|add:'/img/private.png' %}" title="Post Privé" alt="Post Privé">
+				{% elif post.dissimulation > 0 %}
+				<img src="{% static 'forum/'|add:nom_jeu|add:'/img/hide.png' %}" title="Post Caché" alt="Post Caché">
+			{% endif %}
+
+			</div>
+
+		</div>
+
+		{%else%}
+		<div class=post_footer>
+			{{post.date_jeu}}
+			<div class=post_indicMJ>
+			{% if post.dissimulation >= 200 %}
+				<img src="{% static 'forum/'|add:nom_jeu|add:'/img/hrp.png' %}" title="Post HRP" alt="Post HRP">
+				{% elif post.dissimulation >= 100 %}
+				<img src="{% static 'forum/'|add:nom_jeu|add:'/img/private.png' %}" title="Post Privé" alt="Post Privé">
+				{% elif post.dissimulation > 0 %}
+				<img src="{% static 'forum/'|add:nom_jeu|add:'/img/hide.png' %}" title="Post Caché" alt="Post Caché">
+			{% endif %}
+			</div>
+			{% if post.style == "sys" and post.joueur == joueur %}
+			<div class=post_indicMJ>
+				<a href="javascript:deletePost('/forum/deletePost/{{post.lieu.id}}/{{post.id}}')"><img src="{% static delete %}" width="15" height="15"></a>
+			</div>
+			{% endif %}
+		</div>
+		{% endif %}
+
+
+	</div>

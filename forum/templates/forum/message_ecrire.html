@@ -1,0 +1,29 @@
+{% load static %}
+
+
+
+<div id=ecrire style="display: none;">
+	<div class=post_formulaire>
+		<form method="POST" class="post-form">{% csrf_token %}
+			
+			
+			{% if qst_persos_cible.count > 1 %}
+			<div class=post_verbose_form >Destinataire(s) : </div>
+			<div class=post_verbose_form >{{ form.persos_cible }}</div>
+			{% else %}
+			<div class=post_verbose_form >Un seul destinataire possible : {{ qst_persos_cible.0.nom }}</div>
+			<div class=post_verbose_form style="display: none;">{{ form.persos_cible }}</div><br>
+			{% endif %}
+			
+			<div class=post_verbose_form >Titre : </div><div class=post_verbose_form>{{ form.titre }}</div>
+			<div class=post_form_champTexte>{{ form.texte }}</div>
+			
+			
+			<div>
+				<input type="submit" class="save_btn" value="Envoyer">
+			</div>
+		
+		</form>
+		
+	</div>
+</div>

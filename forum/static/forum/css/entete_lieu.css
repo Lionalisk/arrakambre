@@ -1,0 +1,78 @@
+
+
+#entete_lieu{
+	display: inline-flex;
+	margin-top : 25px;
+	min-height:200px;
+	margin-left: 5%;
+	margin-right: 5%;
+	width : 90%;
+	
+}
+
+#entete_lieu_img{
+	display: inline-block;
+	Vertical-Align: bottom;
+	margin-right : 5px;
+	opacity:0.8;
+}
+
+#entete_lieu_contenu{
+	
+	display: inline-block;
+	/*margin-top:25px;*/
+	margin-left : 5px;
+	Vertical-Align: bottom;
+	text-align: left;
+
+}
+
+#perso_present{
+	margin-left: 5%;
+}
+
+.entete_lieu_surtitre{
+
+	text-align: left;
+	Font-family: Fantasy;
+	padding-bottom:15px;
+	Font-Size: 14pt;
+	color: var(--texte_surtitre);
+	
+}
+
+.entete_lieu_titre {
+
+	Font-Weight: Bold;
+	text-align: left;
+	Font-Size: 12pt;
+	color: var(--texte_titre);
+	Opacity: 0.9;
+	text-decoration: none;
+}
+
+.entete_lieu_sstitre {
+	padding-top:2px;
+	text-align: left;
+	Font-Weight: Bold;
+	Font-Size: 10pt;
+	color: var(--texte_titre);
+	Opacity: 0.8;
+}
+
+.entete_lieu_txtbase{
+	padding-top : 10px;
+	text-align: left;
+	Font-Size: 9pt;
+	color:var(--texte_base);
+	Opacity: 0.9;
+}
+
+.entete_lieu_txtcalendrier{
+	text-align: left;
+	Font-Size: 9pt;
+	color:var(--texte_base);
+	Opacity: 0.9;
+	padding-top : 10px;
+	padding-bottom: 5px;
+}

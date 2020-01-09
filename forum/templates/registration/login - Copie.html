@@ -1,0 +1,81 @@
+<html>
+<html lang="fr">
+<head>
+<title>CONNEXION</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+<link rel="stylesheet" type="text/css" href='{% static "forum\css\root.css" %}'>
+<link rel="stylesheet" type="text/css" href='{% static "forum\css\main.css" %}'>
+<link rel="stylesheet" type="text/css" href='{% static "forum\css\header.css" %}'>
+<link rel="stylesheet" type="text/css" href='{% static "forum\css\login.css" %}'>
+
+<style>
+#total {Background-image :url("{% static "forum\img\parchemin.jpg" %}");}
+#login {Background-image :url("{% static "forum\img\fond1.png" %}");}
+</style>
+</head>
+
+	
+<body background="{% static 'forum\img\marbre.jpg' %}">
+
+	<div id=total align="center">
+		
+		<div id=header>
+			<div id=menu_haut></div>
+			<div align="center"><img src="{% static 'forum/img/titre.png' %}"></div>
+
+		</div>
+			
+				
+		<div id=login>
+
+			{% block content %}
+
+			{% if form.errors %}
+			  <p>Your username and password didn't match. Please try again.</p>
+			{% endif %}
+
+			{% if next %}
+			  {% if user.is_authenticated %}
+				<p>Your account doesn't have access to this page. To proceed,
+				please login with an account that has access.</p>
+			  {% else %}
+				<p>Please login to see this page.</p>
+			  {% endif %}
+			{% endif %}
+
+			<form method="post" action="{% url 'login' %}">
+			{% csrf_token %}
+
+			<div>
+				<table><tr>
+				  <td width="150" align="left"><div class=login_texte style="Font-Weight: Bold; Color: #610;">{{ form.username.label_tag }}</div></td>
+				  <td width="150" align="right">{{ form.username }}</td>
+				  </tr>
+				<tr>
+				
+				  <td width="150" align="left"><div class=login_texte style="Font-Weight: Bold; Color: #610;">{{ form.password.label_tag }}</div></td>
+				  <td width="150" align="right">{{form.password }}</td>
+				</tr>
+				</table>
+			</div>
+			<br>
+			<div>
+			  <input type="submit" value="login" />
+			  <input type="hidden" name="next" value="{{ next }}" />
+			</div>
+			</form>
+
+			{# Assumes you setup the password_reset view in your URLconf #}
+			<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+			{% endblock %}
+		
+		</div>
+
+		<div id=login_footer style="min-height: 120px;">
+		</div>
+	</div>
+	
+</body>

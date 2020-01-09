@@ -1,0 +1,114 @@
+{% load static %}
+
+
+{% with "forum/"|add:nom_jeu|add:"/img/prison.png" as imgPrison %}
+
+
+{% if size == "POST" %}
+	{% with "forum/"|add:nom_jeu|add:"/img/"|add:post.perso_image as imgPerso %}
+	{% with "forum/"|add:nom_jeu|add:"/img/"|add:post.perso_etatsante.image as imgSantePerso %}
+	{% with post.desc as desc %}
+
+	{% if post.perso_capture %}
+		<div style="position:relative; left:0px; top:0px; width:0px; height:0px; z-index:4"><img src="{% static imgPrison %}" width="81" height="88" border="1" title="{{desc}}" alt="{{desc}}"></div>
+	{% endif %}
+	<div class=img_perso style="background:url({% static imgPerso %});{% if post.perso_cache %} opacity:0.5;{% endif %}">
+		<!--<a href="/forum/lieu/-{{joueur.id}}/{{perso.lieu.id}}/{{perso.id}}/1/1#perso_present">-->
+			<img src="{% static imgSantePerso %}" width="81" height="88" border="1" title="{{desc}}" alt="{{desc}}">
+	</div>
+
+	{% endwith %}
+	{% endwith %}
+	{% endwith %}
+
+{% else %}
+{% with perso.nom_sous_image as desc %}
+{% with "forum/"|add:nom_jeu|add:"/img/"|add:perso.image as imgPerso %}
+{% with "forum/"|add:nom_jeu|add:"/img/"|add:perso.etat_sante.image as imgSantePerso %}
+	
+	{% if size == "L" %}
+		{% if perso.geolier %}
+			<div style="position:relative; left:-2px; top:48px; width:0px; height:0px; z-index:5">{% include "forum\img_perso.html" with perso=perso.geolier size="XS" %}</div>
+			<div style="position:relative; left:0px; top:0px; width:0px; height:0px; z-index:3"><img src="{% static imgPrison %}" width="81" height="88" border="1" title="{{desc}}" alt="{{desc}}"></div>
+		{% endif %}
+		
+		{% if perso.leader %}
+			<div style="position:relative; left:-2px; top:48px; width:0px; height:0px; z-index:4">{% include "forum\img_perso.html" with perso=perso.leader size="XS" %}</div>
+
+		{% else %}
+			{% with perso.NB_GARDES_GROUPE as NB_GARDES_GROUPE %}
+			{% with perso.NB_TROUPES_GROUPE as NB_TROUPES_GROUPE %}
+			{% if NB_GARDES_GROUPE %}
+				<div class=icone_nb_gardes style="position:relative; left:60px; top:73px; width:0px; height:0px; z-index:3 ;">{{NB_GARDES_GROUPE}}</div>
+				<div style="position:relative; left:52px; top:59px; width:0px; height:0px; z-index:2"><img src="{% static imgGardes %}" width="35" height="35" title="{{NB_GARDES_GROUPE}} Gardes" alt="{{NB_GARDES_GROUPE}} Gardes"></div>
+			{% endif %}
+			{% if NB_TROUPES_GROUPE %}
+				<div class=icone_nb_troupes style="position:relative; left:10px; top:72px; width:0px; height:0px; z-index:3 ;">{{NB_TROUPES_GROUPE}}</div>
+				<div style="position:relative; left:-4px; top:59px; width:0px; height:0px; z-index:2"><img src="{% static imgTroupes %}" width="35" height="35" title="{{NB_TROUPES_GROUPE}} Troupes" alt="{{NB_TROUPES_GROUPE}}"></div>
+			{% endif %}
+			{% endwith %}
+			{% endwith %}
+		{% endif %}
+
+		<div class=img_perso style="background:url({% static imgPerso %});{% if perso.dissimulation != 0 %} opacity:0.5;{% endif %}{% if perso.leader or perso.geolier %} opacity:0.7;{% endif %}">
+			<!--<a href="/forum/lieu/-{{joueur.id}}/{{perso.lieu.id}}/{{perso.id}}/1/1#perso_present">-->
+				<img src="{% static imgSantePerso %}" width="81" height="88" border="1" title="{{desc}}" alt="{{desc}}">
+		</div>
+
+	{% elif size == "S" %}
+		{% if perso.geolier %}
+			<div style="position:relative; left:-2px; top:28px; width:0px; height:0px; z-index:5">{% include "forum\img_perso.html" with perso=perso.geolier size="XS" %}</div>
+			<div style="position:relative; left:0px; top:0px; width:0px; height:0px; z-index:3"><img src="{% static imgPrison %}" width="60" height="68" border="1" title="{{desc}}" alt="{{desc}}"></div>
+		{% endif %}
+		{% if perso.leader %}
+			<div style="position:relative; left:-2px; top:28px; width:0px; height:0px; z-index:4">{% include "forum\img_perso.html" with perso=perso.leader size="XS" %}</div>
+		{% else %}
+			{% with perso.NB_GARDES_GROUPE as NB_GARDES_GROUPE %}
+			{% with perso.NB_TROUPES_GROUPE as NB_TROUPES_GROUPE %}
+			{% if NB_GARDES_GROUPE %}
+				<div class=icone_nb_gardes style="position:relative; left:40px; top:56px; width:0px; height:0px; z-index:3 ;">{{NB_GARDES_GROUPE}}</div>
+				<div style="position:relative; left:32px; top:42px; width:0px; height:0px; z-index:2"><img src="{% static imgGardes %}" width="35" height="35" title="{{NB_GARDES_GROUPE}} Gardes" alt="{{NB_GARDES_GROUPE}} Gardes"></div>
+			{% endif %}
+			{% if NB_TROUPES_GROUPE %}
+				<div class=icone_nb_troupes style="position:relative; left:9px; top:55px; width:0px; height:0px; z-index:3 ;">{{NB_TROUPES_GROUPE}}</div>
+				<div style="position:relative; left:-4px; top:42px; width:0px; height:0px; z-index:2"><img src="{% static imgTroupes %}" width="35" height="35" title="{{NB_TROUPES_GROUPE}} Troupes" alt="{{NB_TROUPES_GROUPE}}"></div>
+			{% endif %}
+			{% endwith %}
+			{% endwith %}
+		{% endif %}
+
+		<div class=img_perso_small style="background-image:url({% static imgPerso %});{% if perso.dissimulation != 0 %} opacity:0.5;{% endif %}{% if perso.leader or perso.geolier %} opacity:0.7;{% endif %}">
+			
+				<img src="{% static imgSantePerso %}" width="60" height="68" border="1" title="{{desc}}" alt="{{desc}}">
+		</div>
+
+	{% elif size == "XS" %}
+		{% if perso.geolier %}
+			<div style="position:relative; left:0px; top:0px; width:0px; height:0px; z-index:4"><img src="{% static imgPrison %}" width="40" height="44" border="1" title="{{desc}}" alt="{{desc}}"></div>
+		{% endif %}
+		<div class=img_perso_Xsmall style="background-image:url({% static imgPerso %});{% if perso.dissimulation != 0 %} opacity:0.5;{% endif %}">
+			
+				<img src="{% static imgSantePerso %}" width="40" height="44" border="1" title="{{desc}}" alt="{{desc}}">
+		</div>
+
+
+	{% elif size == "CIBLE" %}
+		
+		<div class=img_perso_Xsmall>
+			
+				<img src="{% static imgPerso %}" width="40" height="44" border="1" title="{{desc}}" alt="{{desc}}">
+		</div>
+
+
+	{% endif %}
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+
+
+{% endif %}
+
+
+
+{% endwith %}

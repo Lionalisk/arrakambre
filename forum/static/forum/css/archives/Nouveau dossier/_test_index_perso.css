@@ -1,0 +1,133 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+	background-color: #000;
+}
+a {
+	text-decoration: none;
+	color: #422;
+}
+td {
+	Vertical-Align: Top;
+}
+
+
+
+
+
+
+
+
+#index_elt {
+	/*background-color: #beaf9e;
+	Border-Width: 1pt;
+	Border-Style: Solid;
+	Border-Color: #665;*/
+	/*min-height: 120px;*/
+	min-width: 230px;
+	max-width: 600px
+	/*display:table;*/
+	/*float:left;*/
+}
+
+
+
+#index_elt_img{
+	display:inline-table;
+	padding-top: 6px;
+	padding-left: 6px;
+	width: 100px;
+}
+
+#index_elt_info {
+	/*Border: 1pt Solid;*/
+	display:inline-table;
+	Z-Index: 2;
+	/*float: left;*/
+	min-width: 120px;
+	margin-top: 9px;
+	margin-right: 5px;
+	Vertical-Align: Top;
+	
+}
+
+#index_elt_info_lieu{
+	/*Border: 1pt Solid;*/
+	display:inline-table;
+	Z-Index: 2;
+	/*float: left;*/
+	min-width: 120px;
+	margin-right:12px;
+	margin-left:17px;
+	padding: 9px;
+	Vertical-Align: Top;
+	
+}
+
+
+
+#index_elt_action{
+	/*padding: 2px;*/
+	/*width: 100%;*/
+	margin-left:27px;
+	margin-right:15px;
+	margin-bottom:10px;
+	margin-top:4px;
+	display:table;
+}
+
+
+
+
+
+
+#img_perso {
+	width: 82px;
+	height: 90px;
+	/*background-image: url("../img/persos/tir_arkhos.jpg");*/
+	
+}
+#img_lieu{
+	
+	width: 90px;
+	height: 90px;
+}
+
+#img_bouton{
+	padding:2px;
+	display:inline;
+}
+
+#texte_titre {
+	/*padding-top:3px;*/
+	Font-Weight: Bold;
+	text-align: left;
+	Font-Size: 11pt;
+	color: #221;
+	Opacity: 0.9;
+	text-decoration: none;
+}
+
+#texte_sstitre {
+	padding-top:2px;
+	text-align: left;
+	Font-Weight: Bold;
+	Font-Size: 9pt;
+	color: #332;
+	Opacity: 0.8;
+}
+
+#texte_base{
+	padding-top : 5px;
+	text-align: left;
+	Font-Size: 9pt;
+	color: #332;
+	Opacity: 0.8;
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>CARTE</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static "forum\css\cssfile.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "forum\css\cssfile_index.css" %}">
+<style>
+#total {
+	Background-image :url("{% static "forum\img\parchemin.jpg" %}");
+}
+#index_lieu_elt_encart {
+	Background-image:url("{% static "forum\img\fond1.png" %}");
+}
+</style>
+</head>
+<body>
+
+
+
+<body background="..\..\static\forum\img\marbre.jpg">
+
+
+
+<div id=total align="center">
+	
+	
+	<div id=header>
+		<div id=menu_haut>
+				<div id=bouton_menu_gauche style="width: 30px;padding:2px;"><a href="/forum/"><img src="{% static "forum\img\index.png" %}"></a></div>
+				<div id=bouton_menu_gauche style="width: 30px;padding:2px;"><a href="/forum/messagerie/"><img src="{% static "forum\img\msg.png" %}"></a></div>
+				<div id=bouton_menu_gauche><a id=bouton_menu href="/forum/lieu/">Forum</a></div>
+				<div id=bouton_menu_gauche><a id=bouton_menu href="/forum/background/">Background</a></div>
+				<div id=bouton_menu_gauche><a id=bouton_menu href="/forum/regles/">Règles</a></div>
+				
+				<div id=bouton_menu_droite style="width: 30px;padding:1px;"><a href="/forum/accounts/logout"><img src="{% static "forum\img\deconnexion.png" %}"></a></div>
+				<div id=bouton_menu_droite style="Border-Right: 0pt;"><a id=bouton_menu href="/forum/profil/">{{joueur.nom}}</a></div>
+		</div>
+		
+		<div align="center"><img src="..\..\static\forum\img\titre.png"></div>
+	</div>
+
+
+
+	
+	
+	<div id=index_lieu align="left" style="border:0px;">
+		
+		<div id=index_titre>
+		CARTE D'ARRAKAMBRE
+		</div>
+		
+		<div id=index_base_lieu align="left">
+			
+			{% for lieu in list_lieux %}
+			{% with 'forum/img/lieu/'|add:lieu.image|add:'.jpg' as imgPath %}
+			{% if not lieu.lieu_parent %}<div  align=center><img src="..\..\static\forum\img\separateur_h.png"></div>{% endif %}
+			<div id=index_lieu_elt>
+				
+				<div id=index_lieu_elt_separateur>
+				{% if lieu.lieu_parent %}
+					<img src="..\..\static\forum\img\separateur_parent.png">
+					{% if lieu.lieu_parent.lieu_parent %}
+						<img src="..\..\static\forum\img\separateur_parent.png">
+						{% if lieu.lieu_parent.lieu_parent.lieu_parent %}
+							<img src="..\..\static\forum\img\separateur_parent.png">
+							{% if lieu.lieu_parent.lieu_parent.lieu_parent.lieu_parent %}
+								<img src="..\..\static\forum\img\separateur_parent.png">
+								{% if lieu.lieu_parent.lieu_parent.lieu_parent.lieu_parent %}
+									<img src="..\..\static\forum\img\separateur_parent.png">
+								{% endif %}
+							{% endif %}
+						{% endif %}
+					{% endif %}
+				{% endif %}
+				
+				</div>
+				<div id=index_lieu_elt_encart>
+					<div id=index_lieu_elt_img align="left"><img src="{% static imgPath %}" width="90px" height="90px" border="1px"></div>
+					
+					<div id=index_elt_info>
+						<div id=texte_titre><a href="/forum/lieu/{{lieu.id}}/1/1">{{lieu.nom}}</a></div>
+						<div id=texte_sstitre>{{lieu.maison.nom}}</div>
+						
+						<div id=texte_base>
+						Lieu public<br>
+						Gardes : {{lieu.nbgarde}}<br>
+						</div>
+					</div>
+					
+					
+					<!--<img src="..\..\static\forum\img\separateur_v.png" style="display:inline-table;">-->
+
+					<div id=index_elt_info_lieu>
+						
+						<div id=texte_titre>Activités</div>
+						<div id=texte_sstitre>Dernières actions :</div>
+						<div id=texte_base>
+							{% for post in list_derniers_posts %}
+								{% if post.lieu.id == lieu.id %}
+									{{post.date_jeu}} : {{post.perso.nom}}
+									<!--{{post.created_date|date:"G:i-j/m"}} : {{post.perso.nom}}-->
+								{% endif %}
+							{% endfor %}
+							
+						</div>	
+					</div>
+				</div>
+			</div>
+
+			
+			{% endwith %}
+			{% endfor %}
+		</div>
+
+	</div>
+	
+	<!--<div id=index_actu2></div>-->
+	
+	<div id=footer>
+	</div>
+
+</div>
+	
+	
+	
+	
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+{% extends "forum\_base.html" %}
+{% block title %}POST Resultat{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post_action.css' %}">
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block entete %}
+
+
+<div class=entete>
+	<div class=texte_surtitre>CREATION RESULTAT - {{lieu.nom}}</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+
+
+<div class=post_formulaire>
+	<form method="POST" class="post-form">{% csrf_token %}
+		
+
+		<div class=post_verbose_form >Titre </div><div class=post_verbose_form >{{ form.nom }}</div>
+
+		<div class=post_verbose_form >Ce résultat s'additionne à un autre résultat : </div><div class=post_verbose_form>{{ form.add_resultat }}</div>
+		<div class=post_verbose_form >Ce résultat doit être rendu accessible pour être proposé : </div><div class=post_verbose_form>{{ form.possible_pour_tous }}</div>
+		<div class=post_verbose_form >Priorité : </div><div class=post_verbose_form>{{ form.priorite }}</div>
+		<div class=post_verbose_form >Action : </div><div class=post_verbose_form>{{ form.action }}</div>
+
+		<div class=post_form_champTexte>{{ form.texte }}</div>
+		<div class=post_verbose_form >Description du MJ </div><div class=post_form_champTexte>{{ form.description_MJ }}</div>
+
+		<div class=post_verbose_form >Compétence requise : </div><div class=post_verbose_form>{{ form.competence }}</div>
+		<div class=post_verbose_form >Valeur minimale dans la compétence : </div><div class=post_verbose_form>{{ form.valeur_competence }}</div>
+		<div class=post_verbose_form >Chance de réussite : </div><div class=post_verbose_form>{{ form.chance_reussite }}</div>
+		<div class=post_verbose_form >Si un échec est possible (dans le cas ou les chances de réussite < 100 ou si compétence trop faible) alors on lira ce résultat : </div><div class=post_verbose_form>{{ form.echec }}</div>
+
+		<div class=post_verbose_form >Clé 1 (ensemble des mots clés susceptibles de faire trouver le résultat, séparé par ;) : </div><div class=post_verbose_form>{{ form.cle1 }}</div>
+		<div class=post_verbose_form >Clé 2 (ensemble des mots clés susceptibles de faire trouver le résultat, séparé par ;) : </div><div class=post_verbose_form>{{ form.cle2 }}</div>
+		<div class=post_verbose_form >Clé Date  : </div><div class=post_verbose_form>{{ form.cle_date }}</div>
+		<div class=post_verbose_form >Passage Secret Trouvé : </div><div class=post_verbose_form>{{ form.obj_necessaire }}</div>
+		<div class=post_verbose_form >Avoir cet objet rend t'il ce résultat prioritaire ? : 
+			<br>Si le perso a l'objet, alors il découvrira automatiquement ce resultat (prioritairement par rapport à d'autres et il aura un succés obligatoire si un échec était possible)
+			<br>Dans ce cas, alors le resultat ne sera pas répétable</div><div class=post_verbose_form>{{ form.obj_prioritaire }}</div>
+
+		<div class=post_verbose_form >Le Résultat est Public ? </div><div class=post_verbose_form >{{ form.public }}</div>
+		<div class=post_verbose_form >Le Résultat est Unique ? </div><div class=post_verbose_form>{{ form.unique }}</div>
+		<div class=post_verbose_form >Le Résultat est Répétable pour un même joueur ? </div><div class=post_verbose_form>{{ form.unique }}</div>
+		
+		<div class=post_verbose_form >Passage Secret Trouvé : </div><div class=post_verbose_form>{{ form.passage_trouve }}</div>
+		<div class=post_verbose_form >Personnage Trouvé : </div><div class=post_verbose_form>{{ form.perso_trouve }}</div>
+		<div class=post_verbose_form >Effet reçu : </div><div class=post_verbose_form>{{ form.effet_recu }}</div>
+		<div class=texte_base >Effet reçu : {{ form.effet_recu }}</div>
+		<div class=texte_base >{{form.arme_cible.label}} {{ form.arme_cible }}</div>
+		<div class=texte_base >{{form.armure_cible.label}} {{ form.armure_cible }}</div>
+		<div class=texte_base >{{form.potion_cible.label}} {{ form.potion_cible }}</div>
+		<div class=texte_base >{{form.parchemin_cible.label}} {{ form.parchemin_cible }}</div>
+		<div class=texte_base >{{form.rituel_cible.label}} {{ form.rituel_cible }}</div>
+		<div class=texte_base >{{form.obj_quete_cible.label}} {{ form.obj_quete_cible }}</div>
+		<div class=texte_base >{{form.divers_cible.label}} {{ form.divers_cible }}</div>
+		<div class=post_verbose_form >Modif Pt de Vie : </div><div class=post_verbose_form>{{ form.modif_PV }}</div>
+		<div class=post_verbose_form >Modif des gardes : </div><div class=post_verbose_form>{{ form.modif_gardes }}</div>
+		<div class=post_verbose_form >Modif des Troupes : </div><div class=post_verbose_form>{{ form.modif_troupes }}</div>
+		<div class=post_verbose_form >Résultat rendu accessible : </div><div class=post_verbose_form>{{ form.resultat_trouve }}</div>
+		
+		<div>
+			<input type="submit" class="save_btn" value="Envoyer">
+		</div>
+	
+	</form>
+		
+</div>
+
+
+{% endblock %}

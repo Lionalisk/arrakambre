@@ -1,0 +1,29 @@
+
+
+/*LOGIN--------------------------------------------------*/
+
+
+#login {
+	/*background-color: #cfc6b5;*/
+	Width : 400px;
+	Border-Style: Solid;
+	Border-Width: 1pt;
+	Border-Color: #775;
+	padding : 25px;
+	Font-Size: 9pt;
+	color: #332;
+}
+
+#login_footer {
+	margin-left: 10%;
+	margin-right: 10%;
+	min-height: 120px;
+}
+
+.login_texte {
+	Font-Size: 10pt;
+	color: #332;
+}
+
+
+

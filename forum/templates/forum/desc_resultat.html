@@ -1,0 +1,365 @@
+{% extends "forum\_base.html" %}
+{% block title %}Resultat : {{resultat.nom}}{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\desc_perso.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+{% endblock %}
+
+{% block style %}
+.desc_perso_base {Background-image:url("{% static fond1 %}");}
+{% endblock %}
+
+
+{% block entete %}
+
+<div class=entete>
+	<div class=texte_surtitre>Fiche resultat : {{resultat.nom}}</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+{% with "forum/"|add:nom_jeu|add:"/img/lieu/"|add:resultat.lieu.image|add:".jpg" as imgLieu %}
+
+<div class=desc_perso_main_block align="left">
+	<form method="POST" class="post-form" name="form_action">{% csrf_token %}
+		<a href='/admin/forum/resultat/{{resultat.id}}/change/' target="_blank"><img src="{% static edit %}" width="15" height="15"></a>
+		<div class=desc_perso_tableau>
+				
+				<div class=desc_perso_entete>
+					<div class=desc_perso_entete_gauche>Fiche</div>
+						<!--<div class=colonne_entete_droite>Fold All</a>-->
+				</div>
+
+					
+					<div class=desc_perso_base align="left">
+						<a href="/forum/lieu/{{resultat.lieu.id}}/">
+							<div class=block_image style="padding:5px;">
+								<div class=img_perso>
+									<img src="{% static imgLieu %}" width="81" height="88" border="1" title="{{resultat.lieu.nom}}" alt="{{resultat.lieu.nom}}">
+								</div>
+							</div>
+						</a>
+						<div class=desc_perso_contenu>
+							<div class=texte_titre>
+								<a href="/forum/modifresultat/{{resultat.id}}/active/0/">{% if resultat.active %}V{% else %}X{% endif %}</a> - 
+								<i><span style="{% if not resultat.active or resultat.fini %}opacity:0.5;{% endif %}">
+									<div style="display:inline-flex;">
+										<a id=affiche_form_nom href="javascript:afficheID('form_nom','affiche')">{{resultat.nom}}</a>
+										<a id=masque_form_nom href="javascript:afficheID('form_nom','masque')" style="display:none;">{{resultat.nom}}</a>
+									</div>
+								</span></i>
+								
+								
+								
+								<div class=texte_base id="form_nom" style="display:none;">{{ form.nom }}</div>
+								
+							</div>
+							{% if resultat.add_resultat %}
+							<div class=texte_sstitre style="margin-bottom: 3px;margin-top: 3px;">AJOUT AU RESULTAT : <a href="/forum/resultat/{{resultat.add_resultat.id}}/">{{resultat.add_resultat.nom}}</a> </div>
+							{% else %}
+
+							<div class=texte_sstitre style="margin-bottom: 3px;margin-top: 3px;">
+								<div style="display:inline-flex;">
+									<a id=affiche_form_action href="javascript:afficheID('form_action','affiche')">{{resultat.action.nom}}</a>
+									<a id=masque_form_action href="javascript:afficheID('form_action','masque')" style="display:none;">{{resultat.action.nom}}</a>
+								</div>
+							</div>
+							<div class=texte_base id="form_action" style="display:none;">{{ form.action }}</div>
+
+
+							{% if not resultat.one_resultat_possible %}
+							<div class=texte_base style="margin-bottom: 3px;">Priorité : {{resultat.priorite}} <a href="/forum/modifresultat/{{resultat.id}}/priorite/0/">-</a> <a href="/forum/modifresultat/{{resultat.id}}/priorite/1/">+</a></div>
+							{% endif %}
+							
+							<div class=texte_base>{% if resultat.unique %}<a href="/forum/modifresultat/{{resultat.id}}/unique/0/">Résultat unique</a> - <a href="/forum/modifresultat/{{resultat.id}}/fini/0/">{% if resultat.fini %}Découvert (fini){% else %}Non découvert{% endif %}</a>{% else %}<a href="/forum/modifresultat/{{resultat.id}}/unique/0/">Résultat re-découvrable</a>{% endif %}</div>
+							
+							{% if not resultat.unique %}
+							{% if resultat.obj_necessaire and resultat.obj_prioritaire %}
+							
+							<div class=texte_base>Résultat non re-découvrable <b>par un même joueur, car il peut être prioritaire</b></div>
+							{% else %}
+							<a href="/forum/modifresultat/{{resultat.id}}/repetable/0/"><div class=texte_base>{% if not resultat.repetable %}Résultat non re-découvrable <b>par un même joueur</b><br>	(Déjà découvert par : {{ resultat.get_users_connaissants }}){% else %}Résultat re-découvrable <b>par un même joueur</b>{% endif %}</div></a>
+
+							{% endif %}
+							{% endif %}
+							{% endif %}
+							
+						</div>
+
+						{% if not resultat.add_resultat %}
+						<div class=desc_perso_contenu style="margin-left: 50px;">
+							{% if resultat.action.champ_recherche1 %}
+								<div class=texte_base><a id=affiche_form_cle1 href="javascript:afficheID('form_cle1','affiche')">Clé 1 : {{resultat.cle1}}</a><a id=masque_form_cle1 href="javascript:afficheID('form_cle1','masque')" style="display:none;">Clé 1 : {{resultat.cle1}}</a></div>
+								<div class=texte_base id="form_cle1" style="display:none;">{{ form.cle1 }}</div>
+							{% endif %}
+							
+							{% if resultat.action.champ_recherche2 %}
+								<div class=texte_base><a id=affiche_form_cle2 href="javascript:afficheID('form_cle2','affiche')">Clé 2 : {{resultat.cle2}}</a><a id=masque_form_cle2 href="javascript:afficheID('form_cle2','masque')" style="display:none;">Clé 2 : {{resultat.cle2}}</a></div>
+								<div class=texte_base id="form_cle2" style="display:none;">{{ form.cle2 }}</div>
+							{% endif %}
+							
+							<div class=texte_sstitre style="margin-top:5px;">
+							{% if resultat.competence and resultat.valeur_competence > 0 %}
+								<div style="display:inline-flex;"><a id=affiche_form_competence href="javascript:afficheID('form_competence','affiche')">Compétence nécessaire - {{resultat.competence}}</a><a id=masque_form_competence href="javascript:afficheID('form_competence','masque')" style="display:none;">Compétence nécessaire - {{resultat.competence}}</a></div> : 
+								<a href="/forum/modifresultat/{{resultat.id}}/valeur_competence/0/">-</a> {{resultat.valeur_competence}} <a href="/forum/modifresultat/{{resultat.id}}/valeur_competence/1/">+</a>
+							{% else %}
+							<div style="display:inline-flex;">
+								<a id=affiche_form_competence href="javascript:afficheID('form_competence','affiche')">No Compétence nécessaire</a><a id=masque_form_competence href="javascript:afficheID('form_competence','masque')" style="display:none;">No Compétence nécessaire</a>
+							</div>
+							{% endif %}
+							
+							</div>
+							<div class=texte_base id="form_competence" style="display:none;">{{ form.competence }}</div>
+
+							<div class=texte_sstitre>
+							{% if resultat.obj_necessaire %}
+							<div style="display:inline-flex;"><a id=affiche_form_obj_necessaire href="javascript:afficheID('form_obj_necessaire','affiche')">{{resultat.obj_necessaire.nom}}</a><a id=masque_form_obj_necessaire href="javascript:afficheID('form_obj_necessaire','masque')" style="display:none;">{{resultat.obj_necessaire.nom}}</a></div> est utile pour trouver ce résultat
+							{% else %}
+							<div style="display:inline-flex;"><a id=affiche_form_obj_necessaire href="javascript:afficheID('form_obj_necessaire','affiche')">Pas d'objet utile pour trouver ce résultat</a><a id=masque_form_obj_necessaire href="javascript:afficheID('form_obj_necessaire','masque')" style="display:none;">Pas d'objet utile pour trouver ce résultat</a></div>
+							
+							{% endif %}
+							</div>
+							<div class=texte_base id="form_obj_necessaire" style="display:none;">{{ form.obj_necessaire }}</div>
+
+
+
+							{% if resultat.obj_necessaire %}
+							<div class=texte_base>Si avoir l'objet est une condition suffisante pour avoir ce résultat, cela veut dire que le fait d'avoir cet objet permettra au perso d'avoir une réussite sur ce résultat, même s'il n'a pas la compétence adéquate.
+							<br>Si le résultat est prioritaire, alors si le perso possède l'objet, ce résultat sera choisi en priorité. Il ne sera forcément pas "répétable"</div>
+							
+							{% if resultat.competence and resultat.valeur_competence > 0 %}
+								<div class=texte_base>
+									<a href="/forum/modifresultat/{{resultat.id}}/obj_importance/0/">
+									{% if resultat.obj_importance == 0 %}Avoir cet objet est suffisant pour avoir ce résultat, mais il n'est pas nécessaire
+									{% elif resultat.obj_importance == 1 %}Avoir cet objet est nécessaire pour avoir ce résultat, mais il n'est pas suffisant
+									{% elif resultat.obj_importance == 2 %}Avoir cet objet est une condition nécessaire et suffisante pour avoir ce résultat
+									{% endif %}
+									</a>
+								</div>
+							{% else %}
+								<div class=texte_base>
+									<a href="/forum/modifresultat/{{resultat.id}}/obj_importance/1/">
+									{% if resultat.obj_importance == 0 %}Avoir cet objet n'est pas nécessaire pour avoir ce résultat
+									{% else %}Avoir cet objet est nécessaire pour avoir ce résultat
+									{% endif %}
+									</a>
+								</div>
+							{% endif %}
+
+							{% if not resultat.one_resultat_possible %}
+							<div class=texte_base>
+								<a href="/forum/modifresultat/{{resultat.id}}/obj_prioritaire/0/">
+								{% if resultat.obj_prioritaire %}Résultat prioritaire si on a l'objet{% else %}Résultat non prioritaire même si on a l'objet{% endif %}
+								</a>
+							</div>
+							{% endif %}
+
+							{% if not resultat.echec_utile %}
+							<div class=texte_base>
+								{% if not resultat.echec %}
+									Si le perso n'arrive pas à avoir ce résultat, il ne lui sera pas proposé - <a href='/forum/MakeResultat/echec/{{resultat.id}}/'>ADD Echec</a>
+								{% else %}
+									Si le perso n'arrive pas à avoir ce résultat, il sera re-dirigé vers ce résultat : {{resultat.echec.nom}}
+								{% endif %}
+							</div>
+							{% endif %}
+							
+							{% endif %}
+							<div class=texte_base>
+
+							</div>
+
+						</div>
+						{% endif %}
+						<div style="margin-left: 15px;"><img src="{% static separateur_h %}"></div>
+					
+
+						<div class=desc_perso_contenu align="left" style="margin-left:30px;">
+							<div id=affiche_form_texte>
+								<a href="javascript:afficheID('form_texte','affiche')"><div class=texte_sstitre style="margin-bottom:3px;">Texte du Résultat : </div></a>
+								<div class=texte_base>{{resultat.texte|safe|linebreaksbr}}</div>
+							</div>
+
+							<div id=masque_form_texte style="display:none;">
+								<a href="javascript:afficheID('form_texte','masque')"><div class=texte_sstitre style="margin-bottom:3px;">Texte du Résultat : </div></a>
+								
+								<div class=post_form_champTexte id="form_texte">{{ form.texte }}</div>
+							</div>
+							
+
+
+							<div class=texte_base style="margin-top:10px;">
+								<a href="/forum/modifresultat/{{resultat.id}}/public/0/">{% if resultat.public %}Le résultat se dévoile en message <b>Public</b></a>{% else %}Le résultat se dévoile en message <b>Privé</b>{% endif %}</a>
+							</div>
+
+						</div>
+						<div style="margin-left: 15px;"><img src="{% static separateur_h %}"></div>
+
+
+						<div class=desc_perso_contenu align="left" style="margin-left:30px;margin-bottom: 20px;">
+							
+
+							<div style="margin-top: 8px;margin-bottom: 10px;">
+								<div class=texte_sstitre style="margin-bottom: 5px; display:inline-block;">
+									<div class=texte_base style="display:inline-block;">
+										<a id=affiche_form_objets href="javascript:afficheID('form_objets','affiche')">Objets :</a>
+										<a id=masque_form_objets href="javascript:afficheID('form_objets','masque')" style="display:none;">Objets :</a>
+									</div>
+								
+								{% if resultat.objet_trouve.count == 0 %}
+									None
+								{% else %}
+								
+									{% for objet in resultat.objet_trouve %}
+									<div class=texte_base style="display:block;">
+										{{objet.obj.nom}}
+										<a style="vertical-align: sub; margin-left:15px;" href="javascript:deleteObj('/forum/delete/objetresultat/{{resultat.id}}/{{objet.id}}/')"><img src="{% static delete %}" width="10" height="10"></a>
+									</div>
+									{% endfor %}
+								
+								
+								{% endif %}
+								</div>
+								<div class=texte_base id="form_objets" style="display:none;">
+									<div>Arme : {{ form.arme_cible }}</div>
+									<div>Armure : {{ form.armure_cible }}</div>
+									<div>Potion : {{ form.potion_cible }}</div>
+									<div>Parchemin : {{ form.parchemin_cible }}</div>
+									<div>Rituel : {{ form.rituel_cible }}</div>
+									<div>Objet de quête : {{ form.obj_quete_cible }}</div>
+									<div>Autres : {{ form.divers_cible }}</div>
+								</div>
+							</div>
+
+							<div class=texte_base>
+							{% if resultat.effet_recu %}
+							<span class=red><b>Effet : 
+								<div style="display:inline-flex;">
+									<a id=affiche_form_effet href="javascript:afficheID('form_effet','affiche')">{{resultat.effet_recu.nom}}</a>
+									<a id=masque_form_effet href="javascript:afficheID('form_effet','masque')" style="display:none;">{{resultat.effet_recu.nom}}</a>
+								</div></b></span>
+							{% else %}
+							<div style="display:inline-flex;">
+								<a id=affiche_form_effet href="javascript:afficheID('form_effet','affiche')">Pas d'effets</a>
+								<a id=masque_form_effet href="javascript:afficheID('form_effet','masque')" style="display:none;">Pas d'effets</a>
+							</div>
+							{% endif %}
+							<div class=texte_base id="form_effet" style="display:none;">{{ form.effet_recu }}</div>
+
+
+							<div class=texte_base>
+							{% if resultat.passage_trouve %}
+								<span class=red><b>Passage découvert vers : 
+									<a id=affiche_form_passages href="javascript:afficheID('form_passages','affiche')">{{resultat.passage_trouve.nom}}</a>
+									<a id=masque_form_passages href="javascript:afficheID('form_passages','masque')" style="display:none;">Passage découvert vers : {{resultat.passage_trouve.nom}}</a>
+							{% else %}
+								<div style="display:inline-flex;">
+									<a id=affiche_form_passages href="javascript:afficheID('form_passages','affiche')">Pas de passages à trouver</a>
+									<a id=masque_form_passages href="javascript:afficheID('form_passages','masque')" style="display:none;">Pas de passages à trouver</a>
+								</div>
+							{% endif %}
+							</div>
+							<div class=texte_base id="form_passages" style="display:none;">{{ form.passage_trouve }}</div>
+
+
+
+							<div class=texte_base>
+								{% if resultat.perso_trouve %}
+								<span class=red><b>
+									Perso découvert : 
+									<div style="display:inline-flex;">
+										<a id=affiche_form_persocache href="javascript:afficheID('form_persocache','affiche')">{{resultat.perso_trouve.nom}}</a>
+										<a id=masque_form_persocache href="javascript:afficheID('form_persocache','masque')" style="display:none;">{{resultat.perso_trouve.nom}}</a>
+									</div>
+								</b></span>
+								{% else %}
+								<div style="display:inline-flex;">
+									<a id=affiche_form_persocache href="javascript:afficheID('form_persocache','affiche')">Pas de perso à trouver</a>
+									<a id=masque_form_persocache href="javascript:afficheID('form_persocache','masque')" style="display:none;">Pas de perso à trouver</a>
+								</div>
+								{% endif %}
+							</div>
+							<div class=texte_base id="form_persocache" style="display:none;">{{ form.perso_trouve }}</div>
+
+
+
+							<div class=texte_base>
+								{% if resultat.resultat_trouve %}
+									<span class=red><b>Résultat découvert : 
+									<div style="display:inline-flex;">
+										<a id=affiche_form_resultat_trouve href="javascript:afficheID('form_resultat_trouve','affiche')">{{resultat.perso_trouve.nom}}</a>
+										<a id=masque_form_resultat_trouve href="javascript:afficheID('form_resultat_trouve','masque')" style="display:none;">{{resultat.perso_trouve.nom}}</a>
+									</div>
+									</b></span>
+								{% else %}
+									<div style="display:inline-flex;">
+										<a id=affiche_form_resultat_trouve href="javascript:afficheID('form_resultat_trouve','affiche')">Pas de résultat à découvrir</a>
+										<a id=masque_form_resultat_trouve href="javascript:afficheID('form_resultat_trouve','masque')" style="display:none;">Pas de résultat à découvrir</a>
+									</div>
+								{% endif %}
+							</div>
+							<div class=texte_base id="form_resultat_trouve" style="display:none;">{{ form.resultat_trouve }}</div>
+
+
+							<div class=texte_base>
+							<a href="/forum/modifresultat/{{resultat.id}}/modif_PV/0/">-</a> 
+							{% if resultat.modif_PV != 0 %}<span class=red><b>PV modifié : {{resultat.modif_PV}}</b></span>
+							{% else %}Pas de conséquence sur les PV
+							{% endif %}
+							 <a href="/forum/modifresultat/{{resultat.id}}/modif_PV/1/">+</a>
+							</div>
+
+							<div class=texte_base>
+							<a href="/forum/modifresultat/{{resultat.id}}/modif_gardes/0/">-</a> 
+							{% if resultat.modif_gardes != 0 %}<span class=red><b>Nb de Gardes modifié : {{resultat.modif_gardes}}</b></span>
+							{% else %}Pas de conséquence sur les Gardes
+							{% endif %}
+							 <a href="/forum/modifresultat/{{resultat.id}}/modif_gardes/1/">+</a>
+							</div>
+
+							<div class=texte_base>
+							<a href="/forum/modifresultat/{{resultat.id}}/modif_troupes/0/">-</a> 
+							{% if resultat.modif_troupes != 0 %}<span class=red><b>Nb de Troupes modifié : {{resultat.modif_troupes}}</b></span>
+							{% else %}Pas de conséquence sur les Troupes
+							{% endif %}
+							 <a href="/forum/modifresultat/{{resultat.id}}/modif_troupes/1/">+</a>
+							</div>
+
+							
+							{% if not resultat.add_resultat %}
+							
+							<div style="margin-top: 15px;">
+							<div class=texte_base>Résultat additionnel : <a href='/forum/MakeResultat/add/{{resultat.id}}/'>ADD Résultat</a></div>
+							{% for resultat_add in resultat.get_resultat_additionnel %}
+							<div class=texte_sstitre style="margin-top: 5px;"><a href='/forum/resultat/{{resultat_add.id}}/'>{{resultat_add.nom}}</a></div>
+							<div class=texte_base>{{resultat_add.return_decouverte2|linebreaksbr}}</div>
+							{% endfor %}
+							</div>
+							{% endif %}
+
+						</div>
+
+						
+
+					</div>
+				
+			
+		</div>
+		<input type="submit" class="save_btn" value="Valider">
+	</form>
+</div>
+
+{% endwith %}
+{% endblock %}

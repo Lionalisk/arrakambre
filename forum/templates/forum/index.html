@@ -1,0 +1,130 @@
+{% extends "forum\_base.html" %}
+{% block title %}INDEX{% endblock %}
+
+{% load static %}
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum/css/index.css' %}">
+{% endblock %}
+
+{% block style %}
+#index_personnage {Background-image:url("{% static 'forum/'|add:nom_jeu|add:'/img/fond1.png' %}");}
+#index_actu {Background-image:url("{% static 'forum/'|add:nom_jeu|add:'/img/fond1.png' %}");}
+#index_lieu {Background-image:url("{% static 'forum/'|add:nom_jeu|add:'/img/fond1.png' %}");}
+{% endblock %}
+
+
+{% block entete %}
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+
+
+<div id=index_actu align="center">
+	<div class=index_titre>ACTUALITES</div>
+	<div class=index_actu_all>
+		<div id=texte_sstitre>{{date}}</div>
+	</div>
+</div>
+
+<div id=index_personnage align="center">
+		
+	<div class=index_titre>PERSONNAGES</div>
+	
+	<div class=index_main_block align="left">
+		{% if list_perso %}
+		{% for perso in list_perso %}
+		
+		<div class=index_elt >
+
+			<div class=block_image align="center" style="width:95px;">
+				{% include "forum\post_perso.html" with perso=perso extension="INDEX" %}
+			</div>
+			
+			
+			<div class=index_elt_info style="width:95px;min-width:30px;">
+				<div class=texte_titre>Infos</div>
+				<div class=texte_base>
+					<div>{{perso.etat_sante.nom}}</div>
+					{%if perso.PC > 0 %}<div>Concentration : {{perso.PC}} pt{%if perso.PC > 1 %}s{%endif%}</div>{%endif%}
+					{%if perso.dissimulation > 0 %}<div>Dissimulation : {{perso.dissimulation}}</div>{%endif%}
+
+					{% for effet in perso.effets.all %}
+						<div class=texte_base>
+							Sous effet de : <b>{{effet.nom}}</b>
+						</div>
+					{% endfor %}
+
+					<div>{{perso.nbGardes}} garde{%if perso.nbGardes > 1 %}s{%endif%}<br>{{perso.nbTroupes}} troupe{%if perso.nbTroupes > 1 %}s{%endif%}</div>
+				</div>
+			</div>
+	
+	
+			<div class=index_elt_info style="width:30%;">
+				<div class=texte_titre>Activité</div>
+				<div class=texte_base>
+					<div><b>Lieu :</b> {{perso.lieu.nom}}</div><br>
+					{%if perso.occupe %}
+					<div>{{perso.desc_occupe|safe|linebreaksbr}}</div>
+					{% else %}
+					<div>Pas d'action en cours</div>
+					{% endif %}
+				</div>	
+			</div>
+		
+		</div>	
+
+		{% endfor %}
+		{% endif %}
+				
+		
+	</div>
+</div>
+	
+	
+	
+	
+	<!-- partie territoire-->
+	
+	
+	
+<div id=index_lieu align="left">
+	
+	<div class=index_titre>TERRITOIRES</div>
+	
+	<div class=index_main_block align="left">
+		
+		{% if list_territoire %}
+		{% for territoire in list_territoire %}
+		
+		
+		
+		<div class=index_elt>{% include "forum\territoire.html" with territoire=territoire %}</div>
+		
+		
+		{% endfor %}
+		{% endif %}
+		
+	
+	</div>
+	
+	
+</div>
+	
+	
+	
+	<div id=footer>
+	</div>
+	
+</div>
+
+
+
+
+{% endblock %}

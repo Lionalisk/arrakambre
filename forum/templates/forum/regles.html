@@ -1,0 +1,121 @@
+{% extends "forum\_base.html" %}
+{% block title %}REGLES{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+{% endblock %}
+
+{% block style %}
+#total {min-width: 650px;}
+{% endblock %}
+
+
+{% block entete %}
+
+
+<div class=entete>
+	<div class=texte_surtitre>REGLES - {{rubrique.nom}}</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+
+<div id=menu_haut style="height:22px;">
+		<div class=bouton_menu_gauche style="font-size: 8pt;min-width: 10px;padding: 4px;"><a class=texte_bouton_menu href="/forum/regles/0/"><img src="{% static 'forum\\'|add:nom_jeu|add:'\img\index.png' %}" width="12" height="12"></a></div>
+		{% for rub in qst_titre_regle %}
+		<div class=bouton_menu_gauche style="font-size: 8pt;min-width: 55px;padding: 5px;"><a class=texte_bouton_menu href="/forum/regles/{{rub.id}}/">{{rub.nom}}</a></div>
+		{% endfor %}
+		
+</div>
+
+<div class=msg_main_block align="left" >
+	<!--<div class=msg_titre><div class=texte_titre>JOUEUR</div></div>-->
+		{% if joueur.statut == "MJ" %}
+		<a href="/forum/createregle/{{rubrique.id}}/" target="_blank"><img src="{% static add %}" width="10px" height="10px"></a>
+		{% endif %}
+
+
+		<div class=texte_base style="margin-top: 10pt;margin-bottom: 20pt;">
+			
+			{% if joueur.statut == "MJ" %}
+			{{rubrique.descMJ|safe|linebreaksbr}}
+			{% else %}
+			{{rubrique.desc|safe|linebreaksbr}}
+			{% endif %}
+
+			{% if rubrique.nom_info == "index" %}
+
+				<div style="Background-image: url(/static/forum/{{nom_jeu}}/img/fond1.png);">
+				{{rubrique.index|safe|linebreaksbr}}
+				</div>
+			{% endif %}
+
+		</div>
+
+		<div class=tableau>
+			
+		
+
+		{% for regle in qst_sstitre_regle %}
+			
+			<div id={{regle.nom_info}} class="{% cycle 'row1' 'row2' %}" style="padding:10pt">
+				<div style="margin-right: 10px;">
+				<div id={{regle.nom_info}} class=texte_surtitre>
+					{% if joueur.statut == "MJ" %}
+					<a href="/forum/createregle/{{regle.id}}/" target="_blank"><img src="{% static add %}" width="10px" height="10px"></a>
+					<a href="/admin/forum/regle/{{regle.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a>
+					{% endif %}
+					{{regle.nom}}
+				</div><br>
+				<div class=texte_base style="margin-top: 10pt;margin-bottom: 20pt;">
+
+					{% if joueur.statut == "MJ" %}
+					{{regle.descMJ|safe|linebreaksbr}}
+					{% else %}
+					{{regle.desc|safe|linebreaksbr}}
+					{% endif %}
+
+					{% for ssregle in regle.enfants %}
+							
+							<div id={{ssregle.nom_info}} class=texte_titre style="margin-top: 30pt;margin-bottom: 20pt;margin-left:20pt;">
+								{% if joueur.statut == "MJ" %}
+								
+								<a href="/admin/forum/regle/{{ssregle.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a>
+								{% endif %}
+								{{ssregle.nom}}
+							</div>
+
+							<div style="margin-top: 10pt;margin-bottom: 10pt;margin-left:40pt;">
+								{% if joueur.statut == "MJ" %}
+								{{ssregle.descMJ|safe|linebreaksbr}}
+								{% else %}
+								{{ssregle.desc|safe|linebreaksbr}}
+								{% endif %}
+
+
+							</div>
+
+					{% endfor %}
+				</div>
+				</div>
+			</div>
+			
+			
+		{% endfor %}
+		</div>
+
+</div>
+
+
+{% endblock %}

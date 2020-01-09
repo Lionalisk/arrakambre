@@ -1,0 +1,131 @@
+{% extends "forum\_base.html" %}
+{% block title %}LISTE DES PERSOS{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+
+{% block entete %}
+
+
+<div class=entete>
+	<div class=texte_surtitre>PERSONNAGES</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+<div id=menu_haut>
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/personnagesMJ/maison/">Par Maison</a></div>
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/personnagesMJ/joueur/">Par Joueur</a></div>
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/personnagesMJ/lieu/">Par Lieu</a></div>
+		
+		<div class=bouton_menu_droite><a class=texte_bouton_menu href="/forum/personnagesMJ/inactive/">Inactifs</a></div>
+				
+</div>
+
+
+<div class=msg_main_block align="left">
+	<!--<div class=msg_titre><div class=texte_titre>JOUEUR</div></div>-->
+
+	{% if qst_perso %}
+		<div class=tableau>
+			<div class=row_entete>
+				<!--<div class=colonne_entete_gauche style="margin-left:30px;Font-Weight:Bold;"><div class=texte_entete>De :</div></div>
+				<div class=colonne_entete_gauche style="Font-Weight:Bold;"><div class=texte_entete>Titre</div></div>
+				<div class=colonne_entete_droite>Fold All</a>
+				<div class=colonne_entete_droite>Unfold All</a>-->
+			</div>
+		
+		{% if filtre == "joueur" %}{% regroup qst_perso by 0.listejoueur as T_categories %}
+		{% elif filtre == "lieu" %}{% regroup qst_perso by 0.lieu.nom as T_categories %}
+		{% else %}{% regroup qst_perso by 0.maison.nom as T_categories %}
+		{% endif %}
+
+		{% for categorie in T_categories %}
+			<div>
+			<div class=titre_tableau><div class=texte_titre>{{ categorie.grouper }}</div></div>
+					{% for perso in categorie.list %}
+						<div class="{% cycle 'row1' 'row2' %}">
+							
+							<a href="javascript:afficheID('perso_{{perso.0.id}}','affiche')"><div id="affiche_perso_{{perso.0.id}}" class=colonne_ext><div class=texte_base>+</div></div></a>
+							<a href="javascript:afficheID('perso_{{perso.0.id}}','masque')"><div id="masque_perso_{{perso.0.id}}" class=colonne_ext style="display:none;"><div class=texte_base>-</div></div></a>
+
+							<div class=colonne style="min-width:80px;width:10%; white-space: nowrap;">
+								<div class=texte_base><a href="/admin/forum/perso/{{perso.0.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a> <a href="/forum/perso/-{{joueur.id}}/{{perso.0.id}}/">{{perso.0.nom}}</a></div>
+							</div>
+							<div class=colonne style="width:20%; white-space: nowrap;"><div class=texte_base>{{perso.0.titre}}</div></div>
+							{% if filtre != "joueur" %}<div class=colonne style="width:16%;"><div class=texte_base>{{perso.0.listejoueur}}</div></div>{% endif %}
+							
+							{% if filtre != "maison" %}<div class=colonne style="width:8%;"><div class=texte_base>{{perso.0.maison.nom}}</div></div>{% endif %}
+							
+							{% if filtre != "lieu" %}<div class=colonne style="width:40%;"><div class=texte_base>{{perso.0.lieu.nom}}</div></div> {% endif %}
+
+							
+
+							
+						</div>
+
+						<div id="perso_{{perso.0.id}}" class=msg_post>
+							<div class=msg_base align="left">
+								<div class=post_contenu>
+									<div class=colonne_competence>
+										<div class=texte_sstitre>1/ {{perso.0.classe_principale.nom}}</div>
+										<div class=texte_sstitre>2/ {{perso.0.classe_secondaire.nom}}</div>
+
+										<div class=texte_sstitre><br>{{perso.1.0.0}}</div>
+											{% for competence in perso.1.0.1 %}
+												{% if competence.1 == 0 %} 
+													<div class=texte_base style="opacity:0.4;">{{competence.1}} : {{competence.0.nom}}</div>
+												{% else %}
+													<div class=texte_base><b>{{competence.1}}</b> : {{competence.0.nom}}</div>
+												{% endif %}
+											{% endfor %}
+
+									</div>
+
+									{% for categorie_competence in perso.1 %}
+										{% if categorie_competence.0 != "" %}
+									<div class=colonne_competence>
+										<div class=texte_sstitre style="padding-bottom:3px;">{{categorie_competence.0}}<br></div>
+											{% for competence in categorie_competence.1 %}
+												{% if competence.1 == 0 %} 
+													<div class=texte_base style="opacity:0.4;">{{competence.1}} : {{competence.0.nom}}</div>
+												{% else %}
+													<div class=texte_base><b>{{competence.1}}</b> : {{competence.0.nom}}</div>
+												{% endif %}
+											{% endfor %}
+									</div>
+										{% endif %}
+									{% endfor %}
+								
+								</div>
+							</div>
+						</div>
+
+					{% endfor %}
+			</div>
+		{% endfor %}
+		</div>
+
+	{% else %}
+	<div class=texte_base>Pas de personnage</div>
+	{% endif %}
+</div>
+
+
+{% endblock %}

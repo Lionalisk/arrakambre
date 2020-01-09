@@ -1,0 +1,125 @@
+{% load static %}				
+
+
+
+<div class=desc_perso_contenu align="left">
+	<div style="margin-left:30px;">
+		<div class=texte_titre style="margin-top:5px;">
+			Gardes : {{perso.nbGardes}}</span> <span class=texte_sstitre>/ {{perso.gardes_MAX}}</span>
+			<span style="margin-left: 30px;"><a href="/forum/lieu/-{{joueur.id}}/{{perso.lieu.id}}/{{perso.id}}/69/1"><input type="submit" class="save_btn" value="Donner"></a> 
+			<a style="vertical-align: sub; margin-left:15px;" href="javascript:deleteGarde('/forum/delete/garde/-{{joueur.id}}/{{perso.id}}/1/')"><img src="{% static delete %}" width="20" height="20"></a></span>
+		</div>
+		<div class=texte_titre style="margin-top:5px;">
+			Troupes : {{perso.nbTroupes}} <span class=texte_sstitre>/ {{perso.troupes_MAX}}</span>
+			<span style="margin-left: 30px;"><a href="/forum/lieu/-{{joueur.id}}/{{perso.lieu.id}}/{{perso.id}}/70/1"><input type="submit" class="save_btn" value="Donner"></a> <a style="vertical-align: sub; margin-left:15px;" href="javascript:deleteTroupe('/forum/delete/troupe/-{{joueur.id}}/{{perso.id}}/1/')"><img src="{% static delete %}" width="20" height="20"></a></span>
+		</div>
+	</div>
+
+	<div style="margin-bottom:10px;margin-top:10px;"><img src="{% static separateur_h %}"></div>
+
+
+	{% for objet in qst_objet %}
+
+		<div style="margin-left:30px;">
+
+			<div class=texte_titre style="margin-bottom:7px;">
+				<a href="javascript:afficheID('objet_{{objet.id}}','affiche')"><div id="affiche_objet_{{objet.id}}">+ {{objet.get_nom}}{% if objet.obj.cumulable %} - {{objet.etat}}{% endif %}{% if objet.porte %} <span class=texte_sstitre>(porté)</span>{% endif %}</div></a>
+				<a href="javascript:afficheID('objet_{{objet.id}}','masque')"><div id="masque_objet_{{objet.id}}" style="display:none;">- {{objet.get_nom}}{% if objet.obj.cumulable %} - {{objet.etat}}{% endif %}{% if objet.porte %} <span class=texte_sstitre>(porté)</span>{% endif %}
+				{% if joueur.statut == 'MJ' %}
+				<a href='/admin/forum/objet_perso/{{objet.id}}/change/' target="_blank"><img src="{% static edit %}" width="15" height="15"></a>
+				<a href='/admin/forum/objet/{{objet.obj.id}}/change/' target="_blank"><img src="{% static edit %}" width="15" height="15"></a>
+				{% endif %}
+				</div></a>
+				
+
+			</div>
+			<div id= "objet_{{objet.id}}" style="display:none;">
+				<div class=texte_sstitre>{{objet.obj.classe}}</div>
+				
+
+				{% if objet.obj.classe == "arme" %}
+						<div class=texte_base>Bonus pour Duel : {{objet.get_duel}}</div>
+						<div class=texte_base>Bonus pour mélée : {{objet.get_duel}}</div>
+						<div class=texte_base>Dommages : {{objet.get_dommage}}</div>
+						<div class=texte_base>Temps de Frappe : {{objet.get_initiative}}</div>
+				{% endif %}
+
+				{% if objet.obj.classe == "armure" %}
+						<div class=texte_base>PA : {{objet.get_PA}}</div>
+						<div class=texte_base>Défense : {{objet.get_defense}}</div>
+						<div class=texte_base>Endurance : {{objet.get_endurance}}</div>
+				{% endif %}
+
+				{% if objet.obj.competence_requise.nom and objet.obj.niveau_requis > 0 %}<div class=texte_sstitre>Compétence requise : niv.{{objet.obj.niveau_requis}} dans {{objet.obj.competence_requise.nom}}</div>{% endif %}
+				{% if objet.obj.description %}<div class=texte_base>{{objet.obj.description}}</div>{% endif %}
+				{% if objet.obj.action %}<div>{{objet.obj.action.nom}}</div>{% endif %}
+
+				<div style="margin:10px;">
+					{% if perso.bouton_objet_OK %}
+					{% if objet.obj.classe == "arme" %}
+						
+
+						{% if objet.porte %}
+						<a href="/forum/porte_objet/-{{joueur.id}}/{{perso.id}}/{{objet.id}}/0/"><input type="submit" class="save_btn" value="Ranger Arme"></a>
+						{% else %}
+						<a href="/forum/porte_objet/-{{joueur.id}}/{{perso.id}}/{{objet.id}}/1/"><input type="submit" class="save_btn" value="Porter Arme"></a>
+						{% endif %}
+
+
+					{% elif objet.obj.classe == "armure" %}
+						{% if objet.porte %}
+						<a href="/forum/porte_objet/-{{joueur.id}}/{{perso.id}}/{{objet.id}}/0/"><input type="submit" class="save_btn" value="Enlever Armure"></a>
+						{% else %}
+						<a href="/forum/porte_objet/-{{joueur.id}}/{{perso.id}}/{{objet.id}}/1/"><input type="submit" class="save_btn" value="Porter Armure"></a>
+						{% endif %}
+
+					{% elif objet.obj.en_main_OK %}
+						{% if objet.porte %}
+						<a href="/forum/porte_objet/-{{joueur.id}}/{{perso.id}}/{{objet.id}}/0/"><input type="submit" class="save_btn" value="Ranger"></a>
+						{% else %}
+						<a href="/forum/porte_objet/-{{joueur.id}}/{{perso.id}}/{{objet.id}}/1/"><input type="submit" class="save_btn" value="Porter"></a>
+						{% endif %}
+					{% endif %}
+
+					{% if objet.obj.utilise %}
+					<a href="/forum/lieu/-{{joueur.id}}/{{perso.lieu.id}}/{{perso.id}}/60!{{objet.id}}/1"><input type="submit" class="save_btn" value="Utiliser"></a>
+					{% endif %}
+
+					<a href="/forum/lieu/-{{joueur.id}}/{{perso.lieu.id}}/{{perso.id}}/45!{{objet.id}}/1"><input type="submit" class="save_btn" value="Donner"></a>
+					<a style="vertical-align: sub; margin-left:15px;" href="javascript:deleteObj('/forum/delete/objet/-{{joueur.id}}/{{perso.id}}/{{objet.id}}/')"><img src="{% static delete %}" width="20" height="20"></a>
+
+					{% endif %}
+				</div>
+			<div style="margin-bottom:10px;margin-top:10px;"><img src="{% static separateur_h %}"></div>
+			</div>
+
+		</div>
+
+		
+
+	{% endfor %}
+
+
+	{% if joueur.statut == "MJ" %}
+	<div style="margin-bottom:10px;margin-top:10px;"><img src="{% static separateur_h %}"></div>
+	<div class=texte_titre>MJ : Donner un objet au personnage : </div>
+	<br>
+	<div class=post_formulaire>
+		<form method="POST" class="post-form">{% csrf_token %}
+			
+			<div class=texte_base >Donner {{form.arme_cible.label}} {{ form.arme_cible }}</div>
+			<div class=texte_base >Donner {{form.armure_cible.label}} {{ form.armure_cible }}</div>
+			<div class=texte_base >Donner {{form.potion_cible.label}} {{ form.potion_cible }}</div>
+			<div class=texte_base >Donner {{form.parchemin_cible.label}} {{ form.parchemin_cible }}</div>
+			<div class=texte_base >Donner {{form.rituel_cible.label}} {{ form.rituel_cible }}</div>
+			<div class=texte_base >Donner {{form.obj_quete_cible.label}} {{ form.obj_quete_cible }}</div>
+			<div class=texte_base >Donner {{form.divers_cible.label}} {{ form.divers_cible }}</div>
+
+			<div><input type="submit" class="save_btn" value="Envoyer"></div>
+		
+		</form>
+			
+	</div>
+	{% endif %}
+
+</div>

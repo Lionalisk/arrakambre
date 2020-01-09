@@ -1,0 +1,51 @@
+
+
+@import 'root.css';
+
+
+
+#post_action{
+	
+	display:inline-flex;
+	width: 100%;
+	/*Border-top: 1pt Solid #665;*/
+	Border-bottom: 1pt Solid var(bordure_bas_msg);
+	/*min-height: 120px;*/
+	padding-bottom : 10px;
+
+}
+
+
+.post_action_liste{
+	display: inline-block;
+	min-width: 100px;
+	text-align: left;
+	padding-top: 5px;
+	
+}
+
+.post_action_item{
+	Font-Size: 9pt;
+}
+
+
+.post_formulaire{
+	display : inline-block;
+	Border-left: 0pt Solid var(bordure_bas_msg);
+	padding:5px;
+	min-height: 150px;
+	width:100%
+}
+
+.post_verbose_form{
+	font-size: 8pt;
+	Color: var(bordure_bas_msg);
+}
+
+.post_form_champTexte{
+	
+}
+
+.post_action_categorie{
+	margin-bottom: 7px;
+}

@@ -1,0 +1,92 @@
+/*
+
+fond_enteteMJ : #4a2a1a;
+fond_entete : #7a4a3a;
+fond_rubrique : #603020;
+fond_rubriqueMJ : #302010;
+texte_rubrique : #cab3a1;
+
+fond_bouton : #422;
+texte_bouton : #fed;
+
+texte_surtitre : #410;
+texte_titre : #521;
+texte_base : #332;
+texte_small : #443;
+texte_a = texte_quote : #422;
+
+texte_indicMJ : #642;
+texte_post : #221;
+texte_signature : #864;
+
+bordure_cadre_fonce: #753;
+
+
+
+fond_barreprogress : #410;
+fond_barreprogress_encours : #c82;
+fond_barreprogressOK :#080;
+
+*/
+:root {
+  /*postaction OK*/
+  /*index.css*/
+  ___bordure_cadre_fonce: #753;
+  __texte_fonce: #410;
+  
+  /*message.css*/
+  fond_row1 : #f7eddc;
+  fond_row2 : #976;
+  bordure_row : #987;
+  bordure_bas_msg : #665;
+  __texte_entete : #fed;
+  __fond_entete_fonce : #603020;
+  __texte_clair : #cab3a1;
+  
+  /*main.css*/
+  fond_body : #000;
+  __texte_a : #422;
+  fond_textarea : #fff5e9;
+  bordure_textearea : #422;
+  __texte_submit : #fec;
+  __fond_submit : #422;
+  fond_total : #b8a186;
+  bordure_main : #753;
+  fond_num_page : #410;
+  texte_num_page : #987;
+  __texte_titre : #521;
+  __texte_base : #332;
+  __texte_small : #443;
+  
+  __fond_barreprogress : #410;
+  __fond_barreprogress_encours : #c82;
+  __fond_barreprogressOK :#080;
+  
+  /*header.css*/
+  __fond_menu_MJ : #4a2a1a;
+  __fond_menu_haut : #7a4a3a;
+  ---texte_clair : #cab3a1;
+  ---fond_bouton_menu : #603020;
+  __fond_bouton_menu_MJ : #302010;
+  
+  /*login*/
+  __texte_fonce : #332;
+  bordure_login : #775;
+  
+  /*entetelieu*/
+  __texte_surtitre : #410;
+  texte_base :#000;
+  
+  /*post*/
+  bordure : #665;
+  fond_sys : #dab094;
+  texte_sys : #610;
+  bordure_sys : #754;
+  bordure_post : #665;
+  __texte_post : #221;
+  __texte_signature : #864;
+  bordure_quote : #987;
+  fond_quote : #cab8a0;
+  __texte_quote : #422;
+  __texte_indicMJ : #642;
+}

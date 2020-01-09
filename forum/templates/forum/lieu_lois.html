@@ -1,0 +1,58 @@
+{% load static %}
+
+
+	<div style="border-bottom: 1pt Solid #665;">
+	<div class=titre_tableau><div class=texte_titre>Proposition(s) en cours :</div></div>
+	
+	{% for loi in list_Loi_encours %}
+	{% with loi.get_nb_votes as votes %}
+	<div class="row1">
+		<a href="javascript:afficheID('loi_{{loi.id}}','affiche')"><div id="affiche_loi_{{loi.id}}" class=colonne_ext><div class=texte_base>+</div></div></a>
+		<a href="javascript:afficheID('loi_{{loi.id}}','masque')"><div id="masque_loi_{{loi.id}}" class=colonne_ext style="display:none;"><div class=texte_base>-</div></div></a>
+		
+		<div class=colonne><div class=barre_progress align=left style="width:100px;">
+			{% if votes > 48 %}<div class=barre_progress_OK style="width:{{votes}}px;"></div>
+			{% else %}<div class=barre_progress_encours style="width:{{votes}}px;"></div>
+			{% endif %}
+		</div></div>
+		<div class=colonne><div class=texte_sstitre>{% if joueur.statut == "MJ" %}<a href="/admin/forum/loi/{{loi.id}}/change/" target="_blank"><img src="{% static edit %}" width="10px" height="10px"></a> {% endif %}{{loi.nom}} par {{loi.perso.nom}}</div></div>
+
+
+		
+
+		{% if vote_OK %}
+		{% if perso_joueur == loi.perso %}
+		<div class=colonne><div class=texte_base>- <a href="/forum/deleteLoi/-{{joueur.id}}/{{perso_joueur.id}}/{{loi.id}}/">Retirer proposition</a></div></div>
+		<div class=colonne><div class=texte_base>- <a href="/forum/soumettreLoi/-{{joueur.id}}/{{perso_joueur.id}}/{{loi.id}}/">Provoquer vote</a></div></div>
+		{% elif perso_joueur == perso_joueur.maison.senateur %}
+		
+			{% if perso_joueur.maison in loi.maison_a_vote.all %}
+			<div class=colonne><div class=texte_base>- <a href="/forum/annuleVoteLoi/-{{joueur.id}}/{{perso_joueur.id}}/{{loi.id}}/">Retirer son soutien</a></div></div>
+			{% else %}
+			<div class=colonne><div class=texte_base>- <a href="/forum/voteLoi/-{{joueur.id}}/{{perso_joueur.id}}/{{loi.id}}/">Soutenir la proposition</a></div></div>
+			{% endif %}
+		
+		{% endif %}
+		{% endif %}
+
+
+	</div>
+
+	<div id="loi_{{loi.id}}" class=msg_post>
+		<div class=msg_base align="left">
+			<div class=post_contenu>
+				
+				<div class=texte_base><b>Sénateurs favorables à la loi :</b> {{loi.return_senateur_vote}}</div>
+				<div class=texte_base><b>Nombre de votes :</b> {{votes}} / 100</div>
+				<div class=texte_base><b>Fin des votes :</b> {{loi.date_jeu_fin}}</div>
+				<div align=center><img src="{% static separateur_h %}"></div>
+				<div class=texte_base>{{loi.description|safe|linebreaksbr}}</div>
+				
+			</div>
+		</div>
+	</div>
+	{% endwith %}
+	{% endfor %}
+	<div align=center><img src="{% static separateur_h %}"></div>
+	</div>
+	

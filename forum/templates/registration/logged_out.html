@@ -1,0 +1,33 @@
+<html>
+<html lang="fr">
+<head>
+<title>CONNEXION</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static "forum\css\cssfile.css" %}">
+<style>
+#total {
+	Background-image :url("{% static "forum\img\parchemin.jpg" %}");
+}
+</style>
+</head>
+
+	
+	
+    <body>
+	
+	
+	
+	<div id=total align="center">
+	<div id=header>
+	</div>
+	
+	<div id=base>
+		
+		<div>
+
+{% block content %}
+  <p>Logged out!</p>  
+  <a href="{% url 'login'%}">Click here to login again.</a>
+{% endblock %}

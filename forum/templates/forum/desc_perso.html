@@ -1,0 +1,204 @@
+{% extends "forum\_base.html" %}
+{% block title %}{{perso.get_nom}}{% endblock %}
+
+{% load static %}
+
+
+{% block linkcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\message.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\desc_perso.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\post.css' %}">
+{% endblock %}
+
+{% block style %}
+.desc_perso_base {Background-image:url("{% static fond1 %}");}
+{% endblock %}
+
+
+{% block entete %}
+
+<div class=entete>
+	<div class=texte_surtitre>Fiche perso : {{perso.nom}}</div>
+	<div><img src="{% static separateur_h %}"></div>
+</div>
+
+{% endblock %}
+
+
+
+
+{% block main %}
+
+
+<div id=menu_haut>
+	
+	{% for p in joueur.list_persos %}
+		{% if p == perso %}
+		<div class=bouton_menu_gauche style="opacity:0.5;">{{p.nom}}</div>
+		{% else %}
+		<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/perso/-{{joueur.id}}/{{p.id}}/">{{p.nom}}</a></div>
+		{% endif %}
+	{% endfor %}
+	
+	
+	<!--<div class=bouton_menu_droite><a class=texte_bouton_menu href="/forum/personnagesMJ/inactive/">Inactifs</a></div>-->
+				
+</div>
+
+
+<div class=desc_perso_main_block align="left">
+
+		
+		<div class=desc_perso_tableau>
+					
+				<div class=desc_perso_entete>
+					<div class=desc_perso_entete_gauche><a href="/forum/perso/-{{joueur.id}}/{{perso.id}}/" class=texte_entete>Fiche</a></div>
+						
+						{% if joueur in perso.joueur.all or joueur.statut == "MJ" %}
+						<div class=desc_perso_entete_gauche><a href="/forum/perso/-{{joueur.id}}/{{perso.id}}/equipement/1/" class=texte_entete>Equipement</a></div>
+						<div class=desc_perso_entete_gauche><a href="/forum/perso/-{{joueur.id}}/{{perso.id}}/background/1/" class=texte_entete>Background</a></div>
+						<div class=desc_perso_entete_gauche><a href="/forum/perso/-{{joueur.id}}/{{perso.id}}/historique/1/" class=texte_entete>historique</a></div>
+						<div class=desc_perso_entete_gauche><a href="/forum/perso/-{{joueur.id}}/{{perso.id}}/message/1/" class=texte_entete>conversations</a></div>
+						{% endif %}
+						<!--<div class=colonne_entete_droite>Fold All</a>-->
+				</div>
+
+					
+					<div class=desc_perso_base align="left">
+						<a href="/forum/lieu/-{{joueur.id}}/{{perso.lieu.id}}/{{perso.id}}/1/1#perso_present">
+							<div class=block_image style="padding:5px;">
+							{% include "forum\img_perso.html" with perso=perso size="L" etatsante=perso.etat_sante perso_cache=False %}
+							</div>
+						</a>
+						<div class=desc_perso_contenu>
+							<div class=texte_titre>
+								{{perso.get_nom}}{% if perso.doppelganger %}{% if joueur.statut == "MJ" or joueur in perso.joueur.all %} <i><span style="Font-Size: 9pt;">({{perso.nom_origine}})</span></i>{% endif %}{% endif %}
+								{% if joueur.statut == "MJ" %}
+								<a href='/admin/forum/perso/{{perso.id}}/change/' target="_blank"><img src="{% static edit %}" width="15" height="15"></a>
+								{% endif %}
+							</div>
+							{% if perso.titre != "" %}<div class=texte_sstitre>{{perso.get_titre}}</div>{% endif %}
+							<div class=texte_sstitre>Maison : {{perso.get_maison}}</div>
+							
+							<div class=texte_base>{% if perso.get_genre %}Homme{% else %}Femme{% endif %}</div>
+							
+							<br>
+							{% if joueur in perso.joueur.all or joueur.statut == "MJ" %}
+							<div class=texte_base>
+								Position actuelle : <br><a href="/forum/lieu/-{{joueur.id}}/{{perso.lieu.id}}/{{perso.id}}/1/1">{{perso.lieu.nom}}</a>
+								{% if joueur.statut == "MJ" and perso.lieu.taille > 1 %}<br>Secteur {{perso.secteur}}{% endif %}
+							</div>
+							{% endif %}
+						</div>
+
+						<div class=desc_perso_contenu>
+							
+							<!--<div class=texte_titre>Etat</div>-->
+							{% if perso.geolier %}<div class=texte_sstitre>{{perso.get_nom}} est prisonnier par <a href="/forum/perso/-{{joueur.id}}/{{perso.geolier.id}}/">{{perso.geolier.get_nom}}</a></div><br>{% endif %}
+							{% if perso.leader %}<div class=texte_sstitre>{{perso.get_nom}} accompagne <a href="/forum/perso/-{{joueur.id}}/{{perso.leader.id}}/">{{perso.leader.get_nom}}</a></div><br>{% endif %}
+
+							<div class=texte_sstitre>{{perso.get_nom}} est {{perso.etat_sante.nom}}</div>
+							
+							
+							
+							{% for effet in perso.effets.all %}
+							{% if joueur in perso.joueur.all or joueur.statut == "MJ" or effet.eft.effet_visible %}
+								<div class=texte_base>
+									Sous effet de : <b>{{effet.nom}}</b>
+									{% if joueur.statut == "MJ" %}
+
+									<a href='/admin/forum/effet_perso/{{effet.id}}/change/' target="_blank"><img src="{% static edit %}" width="15" height="15"></a>
+									<a style="vertical-align: sub; margin-left:15px;" href="/forum/delete/effet/-{{joueur.id}}/{{perso.id}}/{{effet.id}}/"><img src="{% static delete %}" width="20" height="20"></a>
+									{% endif %}
+								</div>
+							{% endif %}
+							{% endfor %}
+							
+							{% if joueur in perso.joueur.all or joueur.statut == "MJ" %}
+								{% if perso.dissimulation > 0 %}
+								<div class=texte_sstitre>{{perso.get_nom}} est dissimulé - niveau {{perso.dissimulation}}</div>
+								{% endif %}
+							{% endif %}
+							
+							<div class=texte_base>
+								Pts Vie : {{perso.PV}} / {{perso.PV_MAX}}
+								{% if joueur.statut == "MJ" %}
+								 	{% if perso.PV < perso.PV_MAX %} <a href="/forum/modifPt/{{perso.id}}/PV/{{perso.PV|add:'2'}}/">+</a>{% endif %}
+								 	{% if perso.PV > -1 %} <a href="/forum/modifPt/{{perso.id}}/PV/{{perso.PV}}/">-</a>{% endif %}
+								{% endif %}
+							</div>
+
+							
+
+							{% if joueur in perso.joueur.all or joueur.statut == "MJ" %}
+
+							<div class=texte_base>
+								{% with perso.PA_MAX as PA_MAX %}
+									Pts Armure : {{perso.PA}} / {{PA_MAX}}
+									{% if perso.PA < PA_MAX %} <a href="/forum/modifPt/{{perso.id}}/PA/{{perso.PA|add:'2'}}/">+</a>{% endif %}
+								 	{% if perso.PA > 0 %} <a href="/forum/modifPt/{{perso.id}}/PA/{{perso.PA}}/">-</a>{% endif %}
+								{% endwith %}
+							</div>
+							
+								<!--{% if perso.valeur_concentration > 0 %}
+									<div class=texte_base>
+										Pts Concentration : {{perso.PC}} / {{perso.valeur_concentration}}
+										{% if perso.PC < perso.valeur_concentration %} <a href="/forum/modifPt/{{perso.id}}/PC/{{perso.PC|add:'2'}}/">+</a>{% endif %}
+								 		{% if perso.PC > 0 %} <a href="/forum/modifPt/{{perso.id}}/PC/{{perso.PC}}/">-</a>{% endif %}
+									</div>
+								{% endif %}-->
+
+							{% endif %}
+
+
+							<br>
+							<div class=texte_base>{% if perso.arme %}Arme : <b>{{perso.arme.obj.nom}}</b>{% endif %}</div>
+							<div class=texte_base>{% if perso.armure %}Armure : <b>{{perso.armure.obj.nom}}</b>{% endif %}</div>
+
+							{% with perso.gardes_MAX as gardes_MAX %}
+							{% with perso.troupes_MAX as troupes_MAX %}
+							<div class=texte_base>
+								<b>{{perso.nbGardes}} gardes</b>
+								{% if joueur in perso.joueur.all or joueur.statut == "MJ" %}(max:{{gardes_MAX}}){% endif %}
+								{% if joueur.statut == "MJ" %}
+								{% if perso.nbGardes < gardes_MAX %} <a href="/forum/modifPt/{{perso.id}}/nbGardes/{{perso.nbGardes|add:'2'}}/">+</a>{% endif %}
+								{% if perso.nbGardes > 0 %} <a href="/forum/modifPt/{{perso.id}}/nbGardes/{{perso.nbGardes}}/">-</a>{% endif %}
+								{% endif %}
+							</div>
+							<div class=texte_base>
+								<b>{{perso.nbTroupes}} troupes</b> 
+								{% if joueur in perso.joueur.all or joueur.statut == "MJ" %}(max:{{troupes_MAX}}){% endif %}
+								{% if joueur.statut == "MJ" %}
+								{% if perso.nbTroupes < troupes_MAX %} <a href="/forum/modifPt/{{perso.id}}/nbTroupes/{{perso.nbTroupes|add:'2'}}/">+</a>{% endif %}
+								{% if perso.nbTroupes > 0 %} <a href="/forum/modifPt/{{perso.id}}/nbTroupes/{{perso.nbTroupes}}/">-</a>{% endif %}
+								{% endif %}
+
+							</div>
+							{% endwith %}
+							{% endwith %}
+
+						</div>
+						<div style="margin-left: 15px;"><img src="{% static separateur_h %}"></div>
+					
+
+						{% if rubrique == "fiche" %} 
+							{% include "forum\desc_perso_fiche.html" %}
+						{% elif rubrique == "background" %}
+							{% include "forum\desc_perso_background.html" %}
+						{% elif rubrique == "historique" %}
+							{% include "forum\desc_perso_historique.html" %}
+						{% elif rubrique == "message" %}
+							{% include "forum\desc_perso_msg.html" %}
+						{% elif rubrique == "equipement" %}
+							{% include "forum\desc_perso_equipement.html" %}
+						{% endif %}
+
+
+					</div>
+				
+			
+		</div>
+</div>
+
+
+{% endblock %}

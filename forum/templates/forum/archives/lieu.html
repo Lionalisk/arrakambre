@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>LIEU : {{ lieu.nom }}</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+<script type="text/javascript" src="{% static "forum\jvscript\fonctions.js" %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static "forum\css\cssfile.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "forum\css\cssfile_post.css" %}">
+<style>
+#total {
+	Background-image:url("{% static "forum\img\parchemin.jpg" %}");
+}
+#post_base {
+	Background-image:url("{% static "forum\img\fond1.png" %}");
+}
+
+#base {
+	Background-image:url("{% static "forum\img\fond2.png" %}");
+}
+
+#post_action_base {
+	Background-image:url("{% static "forum\img\fond1.png" %}");
+}
+
+</style>
+</head>
+
+    <body background="{% static "forum/img/marbre.jpg" %}">
+	
+	{% with 'forum/img/lieu/'|add:lieu.image|add:'_2.jpg' as imgLieu %}
+
+
+	<div id=total align="left">
+	
+		<div id=header>
+			<div id=menu_haut>
+					<div id=bouton_menu_gauche style="width: 30px;padding:2px;"><a href="/forum/"><img src="{% static "forum\img\index.png" %}"></a></div>
+					<div id=bouton_menu_gauche style="width: 30px;padding:2px;"><a href="/forum/messagerie/"><img src="{% static "forum\img\msg.png" %}"></a></div>
+					<div id=bouton_menu_gauche><a id=bouton_menu href="/forum/lieu/">Forum</a></div>
+					<div id=bouton_menu_gauche><a id=bouton_menu href="/forum/background/">Background</a></div>
+					<div id=bouton_menu_gauche><a id=bouton_menu href="/forum/regles/">Règles</a></div>
+					
+					<div id=bouton_menu_droite style="width: 30px;padding:1px;"><a href="/forum/accounts/logout"><img src="{% static "forum\img\deconnexion.png" %}"></a></div>
+					<div id=bouton_menu_droite style="Border-Right: 0pt;"><a id=bouton_menu href="/forum/profil/">{{joueur.nom}}</a></div>
+			</div>
+			
+			<div align="center"><img src="{% static "forum/img/titre.png" %}"></div>
+		</div>
+		
+		
+		
+		<div id=post_lieu_entete align="left">
+			<div style="display: inline-flex;">
+				<div id=post_lieu_entete_img>
+					<img src="{% static imgLieu %}" width="250" height="250">
+					
+					
+				</div>
+				<div><img src="{% static "forum/img/separateur_v_2.png" %}"></div>
+				<div id=post_lieu_entete_contenu>
+					
+					<div id=texte_surtitre style="padding-bottom:15px;">{{lieu.nom}}</div>
+					<div id=texte_titre>{{date}}</div>
+					<div id=texte_base style="padding-bottom:5px;">description calendrier</div>
+					<div id=texte_base style="color:#000;">{{lieu.description|safe|linebreaksbr}}</div>
+					<div id=texte_base style="color:#000;">Niveau de défense du lieu : {{lieu.defense_assault}}
+					{%if lieu.nbgarde > 0 %}<br>Nb de gardes : {{lieu.nbgarde}}{%endif%}
+					{%if lieu.nbtroupe > 0 %}<br>Nb de troupes : {{lieu.nbtroupe}}{%endif%}
+					{%if lieu.piege > 0 %}<br>Pièges : {{lieu.piege}}{%endif%}</div>
+					
+					<div id=texte_base style="color:#000;">Le lieu est {%if lieu.ferme%}fermé{%else%}ouvert{%endif%}
+					{%if lieu.ferme%}<br>Personnage invité : {% for perso_autorise in lieu.perso_autorise.all %} {{perso_autorise.nom}} {% endfor %}{%endif%}</div>
+					<br>
+				</div>
+			</div>
+		</div>
+		<div id=perso_present style="margin-left: 5%;">
+			<div id=texte_surtitre style="padding-bottom:5px;">PERSONNAGES PRESENTS</div>
+					
+			{% for perso_j in list_perso_joueur %}
+			{% with 'forum/img/persos/'|add:perso_j.image as imgPerso %}
+			{% with 'forum/img/'|add:perso_j.etat_sante.image as imgSantePerso %}
+				<div id=img_perso style="background:url({% static imgPerso %}); display:inline-block;{% if perso_j.dissimulation != 0 %} opacity:0.5;{% endif %}">
+				<a href="/forum/lieu/{{perso_j.lieu.id}}/{{perso_j.id}}/1#perso_present">
+					<img src="{% static imgSantePerso %}" width="81" height="88" border="1">
+				</a>
+				</div>
+			{% endwith %}{% endwith %}
+			{% endfor %}
+			
+			{% if list_perso %}
+			- <img src="{% static "forum/img/separateur_v.png"%}" style="display:inline-table;"> - 
+			{% endif %}
+			
+			{% for perso in list_perso %}
+			{% with 'forum/img/persos/'|add:perso.image as imgPerso %}
+			{% with 'forum/img/'|add:perso.etat_sante.image as imgSantePerso %}
+				<div id=img_perso_small style="background-image:url({% static imgPerso %});{% if perso.dissimulation != 0 %} opacity:0.5;{% endif %}">
+				<a href="/forum/lieu/{{perso_j.lieu.id}}/{{perso_j.id}}/1#perso_present">
+					<img src="{% static imgSantePerso %}" width="60" height="68" border="1">
+				</a>
+				</div>
+			{% endwith %}{% endwith %}
+			{% endfor %}
+		</div>
+		
+		<div id=base align="center" style="margin-top:20px;">
+			
+			
+			{% if perso_joueur.id != 1 %}
+			{% with 'forum/img/persos/'|add:perso_joueur.image as imgPersoJoueur %}
+			{% with 'forum/img/'|add:perso_joueur.etat_sante.image as imgSantePersoJoueur %}
+			
+			<div id=post_action> 
+				
+				<div id=post_action_base align="center">
+				
+					<div id=post_perso align="left">
+						
+						
+						
+						<div id=img_perso style="background:url({% static imgPersoJoueur %}); display:inline-block">
+							<!--<a href="perso/{{post.perso.id}}/desc/"><img src="{% static imgSantePersoJoueur %}" width="81" height="88" border="1"></a>-->
+							
+							<a href="#"><img src="{% static imgSantePersoJoueur %}" width="81" height="88" border="1">
+						</div>
+						
+						
+						
+						<div id=post_perso_info>
+							<div id=texte_titre style="display:table;"><a href="#">{{perso_joueur.nom}}</a></div>
+							<div id=texte_sstitre>{{perso_joueur.titre}}</div>
+							<div id=texte_base>{{perso_joueur.etat_sante.nom}}</div>
+							{%if perso_joueur.PC > 0 %}<div id=texte_base>Concentration : {{perso_joueur.PC}} pt{%if perso_joueur.PC > 1 %}s{%endif%}</div>{%endif%}
+							{%if perso_joueur.dissimulation > 0 %}<div id=texte_base>Dissimulé : niveau {{perso_joueur.dissimulation}}</div>{%endif%}
+							<div id=texte_base>{{perso_joueur.nbGardes}} garde{%if perso_joueur.nbGardes > 1 %}s{%endif%}<br>{{perso_joueur.nbTroupes}} troupe{%if perso_joueur.nbTroupes > 1 %}s{%endif%}</div>
+						</div>
+					</div>
+					
+					<div id=post_action_liste>
+						{% for categorie_action in list_categorie_action %}
+						{% if categorie_action.id != 1 %}<div id=post_action_item><br></div>{% endif %}
+						{% for action_item in list_action %}
+							{% if not action_item.action_parent and action_item.categorie == categorie_action %}
+								{% if action_item == action %}
+								<div id=post_action_item style="opacity:0.2;">{{ action_item.nom }}</div>
+								{% else %}
+								<div id=post_action_item><a href="/forum/lieu/{{lieu.id}}/{{perso_joueur.id}}/{{action_item.id}}#perso_present">{{ action_item.nom }}</a></div>
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+						{% endfor %}
+					</div>
+					
+					<div id=post_formulaire>
+						{% if perso_joueur.occupe %}<div id=texte_sstitre>{{ perso_joueur.desc_occupe|safe|linebreaksbr }}<br><br></div>{% endif %}
+						<form method="POST" class="post-form">{% csrf_token %}
+							
+									
+							{% if action.options %}<div id=post_item_form >Options :<br>{{ form.option_action }}</div>{% endif %}
+							
+							{% if action.cible_perso %}<div id=post_item_form >{{ action.cible_perso_verbose }}<br>{{ form.perso_cible }}</div>{% endif %}
+							{% if action.cible_persos %}<div id=post_item_form >{{ action.cible_persos_verbose }}<br>{{ form.persos_cible }}</div>{% endif %}
+							{% if action.cible_lieu %}<div id=post_item_form >{{ action.cible_lieu_verbose }}<br>{{ form.lieu_cible }}</div>{% endif %}
+							{% if action.cible_lieux %}<div id=post_item_form >{{ action.cible_lieux_verbose }}<br>{{ form.lieux_cible }}</div>{% endif %}
+							
+							{% if action.champ_recherche1 %}<div id=post_item_form>{{ action.champ_recherche1_verbose }}<br>{{ form.champ_recherche1 }}</div>{% endif %}
+							{% if action.champ_recherche2 %}<div id=post_item_form>{{ action.champ_recherche2_verbose }}<br>{{ form.champ_recherche2 }}</div>{% endif %}
+							{% if action.champ_texte %}<div id=post_item_form align="left">{{ action.champ_texte_verbose }}<br>{{ form.champ_texte }}</div>{% endif %}
+							
+							{% if action.cible_instant %}<div id=post_item_form align="left">{{ action.cible_instant_verbose }}<br>{{ form.heure_cible }}h{{ form.jour_cible }}jour de{{ form.mois_cible }}</div>{% endif %}
+							
+							<div id=post_action_champ>{{ form.texte }}</div>
+							
+							
+							<div id=post_action_valider>
+								<input type="submit" class="save btn btn-default" value="{{ action.nom }}">
+							</div>
+						
+						</form>
+					
+					</div>
+					<div>{{ post.perso.info_signature|safe|linebreaksbr }}</div>
+				</div>
+			</div>
+			{% endwith %}{% endwith %}
+			{% endif %}
+			
+			<div id=post_liste>
+				
+			{% if list_posts %}
+			{% for post in list_posts %}
+			{% with 'forum/img/persos/'|add:post.perso.image as imgPerso %}
+			{% with 'forum/img/'|add:post.perso.etat_sante.image as imgSante %}
+			
+
+			
+			
+				
+				<div id=post>
+					
+					{% if post.style == "info" %}
+					{%if post.dissimulation > 0 %}
+					<div id=post_base align="left" style="opacity:0.7;">
+					{% else %}
+					<div id=post_base align="left">
+					{% endif %}
+					
+					<div id=texte_typeinfo>{{post.texte|safe|linebreaksbr}}</div>
+					</div>
+					
+					{% elif post.style == "sys" %}
+					<div id=post_base_typesys align="left"><div id=texte_typesys>{{post.texte|safe|linebreaksbr}}</div></div>
+					
+					{% else %}
+					{%if post.dissimulation > 0 %}
+					<div id=post_base align="left" style="opacity:0.7;">
+					{% else %}
+					<div id=post_base align="left">
+					{% endif %}
+					
+						<div id=post_perso align="left">
+							
+							<div id=img_perso style="background:url({% static imgPerso %});">
+								<a href="perso/{{post.perso.id}}/desc/"><img src="{% static imgSante %}" width="81" height="88" border="1" title="{{post.perso.nom}} : {{post.perso.etat_sante.nom}}"></a>
+							</div>
+							
+							<div id=post_perso_info>
+								<div id=texte_titre style="display:table;"><a href="#">{{post.perso.nom}}</a></div>
+								<div id=texte_sstitre>{{post.perso.titre}}</div>
+								
+							</div>
+						</div>
+						
+						<div id=post_contenu align="right">
+							<div id=post_contenu_texte>{{post.texte|safe|linebreaksbr}}</div>
+							
+							<div id=post_signature>
+								<!--<div><b>{{post.date_jeu}}</b></div>-->
+								<div>{{ post.perso.info_signature|safe|linebreaksbr }}</div>
+							</div>
+						</div>
+					
+					</div>
+					{% endif %}	
+					<div id=post_footer>
+						{{post.date_jeu}}
+						{%if joueur.statut == "MJ" %}<div id=post_indicMJ>
+							<div id=post_indicMJ_texte>{{ post.info_MJ|safe }}</div>
+							<a href="#" onclick="deletePost('/forum/deletePost/{{lieu.id}}/{{post.id}}')"><img src="{% static "forum/img/edit.png" %}" width="15" height="15"></a>
+							<a href="#" onclick="deletePost('/forum/deletePost/{{lieu.id}}/{{post.id}}')"><img src="{% static "forum/img/delete.png" %}" width="15" height="15"></a>
+							</div>
+						{% endif %}
+						
+					</div>
+				</div>
+			
+			
+			
+			{% endwith %}
+			{% endwith %}
+			{% endfor %}
+			{% else %}
+				<p>No Post are here.</p>
+			{% endif %}
+			
+		
+			</div>
+	
+	
+	
+	{% endwith %}
+	
+	
+	
+	
+
+	<div id=footer>
+	</div>
+
+		
+    </body>
+</html>

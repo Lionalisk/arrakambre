@@ -1,0 +1,76 @@
+<html>
+<html lang="fr">
+<head>
+<title>CONNEXION</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'forum\css\cssfile.css' %}">
+<style>
+#total {
+	Background-image :url("{% static "forum\img\parchemin.jpg" %}");
+}
+</style>
+</head>
+
+	
+	
+    <body>
+	
+	
+	
+	<div id=total align="center">
+	<div id=header>
+	</div>
+	
+	<div id=base>
+		
+		{% if form.errors %}
+			{% for field in form %}
+				{% for error in field.errors %}
+					<div class="alert alert-danger">
+						<strong>{{ error|escape }}</strong>
+					</div>
+				{% endfor %}
+			{% endfor %}
+			{% for error in form.non_field_errors %}
+				<div class="alert alert-danger">
+					<strong>{{ error|escape }}</strong>
+				</div>
+			{% endfor %}
+		{% endif %}
+		
+	</div>
+	<div id=footer>
+	</div>
+	
+</div>
+
+
+
+
+        <!--<p>Hi there!</p>
+        <p>It works!</p>
+		<p>{{ lieu.nom }}</p>
+		{% if list_perso %}
+			<ul>
+			{% for perso in list_perso %}
+				<li><a href="/polls/{{ question.id }}/">{{ perso.nom }}</a></li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			<p>No perso are here.</p>
+		{% endif %}
+		
+		{% if list_posts %}
+			<ul>
+			{% for post in list_posts %}
+				<li><a href="/polls/{{ question.id }}/">{{ post.texte }}</a></li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			<p>No Post are here.</p>
+		{% endif %}-->
+		
+    </body>
+</html>

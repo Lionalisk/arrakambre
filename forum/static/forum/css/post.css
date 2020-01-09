@@ -1,0 +1,241 @@
+
+
+
+#post_liste{
+	display: table;
+	margin-top:15px;
+	width : 100%;
+}
+
+
+/* INFOS du PERSO qui post*/
+
+
+.post_perso {
+	min-width : 120px;
+	padding: 6px;
+}
+
+
+.post_perso_info{
+	padding-top:1px;
+	padding-right:5px;
+	padding-bottom:5px;
+	padding-left:2px;
+}
+
+.post_perso_blocktexte{
+	padding-top:3px;
+	padding-bottom:1px;
+}
+
+
+
+
+/* POSTS */
+
+
+
+.post {
+	display:table;
+	padding-top: 12px;
+	padding-left: 12px;
+	padding-right: 12px;
+	padding-bottom: 0px;
+	width : 95%;
+}
+
+.post_base {
+	display:inline-flex;
+	width: 100%;
+	/*background-color: #beaf9e;*/
+	Border: 1pt Solid var(--bordure_post);
+	
+	/*min-height: 120px;*/
+}
+
+.post_hide {
+	display:inline-flex;
+	width: 100%;
+	/*background-color: #beaf9e;*/
+	Border: 1pt Solid var(--bordure_post);
+	opacity:0.8;
+	/*min-height: 120px;*/
+}
+
+.texte_typeinfo{
+	padding-top:2px;
+	text-align: left;
+	Font-Size: 10pt;
+	color: var(--texte_titre);
+	Opacity: 0.8;
+	padding : 10px;
+}
+
+
+.post_base_typesys {
+	display:inline-flex;
+	width: 100%;
+	background-color: var(--fond_sys);
+	Border-Width: 1pt;
+	Border-Style: Solid;
+	Border-Color: var(--bordure_sys);
+	
+	/*min-height: 120px;*/
+}
+.texte_typesys{
+	padding-top:2px;
+	text-align: left;
+	Font-Size: 9pt;
+	color: var(--texte_sys);
+	Opacity: 0.8;
+	padding : 10px;
+}
+
+
+.post_contenu {
+	display : table;
+	Border-left: 0pt Solid var(--bordure_post);
+	/*background-color: #aaf;*/
+	padding:10px;
+	min-height: 130px;
+	width:100%;
+	
+	position:relative;
+	margin-right:10px;
+	/*margin-top:10px;
+	margin-left:10px;
+	margin-bottom:10px;*/
+}
+
+.post_contenu_texte{
+	display : table-row;
+	padding: 5px;
+	text-align: left;
+	Font-Size: 10pt;
+	color: var(--texte_base);
+	width:100%;
+	height:100%;
+	/*min-height: 90px;*/
+	
+}
+
+.post_signature{
+	/*position : absolute;*/
+	right : 0px;
+	bottom : 7px;
+	text-align: right;
+	Font-Size: 8pt;
+	color: var(--texte_titre);
+	margin-top: 10px;
+	vertical-align:bottom;
+	display : inline-row;
+	
+}
+
+.post_footer {
+	
+	text-align: right;
+	height: 8px;
+	Font-Size: 9pt;
+	color: var(--texte_base);
+	padding: 2px;
+	opacity:0.6;
+	
+}
+
+.quote{
+	display: block;
+	padding:10px;
+	margin-bottom:10px;
+	margin-right : 10px;
+	Border: 1pt Solid var(--bordure_row);
+	background-color: var(--fond_quote);
+	color: var(--texte_surtitre);
+}
+
+.boutons_balise{
+	display: table;
+	margin : 2px;
+}
+
+.bouton_balise2{
+	display:inline-table;
+	margin-left:8px;
+	margin-right:8px;
+	margin-bottom : 20px;
+}
+
+.bouton_balise{
+	display:table-cell;
+	width:22px;
+	height:22px;
+	border:1px Solid var(--bordure_row);
+	background-color : var(--clair2);
+	text-align:center;
+	text-align:center;
+	vertical-align : middle;
+	font-size : 10pt;
+	padding-left:4px;
+	padding-right:4px;
+	
+	/*padding-top : 10px;*/
+}
+
+.red{
+	color: var(--texte_sys);
+}
+	
+}
+.title{
+	
+}
+
+.img_perso_cible{
+	width: 41px;
+	height: 45px;
+	background-size: 105%;
+	margin-right : 5px;
+	margin-bottom : 5px;
+}
+
+/* INDICATION POUR MJ EN FOOTER */
+
+.post_indicMJ{
+	display : inline-flex;
+	text-align: right;
+	
+	vertical-align:top;
+}
+
+.post_indicMJ_texte{
+	Font-Size: 8pt;
+	color: var(--texte_titre);
+	margin-top: 2px;
+	margin-right: 10px;
+}
+
+
+/* ICONES sur PERSO */
+
+.icone_nb_gardes{
+	color: var(--clair1);
+	text-align: right;
+	font-size: 9pt;}
+	
+.icone_nb_troupes{
+	color: var(--fonce1);
+	text-align: right;
+	font-size: 9pt;}
+	
+	
+.desc_action{
+	background-color: var(--fond_row1);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 2px;
+	display: flex;
+	Border-bottom: 1pt Solid var(--bordure_row);
+	/*Border-top: 1pt Solid var(--fond_row2);*/
+}

@@ -1,0 +1,109 @@
+{% load static %}
+
+	{% with 'forum/'|add:nom_jeu|add:'/img/lieu/'|add:lieu.image|add:'_2.jpg' as imgLieu %}
+	
+	<div id=entete_lieu align="left">
+		<div id=entete_lieu_img>
+			<img src="{% static imgLieu %}" width="250" height="250">
+
+
+			<div class=entete_lieu_txtbase>
+			<div class=entete_lieu_titre>Passages :</div>
+			{% for passage in list_passage %}
+			{% if joueur in passage.users_connaissants.all or not passage.inconnu %}
+			<b>- <a href="/forum/lieu/-{{joueur.id}}/{{passage.id}}/1/1/1">{{passage}}</a></b><br>
+			{% endif %}
+			{% endfor %}
+			<br>
+			</div>
+
+
+			{% if joueur.statut == "MJ" %}
+			<div class=entete_lieu_txtbase style="margin-bottom:20px;">
+				<div class=entete_lieu_titre>
+					<div style="display:inline-flex;">
+					<a id=affiche_resultat href="javascript:afficheID('resultat','affiche')">+&nbsp;&nbsp;Résultats</a>
+					<a id=masque_resultat href="javascript:afficheID('resultat','masque')" style="display:none;">-&nbsp;&nbsp;Résultats</a>
+					<br>
+					
+					</div>
+				</div>
+				<div id=resultat style="display:none;">
+					<a href="/forum/MakeResultat/{{lieu.id}}">ADD</a><br>
+					{% for resultat in lieu.return_resultats %}
+					<b>- <a href="/forum/resultat/{{resultat.id}}/">{{resultat.nom}}</a></b><br>
+					{% endfor %}
+				</div>
+			</div>
+
+			{% endif %}
+
+		</div>
+		<div><img src="{% static separateur_v2 %}"></div>
+		
+
+		<div id=entete_lieu_contenu>
+			
+			<div class=entete_lieu_surtitre>
+				{{lieu.nom}}
+				{% if joueur.statut == "MJ" %}
+					<a href='/admin/forum/lieu/{{lieu.id}}/change/' target="_blank"><img src="{% static edit %}" width="15" height="15"></a>
+				{% endif %}
+			</div>
+			<div class=entete_lieu_titre>{{date}}</div>
+			<div class=entete_lieu_txtcalendrier>description calendrier</div>
+			<div class=entete_lieu_txtbase>{{lieu.description|safe|linebreaksbr}}</div>
+			
+			<div class=entete_lieu_txtbase>
+				<b>
+				{%if lieu.nbgarde > 0 %}<br>Nb de gardes : {{lieu.nbgarde}}{%endif%}
+				{%if lieu.nbtroupe > 0 %}<br>Nb de troupes : {{lieu.nbtroupe}}{%endif%}
+				<br>
+				{% if lieu.taille > 1 %}
+				Ce lieu est un grand Espace {% if joueur.statut == "MJ" %}- Taille : {{lieu.taille}}{% endif %}
+				{% else %}
+				Ce lieu est un espace restreint
+				{% endif %}
+				<a href='/forum/regles/-1/4/#lieux_espace' target="_blank"><img src="{% static help %}" width="12" height="12"></a>
+				<br>
+				{% if lieu.dissimulation > 0 %}<a href='/forum/regles/-1/4/#lieux_discret' target="_blank"><img src="{% static help %}" width="12" height="12"></a>Ce lieu est un lieu Discret{% endif %}
+				Le lieu est {%if lieu.ferme%}fermé{%else%}ouvert{%endif%}
+				{%if lieu.ferme%}<br>Personnage invité : {% for perso_autorise in lieu.perso_autorise.all %} {{perso_autorise.nom}} {% endfor %}{%endif%}
+				</b>
+			</div>
+			
+			<br>
+		</div>
+	</div>
+
+	{% endwith %}
+	
+	<div id=perso_present>
+		<div class=entete_lieu_surtitre>PERSONNAGES PRESENTS</div>
+		{% if joueur.statut == "MJ" %}
+		<a href="/forum/lieu/-{{joueur.id}}/{{lieu.id}}/1/1/1#perso_present">
+			<img src="{% static talk %}" class=block_image>
+		</a>
+		{% endif %}
+		
+		{% for perso_j in list_perso_joueur %}
+			<a href="/forum/lieu/-{{joueur.id}}/{{perso_j.lieu.id}}/{{perso_j.id}}/1/1#perso_present">
+				<div class=block_image>{% include "forum\img_perso.html" with perso=perso_j size="L" %}</div>
+			</a>
+		{% endfor %}
+		
+		{% if list_perso %}
+			<img src="{% static separateur_v %}" class=block_image> 
+		{% endif %}
+		
+		{% for perso in list_perso %}
+			<a href="/forum/perso/-{{joueur.id}}/{{perso.id}}/">
+				{% if perso.hote %} <div class=block_image style="margin-right: 30px;opacity: 0.8;">{% include "forum\img_perso.html" with perso=perso size="S" lien="#perso_present" %}</div>
+				{% else %}<div class=block_image>{% include "forum\img_perso.html" with perso=perso size="S" lien="#perso_present" %}</div>
+				{% endif %}
+			</a>
+			
+		{% endfor %}
+
+
+	</div>

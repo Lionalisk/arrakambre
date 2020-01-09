@@ -1,0 +1,55 @@
+{% load static %}
+{% with 'forum/'|add:nom_jeu|add:'/img/lieu/'|add:territoire.image|add:'.jpg' as imgPath %}
+
+
+	<div class=block_image align="center">
+		<div class=img_perso>
+			<img src="{% static imgPath %}" width="81" height="88" border="1">
+		</div>
+	</div>
+			
+			
+
+			
+	<div class=index_elt_info style="width:150px;">
+		<div class=texte_titre><a href="#">{{territoire.nom}}</a></div>
+		<div class=texte_sstitre>{{territoire.maison.nom}}</div>
+		<br>
+		{% if territoire.proprietaire %}
+		<div class=texte_sstitre>{{territoire.proprietaire.nom}}<br>{{territoire.proprietaire.titre}}</div>
+		{% endif %}
+		<div class=texte_base></div>
+	</div>
+	
+	
+	<!--<img src="{% static imgPathSeparateur_v %}" style="display:inline-table;">-->
+	
+
+	
+	<div class=index_elt_info style="width:150px;">
+		<div class=texte_titre>Caracteristiques</div>
+		<div class=texte_base>
+			Défense : {{territoire.defense_assault}}<br>
+			Gardes : {{territoire.nbgarde}}<br>
+			Troupe : {{territoire.nbtroupe}}<br>
+			Piège : {{territoire.piege}}
+			
+		</div>	
+	</div>
+	
+	<div class=index_elt_info>
+		
+		<div class=texte_titre>Activités</div>
+		<div class=texte_sstitre>Dernières actions :</div>
+		<div class=texte_base>
+			{% for post in list_derniers_posts %}
+				{% if post.lieu.id == territoire.id %}
+					{{post.created_date|date:"G:i-j/m"}} : {{post.perso.nom}}
+				{% endif %}
+			{% endfor %}
+			
+		</div>	
+	</div>
+
+
+{% endwith %}

@@ -1,0 +1,69 @@
+{% load static %}
+
+
+
+<div id=menu_haut style="margin-top:1px;opacity: 0.85;">
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/messagerie/-{{joueur.id}}/{{perso_id}}/reception/">Reception</a></div>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/messagerie/-{{joueur.id}}/{{perso_id}}/envoi/">Envoi</a></div>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/messagerie/-{{joueur.id}}/{{perso_id}}/all/">All</a></div>
+	<div class=bouton_menu_gauche><a class=texte_bouton_menu href="/forum/messagerie/-{{joueur.id}}/{{perso_id}}/corbeille/">Corbeille</a></div>
+	<div id=affiche_ecrire class=bouton_menu_droite><a class=texte_bouton_menu href="#" onclick="afficheID('ecrire','affiche')">Ecrire</a></div>
+	<div id=masque_ecrire class=bouton_menu_droite style="display: none;"><a class=texte_bouton_menu href="#" onclick="afficheID('ecrire','masque')">Ecrire</a></div>
+	
+</div>
+
+
+
+
+{% include "forum\message_ecrire.html" %}
+
+
+
+<div class=msg_main_block align="left">
+	<div class=msg_titre><div class=texte_titre>MESSAGES - {{filtre|upper}}</div></div>
+
+	{% if qst_msg_joueur %}
+		<div id="message" class=tableau>
+				<div class=row_entete>
+					<div class=colonne_entete_gauche style="margin-left:30px;Font-Weight:Bold;"><div class=texte_entete>De :</div></div>
+					<div class=colonne_entete_gauche style="Font-Weight:Bold;"><div class=texte_entete>Titre</div></div>
+					<div class=colonne_entete_droite><a class=texte_bouton_menu align=center href="javascript:affiche_allID('masque')">Fold All</a></div>
+					<div class=colonne_entete_droite><a class=texte_bouton_menu align=center href="javascript:affiche_allID('affiche')">Unfold All</a></div>
+				</div>
+		{% for msg_joueur in qst_msg_joueur %}
+			
+			<div class="{% cycle 'row1' 'row2' %}" {% if msg_joueur in T_msg_nonlu %}style="Font-Weight: Bold;"{% endif %}>
+				
+				<a href="javascript:afficheID('msg_joueur_{{msg_joueur.id}}','affiche')"><div id="affiche_msg_joueur_{{msg_joueur.id}}" class=colonne_ext><div class=texte_base>+</div></div></a>
+				<a href="javascript:afficheID('msg_joueur_{{msg_joueur.id}}','masque')"><div id="masque_msg_joueur_{{msg_joueur.id}}" class=colonne_ext style="display:none;"><div class=texte_base>-</div></div></a>
+				<div class=colonne><div class=texte_base>{{msg_joueur.joueur.nom}}</div></div> 
+				
+				<div class=colonne style="width:130px;min-width:130px;"><div class=texte_base><b>{{msg_joueur.titre}}</b></div></div>
+				<div class=colonne style="min-width:150px;"><div class=texte_base>{{msg_joueur.date_jeu}}</div></div> 
+				{% if joueur_reel == joueur %}
+					{% if filtre == "corbeille" %}
+					<div style="width:100%;" align="right"><a href="/forum/messagerie/restaure/{{msg_joueur.id}}/">
+						<img src="{% static edit %}" width="15" height="15">
+					</a></div>
+					{% else %}
+					<div style="width:100%;" align="right"><a href="/forum/messagerie/supprime/{{msg_joueur.id}}/">
+						<img src="{% static delete %}" width="15" height="15">
+					</a></div>
+					{% endif %}
+				{% endif %}
+			</div>
+
+			<div id="msg_joueur_{{msg_joueur.id}}" class=msg_post>
+				<div class=msg_base align="left">
+					<div class=post_contenu align="right">
+					<div class=post_contenu_texte>{{msg_joueur.texte|safe|linebreaksbr}}</div>
+				</div>
+				</div>
+			</div>
+
+		{% endfor %}
+		</div>
+	{% else %}
+	<div class=texte_base>Pas de message</div>
+	{% endif %}
+</div>

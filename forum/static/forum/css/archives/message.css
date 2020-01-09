@@ -1,0 +1,143 @@
+@import 'root.css';
+
+.msg_main_block {
+	padding-top: 12px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 0px;
+}
+
+.msg_titre{
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.tableau{
+	display: table;
+	margin-top:5px;
+	Border: 1pt Solid #976;
+	width: 100%;
+}
+
+.row_entete{
+
+	width:100%;
+	height:18px;
+	background-color: #7a4a3a;
+	text-align: center;
+	Font-Size: 9pt;
+	color: #cab3a1;
+	/*display: flex;*/
+}
+
+.row1{
+	background-color: #f7eddc;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 2px;
+	display: flex;
+	Border-bottom: 1pt Solid #987;
+	Border-top: 1pt Solid #976;
+}
+.row2{
+	background-color: #efdbc3;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 2px;
+	display: flex;
+	Border-bottom: 1pt Solid #987;
+	Border-top: 1pt Solid #976;
+}
+.colonne{
+	/*display: inline-flex;*/
+	display: block;
+	min-width : 80px;
+	margin-right : 20px;
+	vertical-align : middle;
+	
+}
+
+
+.colonne_entete{
+	/*display: inline-flex;*/
+	display: block;
+	min-width : 80px;
+	margin-right : 20px;
+	vertical-align : middle;
+	padding-top:2px;
+	text-align:center;
+	Font-Size: 8pt;
+	color: #fed;
+	Opacity: 0.7;
+	
+}
+.colonne_puce{
+	/*display: inline-flex;*/
+	display: block;
+	min-width : 2px;
+	margin-right : 5px;
+	padding-top: 3px;
+	
+}
+
+.puce{
+	height:7px;
+	width:7px;
+}
+
+.colonne_entete_gauche{
+	width:100px;
+	padding : 2px;
+	float:left;
+	/*background-color: #603020;
+	Border-Right: 1pt Solid;*/
+}
+
+
+.colonne_entete_droite{
+	width:70px;
+	float:right;
+	padding : 2px;
+	background-color: #603020;
+	Border-Left: 1pt Solid;
+}
+
+.colonne_ext{
+	display: block;
+	width : 10px;
+	margin-right : 20px;
+}
+
+.msg_base{
+	display:inline-flex;
+	width: 100%;
+	/*background-color: #beaf9e;*/
+	Border-bottom: #987 1pt Solid;
+	/*min-height: 120px;*/
+}
+
+.msg_post{
+	padding-bottom: 25px;
+	display : none;
+}
+
+.msg_base {
+	display:inline-flex;
+	width: 100%;
+	/*background-color: #beaf9e;*/
+	Border-Bottom: 1pt Solid #665;
+	/*min-height: 120px;*/
+}
+
+.texte_entete{
+	/*padding-top : 10px;*/
+	text-align: left;
+	Font-Size: 9pt;
+	color: #cab3a1;
+	
+}
+.titre_tableau{
+	padding : 4px;
+}

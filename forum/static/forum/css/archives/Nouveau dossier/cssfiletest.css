@@ -1,0 +1,200 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+	background-color: #000;
+}
+
+
+#total {
+    
+	/*position: Fixed;*/
+	/*Background-image:url("../../../static/forum/img/parchemin.jpg");*/
+	background-repeat:repeat;
+	background-color: #b8a186;
+	width: 85%;/*80*/
+	min-width: 550px;
+	max-width : 1000px;
+	/*height: 100%;
+	Margin-Left: 10%;
+	Margin-Right: 10%;*/
+	Margin-Top: 5%;
+    Font-Size: 10pt;
+	color: black;
+	Z-Index: 1;
+	margin: auto;
+}
+
+
+#header {
+    height: 120px;
+	/*background-color: #888;*/
+	Z-Index: 2;
+	
+}
+
+#base {
+	/*background-color: #cfc6b5;*/
+	margin-left: 5%;/*10*/
+	margin-right: 5%;/*10*/
+	Border-Style: Solid;
+	Border-Width: 1pt;
+	Border-Color: #aa9;
+	/*Opacity: 0.65;*/
+	padding-bottom: 15px;
+	/*min-height: 600px;*/
+	
+}
+
+#footer {
+	margin-left: 10%;
+	margin-right: 10%;
+	height: 30px;
+}
+
+#menu_haut{
+	width:100%;
+	min-height:25px;
+	background-color: #705440;
+	text-align: center;
+	Font-Size: 9pt;
+	color: #cab3a1;
+}
+
+
+#bouton_menu_gauche{
+	width:70px;
+	float:left;
+	padding : 5px;
+	background-color: #604430;
+	Border-Right: 1pt Solid;
+}
+
+#bouton_menu_droite{
+	width:70px;
+	float:right;
+	padding : 5px;
+	background-color: #604430;
+	Border-Left: 1pt Solid;
+}
+
+
+#partie_gauche {
+	float: left;
+}
+
+#img_perso {
+	float: left;
+	width: 100px;
+	padding-top: 6px;
+	/*Vertical-Align: Middle;*/
+}
+
+#img_lieu {
+	float: left;
+	width: 100px;
+	padding-top: 6px;
+	/*Vertical-Align: Middle;*/
+}
+
+
+#post {
+	padding-top: 12px;
+	padding-left: 12px;
+	padding-right: 12px;
+	padding-bottom: 0px;
+}
+
+#post_base {
+	background-color: #beaf9e;
+	Border-Width: 1pt;
+	Border-Style: Solid;
+	Border-Color: #665;
+	/*min-height: 120px;*/
+}
+
+
+
+#post_contenu {
+	
+}
+
+#post_titre{
+	min-height: 16px;
+	padding: 2px;
+	text-align: left;
+	Font-Weight: Bold;
+	Font-Size: 9pt;
+	color: #221;
+}
+
+#post_texte{
+	padding : 8px;
+	text-align: left;
+	Font-Size: 10pt;
+	color: black;
+	min-height: 76px;
+	margin-left: 100px;
+	background-color: #eee;
+}
+#post_action{
+	/*float : bottom;*/
+	padding : 8px;
+	text-align: left;
+	Font-Size: 10pt;
+	color: black;
+	margin-left: 100px;
+	background-color: #fff;
+	min-height: 20px;
+}
+
+#post_nbgardes{
+	padding : 4px;
+	text-align: left;
+	Font-Size: 8pt;
+
+}
+
+
+#post_footer {
+	
+	text-align: right;
+	height: 8px;
+	Font-Size: 9pt;
+	color: #221;
+	padding: 2px;
+	
+}
+
+#log {
+	/*background-color: #cfc6b5;*/
+	margin-left: 5%;/*10*/
+	margin-right: 5%;/*10*/
+	Border-Style: Inset;
+	Border-Width: 1pt;
+	Border-Color: #aa9;
+	/*Opacity: 0.65;*/
+	padding-bottom: 15px;
+	/*min-height: 600px;*/
+	
+}
+
+
+/* Style the list inside the menu */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+article {
+    float: left;
+    padding: 20px;
+    width: 70%;
+    background-color: #f1f1f1;
+    height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+    content: "";
+    display: table;
+    clear: both;
+}
